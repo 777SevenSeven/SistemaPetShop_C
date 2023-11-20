@@ -52,8 +52,29 @@ int charToPosInt(char *in) {
   return myInt;
 }
 
+int nomeValido(char *in) { //Returns 1 em valido 0 em invalido
+  int valid = 0;
+  int sz = sizeof(*in)/sizeof(char);
+  char Casted[sz];
+  strcpy(Casted,*in);
+  for (int i = 0; i < sz; i++) {
+    if (/*not within range*/) {valid = -1; break;}
+    else valid++;
+  }
+  if (valid >= 3) return 1; else return 0;
+}
+
+Animal* aumentarVetorAnimal(Animal* Animais, int tamanho) { //Aumenta o vetor de Animais em tamanho e retorna o mesmo
+  return (Animal*) realloc(Animais, sizeof(Animais) + sizeof(Animal)*tamanho);
+}
+
+Animal* aumentarVetorAnimal(Animal* Animais, int tamanho) { //Aumenta o vetor de Animais em tamanho e retorna o mesmo
+  return (Animal*) realloc(Animais, sizeof(Animais) + sizeof(Animal)*tamanho);
+}
+
 int main() {
   char[50] in;
+  Animal MeusAnimais = (Animal*) malloc(sizeof(Animal)/* Vezes a quantidade*/);
   while (fgets(in,50,stdin)!=NULL) {
      
   }
