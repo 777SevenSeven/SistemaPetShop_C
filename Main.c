@@ -140,3 +140,66 @@ int main() {
   }
   return 0;
 }
+
+/* IGNORAR
+#include <stdio.h>
+#include <string.h>
+#include <math.h>
+#include <stdlib.h>
+
+typedef struct {
+    char nomeCliente[50];
+    char telefoneCliente[15];
+} Cliente;
+
+typedef struct
+{
+  Cliente *cliente;
+  char nomeAnimal[50];
+  int especie;
+  //Data dataNascimento;
+  char agressivo;		//'S' sim 'N' nao
+} Animal;
+
+char *baseadoEmNomePet (char Nome[50], Animal *Pets, Cliente *Clientes){
+    int letras;
+    char *composto = (char *) malloc (sizeof (char) * letras);
+    void myStrCpy (char *str1, char *str2, int *i, int lee) {
+        int len = strlen(str2);
+        for (int j = 0; j < lee; j++, (*i)++) {
+    	    str1[*i+j] = ((len > j) ? str2[j] : ' ');
+        }
+    }
+    void aggregate (Cliente MeuCliente, Animal MeuAnimal) {//CliNome | CliNum | nomeAnimal[50] | int especie | dataNascimento | char agressivo; //'S' sim 'N' nao
+        int i = 0;
+        char meuChar[100];
+        myStrCpy (meuChar, MeuCliente.nomeCliente, &i, 14);
+        //myStrCpy (meuChar, MeuCliente.telefoneCliente, &i, 13);
+        myStrCpy (meuChar, MeuAnimal.nomeAnimal, &i, 10);
+        myStrCpy (meuChar, MeuAnimal.cliente->nomeCliente, &i, 14);
+        composto[letras] = '\0';
+        //myStrCpy (meuChar, MeuAnimal.especie, &i, 10);
+    }
+    int sz[] = {100, 100}; // Corresponde ao tamanho de entradas em Clientes e Animais Correspondentemente
+    for (int i = 0; i < sz[1]; i++){
+        if (strcmp (Pets[i].nomeAnimal, Nome) == 0) {
+            aggregate (*Pets[i].cliente, Pets[i]); return composto;
+        }
+    }
+}
+
+int main ()
+{
+    Animal Animais[100];
+    Cliente Clientes[100];
+    Animais[0].nomeAnimal = "TRex";
+    Animais[0].cliente = &Clientes[1];
+    Clientes[1].nomeCliente = "Joao";
+    Animais[2].nomeAnimal = "Fofo";
+    Animais[2].cliente = &Clientes[3];
+    Clientes[3].nomeCliente = "Martin";
+    
+    printf ("%s", baseadoEmNomePet("TRex",Animais,Clientes));
+    return 0;
+}
+*/ IGNORAR
