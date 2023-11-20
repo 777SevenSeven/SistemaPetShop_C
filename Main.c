@@ -41,8 +41,21 @@ typedef struct{
 } Servico;
 
 //Funcs
+int charToPosInt(char *in){
+  int myInt = 0;
+  for (int i = 0; i < strlen(*in); i++) {
+    if (/* char is in range*/) {
+      myInt *= 10;
+      myInt += *in[i]; // nn sei notacao pra pegar o valor
+    }
+  }
+  return myInt;
+}
 
 int main() {
-  //asdfsadf
+  char[50] in;
+  while (fgets(in,50,stdin)!=NULL) {
+     
+  }
   return 0;
 }
