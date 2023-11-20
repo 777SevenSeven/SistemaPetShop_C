@@ -42,7 +42,7 @@ typedef struct {
 } Servico;
 
 //Funcs
-char[] baseadoEmNomePet(char Nome[50], Animal Pets*, Cliente Clientes*) {
+char *baseadoEmNomePet(char Nome[50], Animal Pets*, Cliente Clientes*) {
   char *composto = (char*) malloc(sizeof(char));
   void myStrCpy(char[] str1, char[] str2, int *i, int lee) {
     int len = strlen(str2);
@@ -70,7 +70,7 @@ char[] baseadoEmNomePet(char Nome[50], Animal Pets*, Cliente Clientes*) {
 
 int qntdAnimaisAgressivos(Animal *MeusAnimais) {
   int contagem = 0;
-  int sz = sizeof(*MeusAnimais)/sizeof(Animal);
+  int sz = 100; // se tivermos quantia de entradas assignar aqui para otimizacao so funciona se for tudo em ordem sem pular
   for (int i = 0; i < sz; i++) {
     if (MeusAnimais[i].agressivo == 'S') contagem++;
   }
@@ -101,17 +101,17 @@ int charToPosInt(char *in) {
 }
 
 //Função de validar nomes
-int nomeValido(char *in) { //Returns 1 em valido 0 em invalido
-  int valid = 0;
-  int sz = sizeof(*in)/sizeof(char);
-  char Casted[sz];
-  strcpy(Casted,*in);
-  for (int i = 0; i < sz; i++) {
-    if (/*not within range*/) {valid = -1; break;}
-    else valid++;
+  int nomeValido (char *in) {//Returns 1 em valido 0 em invalido
+    int valid = 0;
+    for (int i = 0; i < strlen(in); i++) {
+	    if (in[i] < 65 || (in[i] > 90 && in[i] < 97) || in[i] > 122) {
+    	    valid = -1;
+    	    break;
+    	} else valid++;
+    }
+    if (valid >= 3) return 1;
+    else return 0;
   }
-  if (valid >= 3) return 1; else return 0;
-}
 
 //Função de validar Telefones
 int ValidarTelefone(char telefoneCliente[15]) {
