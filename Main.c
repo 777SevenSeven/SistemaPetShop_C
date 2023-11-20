@@ -42,6 +42,32 @@ typedef struct {
 } Servico;
 
 //Funcs
+char[] baseadoEmNomePet(char Nome[50], Animal Pets*, Cliente Clientes*) {
+  char *composto = (char*) malloc(sizeof(char));
+  void myStrCpy(char[] str1, char[] str2, int *i, int lee) {
+    int len = strlen(str2);
+    for(int j = 0; j < lee; j++, *i++) {
+      str[i+j] = ((len > j) ? str2[j] : ' ');
+    }
+  }
+  void aggregate(Cliente MeuCliente, Animal MeuAnimal) { //CliNome | CliNum | nomeAnimal[50] | int especie | dataNascimento | char agressivo; //'S' sim 'N' nao
+    int i = 0;
+    char meuChar[];
+    myStrCpy(meuChar,MeuCliente.nomeCliente,&i,14);
+    myStrCpy(meuChar,MeuCliente.telefoneCliente,&i,13);
+    myStrCpy(meuChar,MeuAnimal.nomeAnimal,&i,10);
+    myStrCpy(meuChar,MeuAnimal.especie,&i,10);
+  }
+  int sz[] = {sizeof(*Clientes)/sizeof(Animal), sizeof(*Pets)/sizeof(Animal)};
+  for (int i = 0; i < sz[1]; i++) {
+    if (strcmp(Pets[i].nomeAnimal,Nome) == 0) {
+      for (int j = 0; j < sz[0]; j++) {
+        if (strcmp(Clientes[j].nomeCliente, Pets[i].cliente) {aggregate(Clientes[j],Pets[i]); break;}
+      }
+    }
+  }
+}
+
 int qntdAnimaisAgressivos(Animal *MeusAnimais) {
   int contagem = 0;
   int sz = sizeof(*MeusAnimais)/sizeof(Animal);
@@ -49,6 +75,21 @@ int qntdAnimaisAgressivos(Animal *MeusAnimais) {
     if (MeusAnimais[i].agressivo == 'S') contagem++;
   }
   return contagem;
+}
+
+char posIntToChar[](int in) {
+  int i = 0;
+  float myIn = (float) in/ pow(10,1+(int) log10(in));
+  char *myChar = (char*) malloc(sizeof(char));
+  while(in >= 1) {
+    myIn *= 10;
+    myChar[i] = (int) floor(myIn);
+    myIn -= floor(myIn);
+    myChar = (char*) realloc(myChar,sizeof(mychar)+sizeof(char));
+    i++;
+  }
+  myChar[i] = '\0';
+  return myChar;
 }
 
 int charToPosInt(char *in) {
