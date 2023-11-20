@@ -62,6 +62,7 @@ int charToPosInt(char *in) {
   return myInt;
 }
 
+//Função de validar nomes
 int nomeValido(char *in) { //Returns 1 em valido 0 em invalido
   int valid = 0;
   int sz = sizeof(*in)/sizeof(char);
@@ -72,6 +73,23 @@ int nomeValido(char *in) { //Returns 1 em valido 0 em invalido
     else valid++;
   }
   if (valid >= 3) return 1; else return 0;
+}
+
+//Função de validar Telefones
+int ValidarTelefone(char telefoneCliente[15]) {
+    int valido = 0; //-1 invalido 1 valido
+    if(!(strlen(telefoneCliente) <= 12 && strlen(telefoneCliente) >= 11 && telefoneCliente[0] == '0')) return 0;
+    for(int j = 0; j < strlen(telefoneCliente); j++) {
+    //Caso Verdadeiro
+    if(strlen(telefoneCliente) <= 12 && telefoneCliente[j] >= 48 && telefoneCliente[j] <= 57) {
+        valido = 1;
+    }
+        else {
+        valido = 0;
+        break;
+        }
+    }
+    return valido;
 }
 
 Animal* aumentarVetorAnimal(Animal* Animais, int tamanho) { //Aumenta o vetor de Animais em tamanho e retorna o mesmo
