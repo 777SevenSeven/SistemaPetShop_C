@@ -11,14 +11,14 @@ Nomes:André Antônio da Silva Queiroz    | RA:a2575310
 #include <stdlib.h>
 
 //Type def
-typedef struct{
+typedef struct {
   int dia;
   int mes;
   int ano;
 } Data;
 
 
-typedef struct{
+typedef struct {
   char nomeCliente[50];
   char telefoneCliente[15];
 } Cliente;
@@ -32,16 +32,16 @@ typedef struct{
   char agressivo; //'S' sim 'N' nao
 } Animal;
 
-typedef struct{
+typedef struct {
   int identificador;//AUTO_INCREMENT
   Data dataServico;
   Animal pet;
-  int tipoServico
+  int tipoServico;
   char pago; //'S' sim 'N' nao
 } Servico;
 
 //Funcs
-int charToPosInt(char *in){
+int charToPosInt(char *in) {
   int myInt = 0;
   for (int i = 0; i < strlen(*in); i++) {
     if (/* char is in range*/) {
