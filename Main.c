@@ -77,28 +77,25 @@ int qntdAnimaisAgressivos(Animal *MeusAnimais) {
   return contagem;
 }
 
-char posIntToChar[](int in) {
-  int i = 0;
-  float myIn = (float) in/ pow(10,1+(int) log10(in));
-  char *myChar = (char*) malloc(sizeof(char));
-  while(in >= 1) {
-    myIn *= 10;
-    myChar[i] = (int) floor(myIn);
-    myIn -= floor(myIn);
-    myChar = (char*) realloc(myChar,sizeof(mychar)+sizeof(char));
-    i++;
+char *posIntToChar(int in) {
+  int i = 1+(int) log10(in);
+  int mx = i;
+  char *myChar = (char *) malloc(sizeof(char)*(i+2));
+  while(i >= 1) {
+      int toInt = in/pow(10,i-1);
+      myChar[mx-i] = 48+toInt;
+      in -= toInt*pow(10,i-1);
+      i--;
   }
-  myChar[i] = '\0';
+  myChar[mx] = '\0';
   return myChar;
 }
 
 int charToPosInt(char *in) {
   int myInt = 0;
-  for (int i = 0; i < strlen(*in); i++) {
-    if (/* char is in range*/) {
+  for (int i = 0; i < strlen(in); i++) {
       myInt *= 10;
-      myInt += *in[i]; // nn sei notacao pra pegar o valor
-    }
+      myInt += in[i]-48;
   }
   return myInt;
 }
@@ -133,18 +130,11 @@ int ValidarTelefone(char telefoneCliente[15]) {
     return valido;
 }
 
-Animal* aumentarVetorAnimal(Animal* Animais, int tamanho) { //Aumenta o vetor de Animais em tamanho e retorna o mesmo
-  return (Animal*) realloc(Animais, sizeof(Animais) + sizeof(Animal)*tamanho);
-}
-
-Cliente* aumentarVetorClientes(Cliente* Clientes, int tamanho) { //Aumenta o vetor de Animais em tamanho e retorna o mesmo
-  return (Cliente*) realloc(Clientes, sizeof(Clientes) + sizeof(Cliente)*tamanho);
-}
-
 int main() {
   char[50] in;
-  Cliente *MeusClientes = (Cliente*) malloc(sizeof(Cliente));
-  Animal *MeusAnimais = (Animal*) malloc(sizeof(Animal));
+  tamanhos[] = {0,0}; //quantidade de entradas por vetor ordem: MeusClientes, MeusAnimais
+  Cliente MeusClientes[100];
+  Animal MeusAnimais[100];
   while (fgets(in,50,stdin)!=NULL) {
      
   }
