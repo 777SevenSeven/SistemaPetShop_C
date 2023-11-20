@@ -26,7 +26,7 @@ typedef struct {
 
 
 typedef struct{
-  Cliente cliente;
+  Cliente *cliente;
   char nomeAnimal[50];
   int especie;
   Data dataNascimento;
