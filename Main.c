@@ -1,8 +1,8 @@
 /*
 Trabalho Final da Disciplina de Algoritmos 01: Gerenciador de PetShop.
 Turma: EC41A.2023_01.C11 / Data:18/04/2023.
-Nomes:André Antônio da Silva Queiroz /  RA:a2575310
-......Mathias
+Nomes:André Antônio da Silva Queiroz    | RA:a2575310
+......Mathias Vinicius Carcano Ferretti | RA:a2575396
 ......Gabriel
 */
 #include <math.h>
