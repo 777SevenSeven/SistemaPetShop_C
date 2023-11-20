@@ -11,6 +11,7 @@ Nomes:André Antônio da Silva Queiroz    | RA:a2575310
 #include <stdlib.h>
 
 //Type def
+
 typedef struct {
   int dia;
   int mes;
@@ -41,6 +42,15 @@ typedef struct {
 } Servico;
 
 //Funcs
+int qntdAnimaisAgressivos(Animal *MeusAnimais) {
+  int contagem = 0;
+  int sz = sizeof(*MeusAnimais)/sizeof(Animal);
+  for (int i = 0; i < sz; i++) {
+    if (MeusAnimais[i].agressivo == 'S') contagem++;
+  }
+  return contagem;
+}
+
 int charToPosInt(char *in) {
   int myInt = 0;
   for (int i = 0; i < strlen(*in); i++) {
@@ -68,13 +78,14 @@ Animal* aumentarVetorAnimal(Animal* Animais, int tamanho) { //Aumenta o vetor de
   return (Animal*) realloc(Animais, sizeof(Animais) + sizeof(Animal)*tamanho);
 }
 
-Animal* aumentarVetorAnimal(Animal* Animais, int tamanho) { //Aumenta o vetor de Animais em tamanho e retorna o mesmo
-  return (Animal*) realloc(Animais, sizeof(Animais) + sizeof(Animal)*tamanho);
+Cliente* aumentarVetorClientes(Cliente* Clientes, int tamanho) { //Aumenta o vetor de Animais em tamanho e retorna o mesmo
+  return (Cliente*) realloc(Clientes, sizeof(Clientes) + sizeof(Cliente)*tamanho);
 }
 
 int main() {
   char[50] in;
-  Animal MeusAnimais = (Animal*) malloc(sizeof(Animal)/* Vezes a quantidade*/);
+  Cliente *MeusClientes = (Cliente*) malloc(sizeof(Cliente));
+  Animal *MeusAnimais = (Animal*) malloc(sizeof(Animal));
   while (fgets(in,50,stdin)!=NULL) {
      
   }
