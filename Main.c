@@ -42,16 +42,22 @@ typedef struct {
 } Servico;
 
 //Funcs
-char *baseadoEmNomePet (char *Nome, Animal *Pets, Cliente *Clientes){
-	int letras = 400;
-	char *composto = (char *) malloc (sizeof (char) * letras);
-  void myStrCpy (char *str1, char *str2, int *i, int lee) {
+
+//write coluna -1 escreve primeira | 0 nao escreve | 1 escreve primeira e segunda | 2 escreve segunda | nota ele consome um espaco dado por leeWay por coluna impressa
+void myStrCpy (char *str1, char *str2, int *i, int lee, int writeColuna) { //Msm funcao de str cpy soq ele comeca por int i dado, agregando a ele conforme escreve, e int lee, de leeway para limite de escrita, substituindo com espacos brancos | pft para escrever fileiras
     int len = strlen(str2);
+		if (writeColuna%2 == 1) str1[(*i)] = '|';
+		(*i)++;
     for (int j = (*i);(*i)-j < lee-1; (*i)++) {
     	str1[(*i)] = ((len > (*i)-j) ? str2[(*i)-j] : ' ');
     }
+		if (writeColuna > 0) str1[(*i)-1] = '|'; 
     str1[(*i)] = '\0';
-  }
+}
+
+char *baseadoEmNomePet (char *Nome, Animal *Pets, Cliente *Clientes){
+	int letras = 400;
+	char *composto = (char *) malloc (sizeof (char) * letras);
   void aggregate (Cliente MeuCliente, Animal MeuAnimal) {//CliNome | CliNum | nomeAnimal[50] | int especie | dataNascimento | char agressivo; //'S' sim 'N' nao
     int i = 0;
     char meuChar[100];
