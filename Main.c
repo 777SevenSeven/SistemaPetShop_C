@@ -51,24 +51,24 @@ char *baseadoEmNomePet (char *Nome, Animal *Pets, Cliente *Clientes){
     	str1[(*i)] = ((len > (*i)-j) ? str2[(*i)-j] : ' ');
     }
     str1[(*i)] = '\0';
-    }
-    void aggregate (Cliente MeuCliente, Animal MeuAnimal) {//CliNome | CliNum | nomeAnimal[50] | int especie | dataNascimento | char agressivo; //'S' sim 'N' nao
-    	int i = 0;
-      char meuChar[100];
-      myStrCpy (meuChar, MeuCliente.nomeCliente, &i, 14);
-      //myStrCpy (meuChar, MeuCliente.telefoneCliente, &i, 13);
-      myStrCpy (meuChar, MeuAnimal.nomeAnimal, &i, 10);
-      myStrCpy (meuChar, MeuAnimal.cliente->nomeCliente, &i, 14);
-      i = 0;
-      myStrCpy (composto, meuChar, &i,350);
-      composto[letras] = '\0';
-    	//myStrCpy (meuChar, MeuAnimal.especie, &i, 10);
-    }
-    int sz[] = {100, 100}; // Corresponde ao tamanho de entradas em Clientes e Animais Correspondentemente
-    for (int i = 0; i < sz[1]; i++){
-    if (strcmp (Pets[i].nomeAnimal, Nome) == 0) {
+  }
+  void aggregate (Cliente MeuCliente, Animal MeuAnimal) {//CliNome | CliNum | nomeAnimal[50] | int especie | dataNascimento | char agressivo; //'S' sim 'N' nao
+    int i = 0;
+    char meuChar[100];
+    myStrCpy (meuChar, MeuCliente.nomeCliente, &i, 14);
+    //myStrCpy (meuChar, MeuCliente.telefoneCliente, &i, 13);
+    myStrCpy (meuChar, MeuAnimal.nomeAnimal, &i, 10);
+  	myStrCpy (meuChar, MeuAnimal.cliente->nomeCliente, &i, 14);
+    i = 0;
+    myStrCpy (composto, meuChar, &i,350);
+    composto[letras] = '\0';
+    //myStrCpy (meuChar, MeuAnimal.especie, &i, 10);
+  }
+  int sz[] = {100, 100}; // Corresponde ao tamanho de entradas em Clientes e Animais Correspondentemente
+  for (int i = 0; i < sz[1]; i++){
+  	if (strcmp (Pets[i].nomeAnimal, Nome) == 0) {
     	aggregate (*Pets[i].cliente, Pets[i]); return composto;
-    }
+ 		}
 	}
 }
 int qntdAnimaisAgressivos(Animal *MeusAnimais) {
