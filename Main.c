@@ -24,6 +24,7 @@ typedef struct {
 typedef struct {
   char nomeCliente[50];
   char telefoneCliente[15];
+  char opcao;
 } Cliente;
 
 
@@ -196,31 +197,36 @@ int ValidarData(int dia, int mes, int ano) {
 }
 
 //Cadastro de clientes
-int cadastrarCliente(Cliente *MeusClientes, int *tamanhoClientes) { //Fiquei confuso aqui, eu basicamente redeclarei a variavél, será que é necessário?
+int cadastrarCliente(Cliente *MeusClientes, int *tamanhoClientes) {
     char nomeCliente[50];
     char telefoneCliente[15];
 
-	
- 	printf("Nome do cliente: ");
-    fgets(nomeCliente, sizeof(nomeCliente)/sizeof(char), stdin);
+//Recebe o nome do cliente e armazena dentro do char
+ do {
+	printf("Nome do cliente: ");
+    fgets(nomeCliente, sizeof(nomeCliente)/sizeof(char), stdin); //Recebe e armazena o nome
     nomeCliente[strcspn(nomeCliente, "\n")] = '\0'; //Aqui é pra tirar aquele \n no char
 
- // Validação do nome
+ // Validação do nome, chama a função do nome e informa que o nome está inválido
     if (!nomeValido(nomeCliente)) {
-        printf("Nome inválido, insira um nome válido., ou e pra desistir\n");
-        return 0;
+        printf("Nome inválido, insira um nome válido ou E para desistir.\n");
+        continue; 
     }
 
-    // Telefone do cliente
+    // Recebe o telefone do cliente e coloca dentro do char
     printf("Telefone do cliente: ");
-    fgets(telefoneCliente, sizeof(telefoneCliente), stdin);
+    fgets(telefoneCliente, sizeof(telefoneCliente)/sizeof(char), stdin); //rececebe e armazena o telefone
     telefoneCliente[strcspn(telefoneCliente, "\n")] = '\0';
 
-    // Validação do telefone
+    // Validação do telefone, chama uma função e informa que o telefone é inválido
     if (!ValidarTelefone(telefoneCliente)) {
-        printf("Telefone inválido, insira um telefone válido.\n");
-        return 0;
+        printf("Telefone inválido, insira um telefone válido ou E para desistir.\n");
+        continue;
     }
+ 	printf("Deseja cadastrar outro cliente? S para sim, N para não: ");
+        scanf(" %c", &opcao);
+ } while (opcao == 'S' || opcao == 's');
+	
 //	meusCliente[*tamanho].nome = nomeClie;
 	
 //	meusCliente[*tamanho].nome = telefone;
