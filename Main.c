@@ -140,7 +140,7 @@ int ValidarTelefone(char telefoneCliente[15]) {
 }
 
 //Cadastro de clientes
-int cadastrarCliente(Cliente *MeusClientes, int *tamanhoClientes) {
+int cadastrarCliente(Cliente *MeusClientes, int *tamanhoClientes) { //Fiquei confuso aqui, eu basicamente redeclarei a variavél, será que é necessário?
     char nomeCliente[50];
     char telefoneCliente[15];
 
