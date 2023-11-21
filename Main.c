@@ -124,19 +124,38 @@ int charToPosInt(char *in) {
 
 //Função de validar Telefones
 int ValidarTelefone(char telefoneCliente[15]) {
-    int valido = 0; //-1 invalido 1 valido
-    if(!(strlen(telefoneCliente) <= 12 && strlen(telefoneCliente) >= 11 && telefoneCliente[0] == '0')) return 0;
-    for(int j = 0; j < strlen(telefoneCliente); j++) {
-    //Caso Verdadeiro
-    if(strlen(telefoneCliente) <= 12 && telefoneCliente[j] >= 48 && telefoneCliente[j] <= 57) {
-        valido = 1;
+    // Verifica se o telefone tem tamanho entre 11 e 12 e se o primeiro caractere é '0'
+    if (!(strlen(telefoneCliente) >= 11 && strlen(telefoneCliente) <= 12 && telefoneCliente[0] == '0')) {
+        return -1; // Inválido
     }
-        else {
-        valido = 0;
-        break;
+	
+    // Verifica se todos os caracteres restantes são dígitos numéricos válidos
+    for (int j = 1; j < strlen(telefoneCliente); j++) {
+        if (telefoneCliente[j] < '0' || telefoneCliente[j] > '9') {
+            return -1; // Inválido
         }
     }
-    return valido;
+    return 1; // Válido
+}
+
+int ValidarData(int dia, int mes, int ano) {
+    // Verifica se o dia está entre 1 e 21 (utilizei 21 pois temos a regra de não permitir datas futuras)
+    if (!(dia >= 1 && dia <= 21)) {
+        return -1; // Inválido
+    }
+
+    // Verifica se o mês está entre 1 e 11  (utilizei 11 pois temos a regra de não permitir datas futuras)
+    if (!(mes >= 1 && mes <= 11)) {
+        return -1; // Inválido
+    }
+
+    // Verifica se o ano é maior ou igual a 1900 (mínimo) ou 2023 (atual)
+    if (!(ano <= 2023 && >= 1900)) { 
+        return -1; // Inválido
+    }
+
+    // Se todas as verificações passarem, a data é válida
+    return 1;
 }
 
 //Cadastro de clientes
