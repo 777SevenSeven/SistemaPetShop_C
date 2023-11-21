@@ -10,6 +10,9 @@ Nomes:André Antônio da Silva Queiroz    | RA:a2575310
 #include <stdio.h>
 #include <stdlib.h>
 
+#define DIA 1
+#define MES 2
+#define ANO 1997
 //Type def
 
 typedef struct {
@@ -17,7 +20,6 @@ typedef struct {
   int mes;
   int ano;
 } Data;
-
 
 typedef struct {
   char nomeCliente[50];
