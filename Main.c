@@ -127,6 +127,8 @@ int charToPosInt(char *in) {
   return myInt;
 }
 
+
+
 //Função de validar nomes
   int nomeValido (char *in) {//Returns 1 em valido 0 em invalido
     int valid = 0;
@@ -192,21 +194,20 @@ int cadastrarCliente(Cliente *MeusClientes, int *tamanhoClientes) {
         printf("Nome inválido, insira um nome válido ou E para desistir.\n");
         continue; 
     }
-
+ }
     // Recebe o telefone do cliente e coloca dentro do char
     printf("Telefone do cliente: ");
     fgets(telefoneCliente, sizeof(telefoneCliente)/sizeof(char), stdin); //rececebe e armazena o telefone
     telefoneCliente[strcspn(telefoneCliente, "\n")] = '\0';
 
     // Validação do telefone, chama uma função e informa que o telefone é inválido
-    if (!ValidarTelefone(telefoneCliente)) {
+    if (a letra la == 'e') return 0;
+	else if (!ValidarTelefone(telefoneCliente)) {
         printf("Telefone inválido, insira um telefone válido ou E para desistir.\n");
         continue;
     }
- 	printf("Deseja cadastrar outro cliente? S para sim, N para não: ");
-        scanf(" %c", &opcao);
  } while (opcao == 'S' || opcao == 's');
-	
+	return 1;
 //	meusCliente[*tamanho].nome = nomeClie;
 	
 //	meusCliente[*tamanho].nome = telefone;
@@ -225,7 +226,20 @@ int main() {
 		case 'h' : //menu de comandos
 			printf("%s",MENUDECOMANDOS);
 			break;
-		case 
+		case 'c' : //menu de cadastro
+			do {
+				cadastrarCliente();
+				printf("Deseja cadastrar outro cliente? 's' para sim, 'n' para não: ");
+				do {
+					fgets(in,50,stdin);
+				} while (in[0] != 'n' || in[0] != 's')
+				if (in[0] == 'n') break;
+			} while(1)
+			break;
+		case 'a' : //menu impressao de animais alfabeticamente
+			meuSort(MeusAnimais,&tamanhos[1]);
+			printf("%s\n", imprimirAnimais(MeusAnimais,&tamanhos[1]));
+			break;
 	}
   }
   return 0;
