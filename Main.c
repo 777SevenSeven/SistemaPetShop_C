@@ -146,9 +146,9 @@ int cadastrarCliente(Cliente *MeusClientes, int *tamanhoClientes) {
 
  printf("Nome do cliente: ");
     fgets(nomeCliente, sizeof(nomeCliente), stdin);
-    nomeCliente[strcspn(nomeCliente, "\n")] = '\0';
+    nomeCliente[strcspn(nomeCliente, "\n")] = '\0'; ; //Aqui é pra tirar aquele \n no char
 
- // Validar o nome
+ // Validação do nome
     if (!nomeValido(nomeCliente)) {
         printf("Nome inválido, insira um nome válido.\n");
         return 0;
@@ -159,7 +159,7 @@ int cadastrarCliente(Cliente *MeusClientes, int *tamanhoClientes) {
     fgets(telefoneCliente, sizeof(telefoneCliente), stdin);
     telefoneCliente[strcspn(telefoneCliente, "\n")] = '\0';
 
-    // Validar o telefone
+    // Validação do telefone
     if (!ValidarTelefone(telefoneCliente)) {
         printf("Telefone inválido, insira um telefone válido.\n");
         return 0;
