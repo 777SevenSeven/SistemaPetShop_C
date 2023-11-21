@@ -65,21 +65,6 @@ int *meuSort(Animal *meusAnimais) {
     		else if (cursor > 0) {cursor = 0; res = 0;} else {res = 0; cursor++;}
     	}
 	return out;
-	/*char meuArray[7][6] = {"Abcde","Bcde","Cdari","Abdee","Macad","Zeta","zeta"};
-    int *meuSort() {
-        int *out = (int*) malloc(sizeof(int)*7);
-        char meuArray[7][6] = {"Abcde","Bcde","Cdari","Abdee","Macad","Zeta","zeta"};
-    	char **meusNomes[7]; 
-    	for (int i = 0; i < 7; i ++) meusNomes[i] = (char **) &meuArray[i];
-    	int cursor = 0, res = 0;
-    	void sw(int a, int b) {
-    		char **ptr = meusNomes[a];
-    		meusNomes[a] = meusNomes[b];
-    		meusNomes[b] = ptr;
-    	}
-    	/*for (int i = 0; i < 7; i++) {
-    	    meusNomes[i] = &meusAnimais[i];
-    	}*/
     	while (1) {
     		if (cursor == 6) if (res == 0) break; else {cursor = 0; res = 0;}
     		
@@ -215,13 +200,14 @@ int cadastrarCliente(Cliente *MeusClientes, int *tamanhoClientes) { //Fiquei con
     char nomeCliente[50];
     char telefoneCliente[15];
 
- printf("Nome do cliente: ");
-    fgets(nomeCliente, sizeof(nomeCliente), stdin);
-    nomeCliente[strcspn(nomeCliente, "\n")] = '\0'; ; //Aqui é pra tirar aquele \n no char
+	
+ 	printf("Nome do cliente: ");
+    fgets(nomeCliente, sizeof(nomeCliente)/sizeof(char), stdin);
+    nomeCliente[strcspn(nomeCliente, "\n")] = '\0'; //Aqui é pra tirar aquele \n no char
 
  // Validação do nome
     if (!nomeValido(nomeCliente)) {
-        printf("Nome inválido, insira um nome válido.\n");
+        printf("Nome inválido, insira um nome válido., ou e pra desistir\n");
         return 0;
     }
 
@@ -235,6 +221,11 @@ int cadastrarCliente(Cliente *MeusClientes, int *tamanhoClientes) { //Fiquei con
         printf("Telefone inválido, insira um telefone válido.\n");
         return 0;
     }
+//	meusCliente[*tamanho].nome = nomeClie;
+	
+//	meusCliente[*tamanho].nome = telefone;
+//	(*tamanho)++;
+//	return 1;
 } //tava faltando aqui, acho q corto qndo colou, se estiver errado so tirar
 
 int main() {
@@ -351,4 +342,10 @@ int main ()
     printf ("%p %p %p %p %p", a, b, &a, &b, &max);
     return 0;
 }
+
+
+
+
+
+
 */ IGNORAR
