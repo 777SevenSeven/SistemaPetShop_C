@@ -139,6 +139,31 @@ int ValidarTelefone(char telefoneCliente[15]) {
     return valido;
 }
 
+//Cadastro de clientes
+int cadastrarCliente(Cliente *MeusClientes, int *tamanhoClientes) {
+    char nomeCliente[50];
+    char telefoneCliente[15];
+
+ printf("Nome do cliente: ");
+    fgets(nomeCliente, sizeof(nomeCliente), stdin);
+    nomeCliente[strcspn(nomeCliente, "\n")] = '\0';
+
+ // Validar o nome
+    if (!nomeValido(nomeCliente)) {
+        printf("Nome inválido, insira um nome válido.\n");
+        return 0;
+    }
+
+    // Telefone do cliente
+    printf("Telefone do cliente: ");
+    fgets(telefoneCliente, sizeof(telefoneCliente), stdin);
+    telefoneCliente[strcspn(telefoneCliente, "\n")] = '\0';
+
+    // Validar o telefone
+    if (!ValidarTelefone(telefoneCliente)) {
+        printf("Telefone inválido, insira um telefone válido.\n");
+        return 0;
+
 int main() {
   char[50] in;
   tamanhos[] = {0,0}; //quantidade de entradas por vetor ordem: MeusClientes, MeusAnimais
