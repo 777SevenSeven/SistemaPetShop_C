@@ -156,59 +156,94 @@ int main() {
 #include <math.h>
 #include <stdlib.h>
 
-typedef struct {
-    char nomeCliente[50];
-    char telefoneCliente[15];
-} Cliente;
+//write coluna -1 escreve primeira | 0 nao escreve | 1 escreve primeira e segunda | 2 escreve segunda | nota ele consome um espaco dado por leeWay por coluna impressa
+void myStrCpy (char *str1, char *str2, int *i, int lee, int writeColuna) { //Msm funcao de str cpy soq ele comeca por int i dado, agregando a ele conforme escreve, e int lee, de leeway para limite de escrita, substituindo com espacos brancos | pft para escrever fileiras
+    int len = strlen(str2);
+		if (writeColuna%2 == 1) str1[(*i)] = '|';
+		(*i)++;
+    for (int j = (*i);(*i)-j < lee-1; (*i)++) {
+    	str1[(*i)] = ((len > (*i)-j) ? str2[(*i)-j] : ' ');
+    }
+		if (writeColuna > 0) str1[(*i)-1] = '|'; 
+    str1[(*i)] = '\0';
+}
 
-typedef struct
-{
-  Cliente *cliente;
-  char nomeAnimal[50];
-  int especie;
-  //Data dataNascimento;
-  char agressivo;		//'S' sim 'N' nao
-} Animal;
+typedef struct{
+    int *value;
+    int flag;
+} RowSize;
 
-char *baseadoEmNomePet (char Nome[50], Animal *Pets, Cliente *Clientes){
-    int letras;
-    char *composto = (char *) malloc (sizeof (char) * letras);
-    void myStrCpy (char *str1, char *str2, int *i, int lee) {
-        int len = strlen(str2);
-        for (int j = 0; j < lee; j++, (*i)++) {
-    	    str1[*i+j] = ((len > j) ? str2[j] : ' ');
+typedef struct{
+    char **value;
+    int flag;
+} RowName;
+
+typedef struct{
+    char **value;
+    int flag;
+} Conditions;
+
+typedef struct{
+    void *value;
+    char *pseudo; //pseudo name used in where cons
+    int flag; //type of struct
+} Origin;
+
+typedef struct{
+    char *Origin;
+    int flag; //size
+} From;
+
+typedef struct{
+    RowSize rowSize;
+    RowName rowName;
+    Conditions where;
+    Origin *from; //mallocc'ed to size of FROM entries
+} tablePrinter;
+
+typedef struct{
+    
+} cursor;
+
+void PrintTable(tablePrinter tp) {
+    char Table[1000];
+    int wCursor = 0, rlCursor = 0;
+    int *wc = &wCursor, *rlc = &rlCursor;
+    char *rowLine = (char*) malloc(1);
+    char *createRowLine(int size) {
+        char *out = (char*) malloc(sizeof(char)*(size+1))
+        for (int i = 0; i < size-1; i++) {
+            out[i] = '-';
+        }
+        out[size-1] = '\0';
+        return out;
+    }
+    void startUpRowLine(){
+        char *myLn = createRowLine(tp.rowSize.value[0]);
+        rowLine = (char *) realloc(rowLine,((int)strlen(myLn)+1+rlc)*sizeof(char));
+        myStrCpy(rowLine, myLn, rlc, tp.rowSize.value[0], 1);
+        for (int i = 1; i < tp.rowSize.flag; i++) {
+            myLn = createRowLine(tp.rowSize.value[i]);
+            rowLine = (char *) realloc(rowLine,((int)strlen(myLn)+1+rlc)*sizeof(char));
+            myStrCpy(rowLine, myLn, rlc, tp.rowSize.value[i], 2);
         }
     }
-    void aggregate (Cliente MeuCliente, Animal MeuAnimal) {//CliNome | CliNum | nomeAnimal[50] | int especie | dataNascimento | char agressivo; //'S' sim 'N' nao
-        int i = 0;
-        char meuChar[100];
-        myStrCpy (meuChar, MeuCliente.nomeCliente, &i, 14);
-        //myStrCpy (meuChar, MeuCliente.telefoneCliente, &i, 13);
-        myStrCpy (meuChar, MeuAnimal.nomeAnimal, &i, 10);
-        myStrCpy (meuChar, MeuAnimal.cliente->nomeCliente, &i, 14);
-        composto[letras] = '\0';
-        //myStrCpy (meuChar, MeuAnimal.especie, &i, 10);
+    void annexRowLine() myStrCpy(Table, rowLine, wc, rlc, 0);
+    //we need to iterate through every single origin mixed into every single origin
+    myStrCpy(Table, tp.rowName.value[0],wc,tp.rowSize.value[0], 1);
+    for (int i = 1; i < tp.rowSize.flag; i++) {
+        myStrCpy(Table, tp.rowName.value[i],wc,tp.rowSize.value[i], 2);
     }
-    int sz[] = {100, 100}; // Corresponde ao tamanho de entradas em Clientes e Animais Correspondentemente
-    for (int i = 0; i < sz[1]; i++){
-        if (strcmp (Pets[i].nomeAnimal, Nome) == 0) {
-            aggregate (*Pets[i].cliente, Pets[i]); return composto;
-        }
-    }
+    Table[wCursor] = '\n';
+    wCursor++;
 }
 
 int main ()
 {
-    Animal Animais[100];
-    Cliente Clientes[100];
-    Animais[0].nomeAnimal = "TRex";
-    Animais[0].cliente = &Clientes[1];
-    Clientes[1].nomeCliente = "Joao";
-    Animais[2].nomeAnimal = "Fofo";
-    Animais[2].cliente = &Clientes[3];
-    Clientes[3].nomeCliente = "Martin";
-    
-    printf ("%s", baseadoEmNomePet("TRex",Animais,Clientes));
+    int *a = &max[0];
+    int *b = &max[1];
+    printf ("%p %p %p %p %p", a, b, &a, &b, &max);
     return 0;
 }
+
 */ IGNORAR
