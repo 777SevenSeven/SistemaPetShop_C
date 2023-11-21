@@ -43,23 +43,57 @@ typedef struct {
 
 //Funcs
 
-//write coluna -1 escreve primeira | 0 nao escreve | 1 escreve primeira e segunda | 2 escreve segunda | nota ele consome um espaco dado por leeWay por coluna impressa
-void meuSort(Animal *meusAnimais) {
-	char *meusNomes[100];
-	int cursor = 0, res = 0;
-	void sw(int a, int b) {
-		char *ptr = meusNomes[a];
-		meusNomes[a] = meusNomes[b];
-		meusNomes[b] = ptr;
-	}
-	while (1) {
-		if (cursor == 100) if (res == 1) break; else {cursor = 0; res = 1}
-		
-		if (strcmp(meusNomes[cursor]->nomeAnimal,meusNomes[cursor+1]->nomeAnimal) > 0) {sw(cursor,cursor+1); cursor++;}
-		else if (cursor > 0) cursor = 0; else {res = 0; cursor++}
-	}
+//retornar a ordem alfabetica das entradas atravez dum array array[posicao alfabetica] = posicaoRealNoArrayDeEntrada
+int *meuSort(Animal *meusAnimais) {
+        int *out = (int*) malloc(sizeof(int)*7);
+    	char **meusNomes[7];// = {};
+    	int cursor = 0, res = 0;
+    	void sw(int a, int b) {
+    		char **ptr = meusNomes[a];
+    		meusNomes[a] = meusNomes[b];
+    		meusNomes[b] = ptr;
+    	}
+    	for (int i = 0; i < 7; i++) {
+    	    meusNomes[i] = &meusAnimais[i].nomeAnimal;
+    	}
+    	while (1) {
+    		if (cursor == 6) if (res == 0) break; else {cursor = 0; res = 0;}
+    		
+    		if (strcmp(*meusNomes[cursor],*meusNomes[cursor+1]) > 0) {sw(cursor,cursor+1); cursor++; res = 1;}
+    		else if (cursor > 0) {cursor = 0; res = 0;} else {res = 0; cursor++;}
+    	}
+	return out;
+	/*char meuArray[7][6] = {"Abcde","Bcde","Cdari","Abdee","Macad","Zeta","zeta"};
+    int *meuSort() {
+        int *out = (int*) malloc(sizeof(int)*7);
+        char meuArray[7][6] = {"Abcde","Bcde","Cdari","Abdee","Macad","Zeta","zeta"};
+    	char **meusNomes[7]; 
+    	for (int i = 0; i < 7; i ++) meusNomes[i] = (char **) &meuArray[i];
+    	int cursor = 0, res = 0;
+    	void sw(int a, int b) {
+    		char **ptr = meusNomes[a];
+    		meusNomes[a] = meusNomes[b];
+    		meusNomes[b] = ptr;
+    	}
+    	/*for (int i = 0; i < 7; i++) {
+    	    meusNomes[i] = &meusAnimais[i];
+    	}*/
+    	while (1) {
+    		if (cursor == 6) if (res == 0) break; else {cursor = 0; res = 0;}
+    		
+    		if (strcmp(*meusNomes[cursor],*meusNomes[cursor+1]) > 0) {sw(cursor,cursor+1); cursor++; res = 1;}
+    		else if (cursor > 0) {cursor = 0; res = 0;} else {res = 0; cursor++;}
+    	}
+    }
+    int *meuPtr = (int*) malloc(sizeof(int)*7);
+    meuPtr = meuSort();
+    for (int i = 0; i < 7; i++){
+        puts(meuArray[meuPtr[i]]);
+    }
+    return 0;*/
 }
 
+//write coluna -1 escreve primeira | 0 nao escreve | 1 escreve primeira e segunda | 2 escreve segunda | nota ele consome um espaco dado por leeWay por coluna impressa
 void myStrCpy (char *str1, char *str2, int *i, int lee, int writeColuna) { //Msm funcao de str cpy soq ele comeca por int i dado, agregando a ele conforme escreve, e int lee, de leeway para limite de escrita, substituindo com espacos brancos | pft para escrever fileiras
     int len = strlen(str2);
 		if (writeColuna%2 == 1) str1[(*i)] = '|';
