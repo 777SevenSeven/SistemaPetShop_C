@@ -13,6 +13,7 @@ Nomes:André Antônio da Silva Queiroz    | RA:a2575310
 #define DIA 1
 #define MES 2
 #define ANO 1997
+#define MENU_DE_COMANDOS "\n'c' para cadastrar um cliente;\n'e' para terminar;\n\ndigite aqui: "
 //Type def
 
 typedef struct {
@@ -47,39 +48,18 @@ typedef struct {
 //Funcs
 
 //retornar a ordem alfabetica das entradas atravez dum array array[posicao alfabetica] = posicaoRealNoArrayDeEntrada
-int *meuSort(Animal *meusAnimais) {
-        int *out = (int*) malloc(sizeof(int)*7);
-    	char **meusNomes[7];// = {};
-    	int cursor = 0, res = 0;
-    	void sw(int a, int b) {
-    		char **ptr = meusNomes[a];
-    		meusNomes[a] = meusNomes[b];
-    		meusNomes[b] = ptr;
-    	}
-    	for (int i = 0; i < 7; i++) {
-    	    meusNomes[i] = &meusAnimais[i].nomeAnimal;
-    	}
-    	while (1) {
-    		if (cursor == 6) if (res == 0) break; else {cursor = 0; res = 0;}
-    		
-    		if (strcmp(*meusNomes[cursor],*meusNomes[cursor+1]) > 0) {sw(cursor,cursor+1); cursor++; res = 1;}
-    		else if (cursor > 0) {cursor = 0; res = 0;} else {res = 0; cursor++;}
-    	}
-	return out;
-    	while (1) {
-    		if (cursor == 6) if (res == 0) break; else {cursor = 0; res = 0;}
-    		
-    		if (strcmp(*meusNomes[cursor],*meusNomes[cursor+1]) > 0) {sw(cursor,cursor+1); cursor++; res = 1;}
-    		else if (cursor > 0) {cursor = 0; res = 0;} else {res = 0; cursor++;}
+void meuSort(Animal *meusAnimais, int *tamanho) {
+    	Animal meuAnimal;
+    	for (int x = 0; x < (*tamanho)-1; x++) {
+    		for (int y = x+1; y < (*tamanho); y++) {
+    			if (strcmp(meusAnimais[x].nomeAnimal, meusAnimais[y].nomeAnimal) > 0) {
+    				meuAnimal = meusAnimais[x];
+    				meusAnimais[x] = meusAnimais[y];
+    				meusAnimais[y] = meuAnimal;
+    			}
+    		}
     	}
     }
-    int *meuPtr = (int*) malloc(sizeof(int)*7);
-    meuPtr = meuSort();
-    for (int i = 0; i < 7; i++){
-        puts(meuArray[meuPtr[i]]);
-    }
-    return 0;*/
-}
 
 //write coluna -1 escreve primeira | 0 nao escreve | 1 escreve primeira e segunda | 2 escreve segunda | nota ele consome um espaco dado por leeWay por coluna impressa
 void myStrCpy (char *str1, char *str2, int *i, int lee, int writeColuna) { //Msm funcao de str cpy soq ele comeca por int i dado, agregando a ele conforme escreve, e int lee, de leeway para limite de escrita, substituindo com espacos brancos | pft para escrever fileiras
@@ -239,8 +219,14 @@ int main() {
   tamanhos[] = {0,0}; //quantidade de entradas por vetor ordem: MeusClientes, MeusAnimais
   Cliente MeusClientes[100];
   Animal MeusAnimais[100];
-  while (fgets(in,50,stdin)!=NULL) {
-     
+	printf("'h' para comandos, 'e' para terminar;\n");
+  while (strcmp(fgets(in,50,stdin), "e")!= 0) {
+	switch(in[0]) { //controle de menus
+		case 'h' : //menu de comandos
+			printf("%s",MENUDECOMANDOS);
+			break;
+		case 
+	}
   }
   return 0;
 }
