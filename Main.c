@@ -63,7 +63,9 @@ void meuSort(Animal *meusAnimais, int *tamanho) {
 
 //write coluna -1 escreve primeira | 0 nao escreve | 1 escreve primeira e segunda | 2 escreve segunda | nota ele consome um espaco dado por leeWay por coluna impressa
 void myStrCpy (char *str1, char *str2, int *i, int lee, int writeColuna) { //Msm funcao de str cpy soq ele comeca por int i dado, agregando a ele conforme escreve, e int lee, de leeway para limite de escrita, substituindo com espacos brancos | pft para escrever fileiras
-    int len = strlen(str2);
+    char cpyFrm[2] = {' ', '|'};
+	if (writeColuna == -3) {cpyFrm[0] = '-';
+	int len = strlen(str2);
 		if (writeColuna%2 == 1) str1[(*i)] = '|';
 		(*i)++;
     for (int j = (*i);(*i)-j < lee-1; (*i)++) {
@@ -127,7 +129,14 @@ int charToPosInt(char *in) {
   return myInt;
 }
 
-
+int confTabelaAnimais[] = {5,14,12,24,56} //Primeiro Valor tamanho do Array
+char *imprimirAnimais(Animal MeusAnimais[], int *tamanho) {
+	int flI = 0;
+	char *minhaFileiraLinha = (char*) malloc(sizeof(char)), *minhaFileira;
+	for (int i = 1; i < confTabelaAnimais[0]; i++) {
+		myStrCpy()
+	}
+}
 
 //Função de validar nomes
   int nomeValido (char *in) {//Returns 1 em valido 0 em invalido
@@ -241,117 +250,7 @@ int main() {
 			printf("%s\n", imprimirAnimais(MeusAnimais,&tamanhos[1]));
 			break;
 	}
+	free();
   }
   return 0;
 }
-
-/* IGNORAR
-#include <stdio.h>
-#include <string.h>
-#include <math.h>
-#include <stdlib.h>
-
-//write coluna -1 escreve primeira | 0 nao escreve | 1 escreve primeira e segunda | 2 escreve segunda | nota ele consome um espaco dado por leeWay por coluna impressa
-void myStrCpy (char *str1, char *str2, int *i, int lee, int writeColuna) { //Msm funcao de str cpy soq ele comeca por int i dado, agregando a ele conforme escreve, e int lee, de leeway para limite de escrita, substituindo com espacos brancos | pft para escrever fileiras
-    int len = strlen(str2);
-		if (writeColuna%2 == 1) str1[(*i)] = '|';
-		(*i)++;
-    for (int j = (*i);(*i)-j < lee-1; (*i)++) {
-    	str1[(*i)] = ((len > (*i)-j) ? str2[(*i)-j] : ' ');
-    }
-		if (writeColuna > 0) str1[(*i)-1] = '|'; 
-    str1[(*i)] = '\0';
-}
-
-typedef enum {Animal, Cliente, Data}StructType;
-
-typedef struct{
-    int *value;
-    int flag;
-} RowSize;
-
-typedef struct{
-    char **value;
-    int flag;
-} RowName;
-
-typedef struct{
-    char **value;
-    int flag;
-} Conditions;
-
-typedef struct{
-    void *value;
-    char *pseudo; //pseudo name used in where cons
-    StructType type; //type of struct
-} Origin;
-
-typedef struct{
-    Origin *origin;
-    int flag; //size
-} From;
-
-typedef struct{
-    RowSize rowSize;
-    RowName rowName;
-    Conditions where;
-    From *from; //mallocc'ed to size of FROM entries
-} tablePrinter;
-
-typedef struct{
-    
-} cursor;
-
-void PrintTable(tablePrinter tp) {
-    char Table[1000];
-    int wCursor = 0, rlCursor = 0;
-    int *wc = &wCursor, *rlc = &rlCursor;
-    char *rowLine = (char*) malloc(1);
-    char *createRowLine(int size) {
-        char *out = (char*) malloc(sizeof(char)*(size+1))
-        for (int i = 0; i < size-1; i++) {
-            out[i] = '-';
-        }
-        out[size-1] = '\0';
-        return out;
-    }
-    void startUpRowLine(){
-        char *myLn = createRowLine(tp.rowSize.value[0]);
-        rowLine = (char *) realloc(rowLine,((int)strlen(myLn)+1+rlc)*sizeof(char));
-        myStrCpy(rowLine, myLn, rlc, tp.rowSize.value[0], 3);
-        for (int i = 1; i < tp.rowSize.flag; i++) {
-            myLn = createRowLine(tp.rowSize.value[i]);
-            rowLine = (char *) realloc(rowLine,((int)strlen(myLn)+1+rlc)*sizeof(char));
-            myStrCpy(rowLine, myLn, rlc, tp.rowSize.value[i], 6);
-        }
-    }
-    void annexRowLine() myStrCpy(Table, rowLine, wc, rlc, 0);
-    for (int i = 0; i < tp.from.flag; i++) {
-        switch(tp.from.origin[i].type) {
-            case 0 :
-                
-        }
-    }
-    //we need to iterate through every single origin mixed into every single origin
-    myStrCpy(Table, tp.rowName.value[0],wc,tp.rowSize.value[0], 1);
-    for (int i = 1; i < tp.rowSize.flag; i++) {
-        myStrCpy(Table, tp.rowName.value[i],wc,tp.rowSize.value[i], 2);
-    }
-    Table[wCursor] = '\n';
-    wCursor++;
-}
-
-int main ()
-{
-    int *a = &max[0];
-    int *b = &max[1];
-    printf ("%p %p %p %p %p", a, b, &a, &b, &max);
-    return 0;
-}
-
-
-
-
-
-
-*/ IGNORAR
