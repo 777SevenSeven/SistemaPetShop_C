@@ -193,6 +193,8 @@ void myStrCpy (char *str1, char *str2, int *i, int lee, int writeColuna) { //Msm
     str1[(*i)] = '\0';
 }
 
+typedef enum {Animal, Cliente, Data}StructType;
+
 typedef struct{
     int *value;
     int flag;
@@ -211,11 +213,11 @@ typedef struct{
 typedef struct{
     void *value;
     char *pseudo; //pseudo name used in where cons
-    int flag; //type of struct
+    StructType type; //type of struct
 } Origin;
 
 typedef struct{
-    char *Origin;
+    Origin *origin;
     int flag; //size
 } From;
 
@@ -223,7 +225,7 @@ typedef struct{
     RowSize rowSize;
     RowName rowName;
     Conditions where;
-    Origin *from; //mallocc'ed to size of FROM entries
+    From *from; //mallocc'ed to size of FROM entries
 } tablePrinter;
 
 typedef struct{
@@ -246,14 +248,20 @@ void PrintTable(tablePrinter tp) {
     void startUpRowLine(){
         char *myLn = createRowLine(tp.rowSize.value[0]);
         rowLine = (char *) realloc(rowLine,((int)strlen(myLn)+1+rlc)*sizeof(char));
-        myStrCpy(rowLine, myLn, rlc, tp.rowSize.value[0], 1);
+        myStrCpy(rowLine, myLn, rlc, tp.rowSize.value[0], 3);
         for (int i = 1; i < tp.rowSize.flag; i++) {
             myLn = createRowLine(tp.rowSize.value[i]);
             rowLine = (char *) realloc(rowLine,((int)strlen(myLn)+1+rlc)*sizeof(char));
-            myStrCpy(rowLine, myLn, rlc, tp.rowSize.value[i], 2);
+            myStrCpy(rowLine, myLn, rlc, tp.rowSize.value[i], 6);
         }
     }
     void annexRowLine() myStrCpy(Table, rowLine, wc, rlc, 0);
+    for (int i = 0; i < tp.from.flag; i++) {
+        switch(tp.from.origin[i].type) {
+            case 0 :
+                
+        }
+    }
     //we need to iterate through every single origin mixed into every single origin
     myStrCpy(Table, tp.rowName.value[0],wc,tp.rowSize.value[0], 1);
     for (int i = 1; i < tp.rowSize.flag; i++) {
@@ -270,5 +278,4 @@ int main ()
     printf ("%p %p %p %p %p", a, b, &a, &b, &max);
     return 0;
 }
-
 */ IGNORAR
