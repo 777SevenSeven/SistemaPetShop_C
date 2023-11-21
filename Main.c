@@ -36,7 +36,7 @@ typedef struct{
 typedef struct {
   int identificador;//AUTO_INCREMENT
   Data dataServico;
-  Animal pet;
+  Animal *pet;
   int tipoServico;
   char pago; //'S' sim 'N' nao
 } Servico;
@@ -44,6 +44,22 @@ typedef struct {
 //Funcs
 
 //write coluna -1 escreve primeira | 0 nao escreve | 1 escreve primeira e segunda | 2 escreve segunda | nota ele consome um espaco dado por leeWay por coluna impressa
+void meuSort(Animal *meusAnimais) {
+	char *meusNomes[100];
+	int cursor = 0, res = 0;
+	void sw(int a, int b) {
+		char *ptr = meusNomes[a];
+		meusNomes[a] = meusNomes[b];
+		meusNomes[b] = ptr;
+	}
+	while (1) {
+		if (cursor == 100) if (res == 1) break; else {cursor = 0; res = 1}
+		
+		if (strcmp(meusNomes[cursor]->nomeAnimal,meusNomes[cursor+1]->nomeAnimal) > 0) {sw(cursor,cursor+1); cursor++;}
+		else if (cursor > 0) cursor = 0; else {res = 0; cursor++}
+	}
+}
+
 void myStrCpy (char *str1, char *str2, int *i, int lee, int writeColuna) { //Msm funcao de str cpy soq ele comeca por int i dado, agregando a ele conforme escreve, e int lee, de leeway para limite de escrita, substituindo com espacos brancos | pft para escrever fileiras
     int len = strlen(str2);
 		if (writeColuna%2 == 1) str1[(*i)] = '|';
@@ -163,6 +179,8 @@ int cadastrarCliente(Cliente *MeusClientes, int *tamanhoClientes) { //Fiquei con
     if (!ValidarTelefone(telefoneCliente)) {
         printf("Telefone inválido, insira um telefone válido.\n");
         return 0;
+    }
+} //tava faltando aqui, acho q corto qndo colou, se estiver errado so tirar
 
 int main() {
   char[50] in;
