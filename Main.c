@@ -61,17 +61,17 @@ void meuSort(Animal *meusAnimais, int *tamanho) {
     	}
     }
 
-//write coluna -1 escreve primeira | 0 nao escreve | 1 escreve primeira e segunda | 2 escreve segunda | nota ele consome um espaco dado por leeWay por coluna impressa
+//write coluna | -3 escrv s sub | -2 escrv p e s sub | -1 escrv p sub | 0 n escrv | 1 escrv p | 2 escrv p e s | 3 escreve s | **nota nao consome espaco de leeway por coluna, so anexa ao lado
 void myStrCpy (char *str1, char *str2, int *i, int lee, int writeColuna) { //Msm funcao de str cpy soq ele comeca por int i dado, agregando a ele conforme escreve, e int lee, de leeway para limite de escrita, substituindo com espacos brancos | pft para escrever fileiras
     char cpyFrm[2] = {' ', '|'};
-	if (writeColuna == -3) {cpyFrm[0] = '-';
+	if (writeColuna < 0) {cpyFrm[0] = '-'; cpyFrm[1] = '+';}
 	int len = strlen(str2);
-		if (writeColuna%2 == 1) str1[(*i)] = '|';
-		(*i)++;
+	if (writeColuna > -3 && writeColuna < 3 && writeColuna != 0) str1[(*i)] = cpyFrm[1];
+	(*i)++;
     for (int j = (*i);(*i)-j < lee-1; (*i)++) {
-    	str1[(*i)] = ((len > (*i)-j) ? str2[(*i)-j] : ' ');
+    	str1[(*i)] = ((len > (*i)-j) ? str2[(*i)-j] : cpyFrm[0]);
     }
-		if (writeColuna > 0) str1[(*i)-1] = '|'; 
+	if (writeColuna > 1 || writeColuna < -1) {str1[(*i)] = cpyFrm[1]; (*i)++;}
     str1[(*i)] = '\0';
 }
 
@@ -131,11 +131,32 @@ int charToPosInt(char *in) {
 
 int confTabelaAnimais[] = {5,14,12,24,56} //Primeiro Valor tamanho do Array
 char *imprimirAnimais(Animal MeusAnimais[], int *tamanho) {
-	int flI = 0;
-	char *minhaFileiraLinha = (char*) malloc(sizeof(char)), *minhaFileira;
-	for (int i = 1; i < confTabelaAnimais[0]; i++) {
-		myStrCpy()
+	int flI = 0, flC = 0;
+	char *minhaFileiraLinha = (char*) malloc(sizeof(char)),
+		*minhaFileira;
+		*minhaImpressao = (char*) malloc(sizeof(char));
+	void criacaoFileiraLinha() {
+		for (int i = 1; i < confTabelaAnimais[0]; i++) {
+			flC += confTabelaAnimais[i]+1;
+			minhaFileiraLinha = (char*) realloc(minhaFileiraLinha,sizeof(char)*(flC+2));
+			myStrCpy(minhaFileiraLinha,"",&flI,confTabelaAnimais[i],-2);
+		}
+		flI = 0;
+		myStrCpy(minhaFileiraLinha,minhaFileiraLinha,&flI,flC,-1);
+		minhaFileiraLinha[flI] = '\n';
 	}
+	void anexarFileiraLinha(){
+		minhaImpressao = (char*) realloc(MinhaImpressao,sizeof(char)*(flC+2));
+		myStrCpy(minhaImpressao,minhaFileiraLinha,&flI,confTabelaAnimais[j],2);
+		
+	}
+	criacaoFileiraLinha();
+	flI = 0;
+	for(int i = 0; i < (*tamanho); i++) {
+		myStrCpy(minhaImpressao,minhaFileiraLinha,&flI,confTabelaAnimais[j],2);
+		
+	}
+	return minhaImpressao;
 }
 
 //Função de validar nomes
@@ -255,3 +276,68 @@ int main() {
   }
   return 0;
 }
+
+		/* IGNORAR
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+int main()
+{
+    void myStrCpy (char *str1, char *str2, int *i, int lee, int writeColuna) { //Msm funcao de str cpy soq ele comeca por int i dado, agregando a ele conforme escreve, e int lee, de leeway para limite de escrita, substituindo com espacos brancos | pft para escrever fileiras
+        char meuString[24], meuSRR[24];
+        int testInt = -1;
+        void strAAA() {
+            strcpy(meuString,str1);
+            strcpy(meuSRR,str2);
+        }
+        char cpyFrm[2] = {' ', '|'};
+        strAAA();
+    	if (writeColuna < 0) {cpyFrm[0] = '-'; cpyFrm[1] = '+';}
+    	int len = strlen(str2);
+    	if (writeColuna > -3 && writeColuna < 3 && writeColuna != 0) str1[(*i)] = cpyFrm[1];
+    	strAAA();
+    	(*i)++;
+        for (int j = (*i);(*i)-j < lee-1; (*i)++) {
+        	testInt = (*i);
+        	str1[(*i)] = ((len > (*i)-j) ? str2[(*i)-j] : cpyFrm[0]); //se escrevo primeira coluna copio de um a menos para um a mai
+        
+            strAAA();
+            
+        }
+    	if (writeColuna > 1 || writeColuna < -1) {str1[(*i)] = cpyFrm[1]; (*i)++;}
+    	strAAA();
+        str1[(*i)] = '\0';
+        strAAA();
+        
+    }
+    int confTabelaAnimais[] = {4,12,5,3}; //20
+    char *imprimirAnimais(int *tamanho) {
+    	int flI = 0, flC = 0;
+    	char *minhaFileiraLinha = (char*) malloc(sizeof(char)),
+    		*minhaFileira,
+    		*minhaImpressao = (char*) malloc(sizeof(char));
+    	void criacaoFileiraLinha() {
+    		for (int i = 1; i < confTabelaAnimais[0]; i++) {
+    			flC += confTabelaAnimais[i]+1;
+    			minhaFileiraLinha = (char*) realloc(minhaFileiraLinha,sizeof(char)*(flC+2));
+    			myStrCpy(minhaFileiraLinha,"",&flI,confTabelaAnimais[i],-3);
+    		}
+    		char copiaDaMinhaFileiraCompleta[flC+2];
+    		strcpy(copiaDaMinhaFileiraCompleta,minhaFileiraLinha);
+    		flI = 0;
+    		myStrCpy(minhaFileiraLinha,copiaDaMinhaFileiraCompleta,&flI,flC,-1);
+    		minhaFileiraLinha[flI] = '\n';
+    	}
+    	criacaoFileiraLinha();
+    	minhaFileiraLinha[flC-1] = '\0'; 
+        return minhaFileiraLinha;
+    }
+    int a = 5;
+    char *mf = (char*) malloc(sizeof(char)*100);
+    mf = imprimirAnimais(&a);
+    puts(mf);
+    printf("\n%d",(int)strlen(mf));
+    return 0;
+*/
