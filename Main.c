@@ -193,17 +193,17 @@ char *imprimirAnimais(Animal Animais[],int *tamanho) {
 }
 
 //Função de validar nomes
-  int nomeValido (char *in) {//Returns 1 em valido 0 em invalido
+  int nomeValido(char *in) {
     int valid = 0;
+    
     for (int i = 0; i < strlen(in); i++) {
-	    if (in[i] < 65 || (in[i] > 90 && in[i] < 97) || in[i] > 122) {
-    	    valid = -1;
-    	    break;
-    	} else valid++;
+        if ((in[i] < 65 || (in[i] > 90 && in[i] < 97) || in[i] > 122) && in[i] != ' ') {
+            valid = -1;
+            break;
+        } else if (in[i] != ' ') {
+            valid++;
+        }
     }
-    if (valid >= 3) return 1;
-    else return 0;
-  }
 
 //Função de validar Telefones
 int ValidarTelefone(char telefoneCliente[15]) {
@@ -211,7 +211,7 @@ int ValidarTelefone(char telefoneCliente[15]) {
     if (!(strlen(telefoneCliente) >= 11 && strlen(telefoneCliente) <= 12 && telefoneCliente[0] == '0')) {
         return -1; // Inválido
     }
-	
+
     // Verifica se todos os caracteres restantes são dígitos numéricos válidos
     for (int j = 1; j < strlen(telefoneCliente); j++) {
         if (telefoneCliente[j] < '0' || telefoneCliente[j] > '9') {
@@ -219,8 +219,8 @@ int ValidarTelefone(char telefoneCliente[15]) {
         }
     }
     return 1; // Válido
-}
-	
+}   
+
 //Função de validar Datas
 int ValidarData(int dia, int mes, int ano) {
     // Verifica se o dia está entre 1 e 21 (utilizei 21 pois temos a regra de não permitir datas futuras)
