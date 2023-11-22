@@ -17,7 +17,7 @@ Nomes:André Antônio da Silva Queiroz    | RA:a2575310
 
 const char ESPECIES[][] = {"York","Yorkie","Yorkshire","York fofo", "Yorkiezinho", "Yorkiiiiee >///<"};
 
-char confTANomeColunas[][] = {"Nome", "Especie", "Agressivo", "Data de Nascimento", "Nome do Cliente", "Telefone"};
+char tabelaAnimaisNomeColunas[][] = {"Nome", "Especie", "Agressivo", "Data de Nascimento", "Nome do Cliente", "Telefone"};
 int confTabelaAnimais[] = {7,14,12,20,13,14}; //Primeiro Valor tamanho do Array
 //Type def
 
@@ -165,7 +165,7 @@ char *baseadoEmNomePet (char *Nome, Animal *Pets, int tamanhoVetorAnimais){
 	char impressao[400];
   	for (int i = 0; i < tamanhoVetorAnimais; i++){
   		if (strcmp (Pets[i].nomeAnimal, Nome) == 0) {
-			char *primeiraFileira   = anexarFileira(confTANomeColunas,confTabelaAnimais,1);
+			char *primeiraFileira   = anexarFileira(tabelaAnimaisNomeColunas,tabelaAnimaisNomeColunas,1);
 			char *fileiraDeConteudo = anexarFileira(criarColunaAnimais(Pets[i]),confTabelaAnimais,0);
 			int tamanhoDaPrimeiraFileira = strlen(primeiraFileira);
 			int tamanhoFileiraDeConteudo = strlen(fileiraDeConteudo);
@@ -180,7 +180,7 @@ char *baseadoEmNomePet (char *Nome, Animal *Pets, int tamanhoVetorAnimais){
 char *imprimirAnimais(Animal Animais[],int *tamanho) {
 	int cursor = 0;
 	char *minhaImpressao = stringDinamica(1);
-	anexarFileira(confTAColunas, confTabelaAnimais, 1);
+	anexarFileira(tabelaAnimaisNomeColunas, confTabelaAnimais, 1);
     	for(int i = 0; i < (*tamanho); i++) {
 		int j = 0;
 		Animal oA = Animais[i];
