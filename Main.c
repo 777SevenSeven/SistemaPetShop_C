@@ -14,6 +14,8 @@ Nomes:André Antônio da Silva Queiroz    | RA:a2575310
 #define MES 2
 #define ANO 1997
 #define MENU_DE_COMANDOS "\n'c' para cadastrar um cliente;\n'e' para terminar;\n\ndigite aqui: "
+
+const char ESPECIES[][] = {"York","Yorkie","Yorkshire","York fofo", "Yorkiezinho", "Yorkiiiiee >///<"};
 //Type def
 
 typedef struct {
@@ -25,9 +27,7 @@ typedef struct {
 typedef struct {
   char nomeCliente[50];
   char telefoneCliente[15];
-  char opcao;
 } Cliente;
-
 
 typedef struct{
   Cliente *cliente;
@@ -48,6 +48,11 @@ typedef struct {
 //Funcs
 
 //retornar a ordem alfabetica das entradas atravez dum array array[posicao alfabetica] = posicaoRealNoArrayDeEntrada
+char* definirStringDinamica(char *string, int tamanho) return (char*) malloc(string,tamanho*sizeof(char));
+
+char* aumentarTamString(char *string, int tamanho) return (char*) realloc(string,tamanho*sizeof(char));
+
+
 void meuSort(Animal *meusAnimais, int *tamanho) {
     	Animal meuAnimal;
     	for (int x = 0; x < (*tamanho)-1; x++) {
@@ -61,7 +66,6 @@ void meuSort(Animal *meusAnimais, int *tamanho) {
     	}
     }
 
-//write coluna | -3 escrv s sub | -2 escrv p e s sub | -1 escrv p sub | 0 n escrv | 1 escrv p | 2 escrv p e s | 3 escreve s | **nota nao consome espaco de leeway por coluna, so anexa ao lado
 void myStrCpy (char *str1, char *str2, int *i, int lee, int writeColuna) { //Msm funcao de str cpy soq ele comeca por int i dado, agregando a ele conforme escreve, e int lee, de leeway para limite de escrita, substituindo com espacos brancos | pft para escrever fileiras
         char cpyFrm[2] = {' ', '|'};
     	if (writeColuna < 0) {cpyFrm[0] = '-'; cpyFrm[1] = '+';}
@@ -128,9 +132,23 @@ int charToPosInt(char *in) {
   return myInt;
 }
 
+char *dataParaChar(Data data) {
+	int i = 0;
+	char out[12];
+	void anexarValor(char *valor, int letras) myStrCpy(out,valor,&i,letras,0);
+	void anexarBarra() anexarValor("/",1);
+	anexarValor(posIntToChar(data.dia),2);
+	anexarBarra();
+	anexarValor(posIntToChar(data.mes),2);
+	anexarBarra();
+	anexarValor(posIntToChar(data.ano),4);
+	return out;
+}
+
 int confTabelaAnimais[] = {5,14,12,24,56} //Primeiro Valor tamanho do Array
 char *imprimirAnimais(Animal Animais[],int *tamanho) {
-    	int flI = 0, flC = 0;
+    	int     pos = 0, // Posicao em que se esta escrevendo
+		flT = 0; // Fileira linha Tamanho
     	char *minhaFileiraLinha = (char*) malloc(sizeof(char)),
     		*minhaImpressao = (char*) malloc(sizeof(char));
     	void criacaoFileiraLinha() {
@@ -142,19 +160,31 @@ char *imprimirAnimais(Animal Animais[],int *tamanho) {
     		minhaFileiraLinha[flI] = '\n';
 		minhaFileiraLinha[flI+1] = '\0';
     	}
-	void anexarFL() myStrCpy(minhaImpressao,minhaFileiraLinha,&flI,strlen(minhaFileiraLinha),0);
+	void anexarColuna(char *valor, int coluna) myStrCpy(minhaImpressao, valor, &flI, confTabelaAnimais[coluna], 3);
+	void anexarFL()                            myStrCpy(minhaImpressao,minhaFileiraLinha,&flI,strlen(minhaFileiraLinha),0);
+	void anexarNL()                            myStrCpy(minhaImpressao,"\n",&flI,1,0);
+	void anexarFileira(char **colunas, int confTabelaAnimais[]) {
+		for (int i = 1; i < confTabelaAnimais[0]; i++) {
+			anexarColuna(colunas[i], &i);
+		}
+	}
 	flI = 0;
     	criacaoFileiraLinha();
     	for(int i = 0; i < (*tamanho); i++) {
 		int j = 0;
 		Animal oa = Animais[i];
+		char colunas[][] = {    oa.nomeAnimal,
+					ESPECIE[oa.especie],
+					oa.agressivo,
+					dataParaChar(oa.dataNascimento),
+					oa.cliente->nomeCliente,
+					oa.cliente->telefoneCliente};
 		anexarFL();
-		// Aqui imprimo todas os conteudos da tabela por ordem
-		myStrCpy(minhaImpressao, oa.nomeAnimal,confTabelaAnimais[1+j++],3);
-		myStrCpy(minhaImpressao, posIntToChar(oa.especie),confTabelaAnimais[1+j++],3);
-		myStrCpy(minhaImpressao, );
+		anexarFileira(colunas, confTabelaAnimais)
+		anexarNL();
 	}
 	anexarFL();
+	anexarNL()
 	return minhaImpressao;
     }
 
