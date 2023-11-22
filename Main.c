@@ -56,10 +56,42 @@ typedef struct {
 //Funcs
 
 //retornar a ordem alfabetica das entradas atravez dum array array[posicao alfabetica] = posicaoRealNoArrayDeEntrada
-char* stringDinamica(int tamanho) return (char*) malloc(tamanho*sizeof(char));
+char *stringDinamica(int tamanho) return (char*) malloc(tamanho*sizeof(char));
 
-char* aumentarTamString(char *string, int tamanho) return (char*) realloc(string,tamanho*sizeof(char));
+char *aumentarTamString(char *string, int tamanho) return (char*) realloc(string,tamanho*sizeof(char));
 
+int *vetorIntDinamico(int tamanho) return (int*) malloc(tamanho*sizeof(int));
+
+int *aumentarVetorInt(int *vetor, int tamanho) return (int*) realloc(vetor,tamanho*sizeof(int));
+
+int find(char from[], char to[]) {
+    	int cursor = 0,
+            valid;
+    	while (from[cursor] != '\0') {
+        valid = 0;
+        for (int i = 0; i < strlen(to) && cursor+i < strlen(from); i++) {
+            	if (!(from[cursor+i] == to[i])) {
+                	break;
+            	} else if (i+1 == strlen(to)) valid = 1;
+        }
+        if (valid == 1) break;
+        	cursor++;
+    	}
+    	return valid;
+}
+
+int *mapaListagemClientesPorPesquisa(Cliente *Clientes, int tamanho, char[] termo) {
+	int meuVetor[101],
+	    i = 1;
+	for (int j = 0; j < tamanho; j++) {
+		if (find(Clientes[j].nomeCliente, termo) == 1) {
+			meuVetor[i] = j;
+			i++;
+		}
+	}
+	meuVetor[0] = i;
+	return meuVetor;
+}
 
 void meuSort(Animal *meusAnimais, int *tamanho) {
     	Animal meuAnimal;
