@@ -242,41 +242,43 @@ int ValidarData(int dia, int mes, int ano) {
     return 1;
 }
 
-//Cadastro de clientes
+// Função para cadastrar os clientes
 int cadastrarCliente(Cliente *MeusClientes, int *tamanhoClientes) {
     char nomeCliente[50];
     char telefoneCliente[15];
 
-//Recebe o nome do cliente e armazena dentro do char
+// Recebe o nome do cliente e armazena dentro do char
  do {
     printf("Nome do cliente: ");
     fgets(nomeCliente, sizeof(nomeCliente) / sizeof(char), stdin);
     nomeCliente[strcspn(nomeCliente, "\n")] = '\0';
 
-    // Validação do nome
+    // Irá realizar a validação do nome
     if (!nomeValido(nomeCliente)) {
         printf("Nome inválido, insira um nome válido ou E para desistir.\n");
         fgets(opcao, sizeof(opcao) / sizeof(char), stdin);
         opcao[strcspn(opcao, "\n")] = '\0';
 
+	// Caso o usuário desista de inserir, ele pode pressionar E ou e para desistir
         if (opcao[0] == 'E' || opcao[0] == 'e') return 0;
 
         // Continue para a próxima iteração do loop para que o usuário insira o nome novamente
         continue;
     }
 
-    // Recebe o telefone do cliente
+    // Recebe o telefone do cliente e armazena dentro do char
     printf("Telefone do cliente: ");
     fgets(telefoneCliente, sizeof(telefoneCliente) / sizeof(char), stdin);
     telefoneCliente[strcspn(telefoneCliente, "\n")] = '\0';
 
-    // Validação do telefone
+    // irá realizar a validação do telefone
     if (!ValidarTelefone(telefoneCliente)) {
         printf("Telefone inválido, insira um telefone válido ou E para desistir.\n");
         fgets(opcao, sizeof(opcao) / sizeof(char), stdin);
         opcao[strcspn(opcao, "\n")] = '\0';
 
-        if (opcao[0] == 'E' || opcao[0] == 'e') return 0;
+        // Caso o usuário desista de inserir, ele pode pressionar E ou e para desistir
+	if (opcao[0] == 'E' || opcao[0] == 'e') return 0;
 
         // Continue para a próxima iteração do loop para que o usuário insira o telefone novamente
         continue;
@@ -288,6 +290,14 @@ int cadastrarCliente(Cliente *MeusClientes, int *tamanhoClientes) {
 } while (1);
 
 return 1;
+
+// Função de cadastrar os pets
+int cadastrarPet(Animal *MeusAnimais, int *tamanhoAnimais, Cliente *MeusClientes, int tamanhoClientes) {
+
+
+
+
+
 //	meusCliente[*tamanho].nome = nomeClie;
 	
 //	meusCliente[*tamanho].nome = telefone;
