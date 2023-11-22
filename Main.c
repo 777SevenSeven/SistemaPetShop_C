@@ -250,29 +250,45 @@ int cadastrarCliente(Cliente *MeusClientes, int *tamanhoClientes) {
 
 //Recebe o nome do cliente e armazena dentro do char
  do {
-	printf("Nome do cliente: ");
-    fgets(nomeCliente, sizeof(nomeCliente)/sizeof(char), stdin); //Recebe e armazena o nome
-    nomeCliente[strcspn(nomeCliente, "\n")] = '\0'; //Aqui é pra tirar aquele \n no char
+    printf("Nome do cliente: ");
+    fgets(nomeCliente, sizeof(nomeCliente) / sizeof(char), stdin);
+    nomeCliente[strcspn(nomeCliente, "\n")] = '\0';
 
- // Validação do nome, chama a função do nome e informa que o nome está inválido
+    // Validação do nome
     if (!nomeValido(nomeCliente)) {
         printf("Nome inválido, insira um nome válido ou E para desistir.\n");
-        continue; 
-    }
- }
-    // Recebe o telefone do cliente e coloca dentro do char
-    printf("Telefone do cliente: ");
-    fgets(telefoneCliente, sizeof(telefoneCliente)/sizeof(char), stdin); //rececebe e armazena o telefone
-    telefoneCliente[strcspn(telefoneCliente, "\n")] = '\0';
+        fgets(opcao, sizeof(opcao) / sizeof(char), stdin);
+        opcao[strcspn(opcao, "\n")] = '\0';
 
-    // Validação do telefone, chama uma função e informa que o telefone é inválido
-    if (a letra la == 'e') return 0;
-	else if (!ValidarTelefone(telefoneCliente)) {
-        printf("Telefone inválido, insira um telefone válido ou E para desistir.\n");
+        if (opcao[0] == 'E' || opcao[0] == 'e') return 0;
+
+        // Continue para a próxima iteração do loop para que o usuário insira o nome novamente
         continue;
     }
- } while (opcao == 'S' || opcao == 's');
-	return 1;
+
+    // Recebe o telefone do cliente
+    printf("Telefone do cliente: ");
+    fgets(telefoneCliente, sizeof(telefoneCliente) / sizeof(char), stdin);
+    telefoneCliente[strcspn(telefoneCliente, "\n")] = '\0';
+
+    // Validação do telefone
+    if (!ValidarTelefone(telefoneCliente)) {
+        printf("Telefone inválido, insira um telefone válido ou E para desistir.\n");
+        fgets(opcao, sizeof(opcao) / sizeof(char), stdin);
+        opcao[strcspn(opcao, "\n")] = '\0';
+
+        if (opcao[0] == 'E' || opcao[0] == 'e') return 0;
+
+        // Continue para a próxima iteração do loop para que o usuário insira o telefone novamente
+        continue;
+    }
+
+    // Se chegou até aqui, os dados são válidos
+    break;
+
+} while (1);
+
+return 1;
 //	meusCliente[*tamanho].nome = nomeClie;
 	
 //	meusCliente[*tamanho].nome = telefone;
