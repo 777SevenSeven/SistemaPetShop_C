@@ -13,7 +13,7 @@ Nomes:André Antônio da Silva Queiroz    | RA:a2575310
 #define DIA 1
 #define MES 2
 #define ANO 1997
-#define MENU_DE_COMANDOS "\n'l' para limpar o console;\n'c' para cadastrar um cliente;\n'e' para terminar;\n\ndigite aqui: "
+#define MENU_DE_COMANDOS "\n'q' para mostrar quantidade de animais agressivos\n'a' para listar animais;\n'l' para limpar o console;\n'c' para cadastrar um cliente;\n'e' para terminar;\n\ndigite aqui: "
 
 const char ESPECIES[][] = {"York","Yorkie","Yorkshire","York fofo", "Yorkiezinho", "Yorkiiiiee >///<"};
 
