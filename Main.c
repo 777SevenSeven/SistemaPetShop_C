@@ -147,28 +147,31 @@ char *dataParaChar(Data data) {
 
 char confNomeColunas[][] = {"Nome", "Especie", "Agressivo", "Data de Nascimento", "Nome do Cliente", "Telefone"};
 int confTabelaAnimais[] = {7,14,12,20,13,14}; //Primeiro Valor tamanho do Array
-char *imprimirAnimais(Animal Animais[],int *tamanho) {
-    	int     cursor = 0, // Posicao em que se esta escrevendo
+
+char *anexarFileira(char **colunas, int confTabela[]) {
+int     cursor = 0, // Posicao em que se esta escrevendo
 		flT = 0; // Fileira linha Tamanho
     	char *minhaFileiraLinha = definirStringDinamica(1), // A linha que separa conteudo das fileiras
     		*minhaImpressao = definirStringDinamica(1); // A string da tabela inteira que vou montar
     	void criacaoFileiraLinha() { // Inicializa a Fileira Linha
-    		for (int i = 1; i < confTabelaAnimais[0]; i++) {
-    			flT += confTabelaAnimais[i]+1;
+    		for (int i = 1; i < confTabela[0]; i++) {
+    			flT += confTabela[i]+1;
     			minhaFileiraLinha = aumentarTamString(minhaFileiraLinha,flT+2);
-    			myStrCpy(minhaFileiraLinha, "", &cursor, confTabelaAnimais[i], ((i == 1) ? -2 : -3)); // Se for primeira linha quero linha de coluna antes tambem
+    			myStrCpy(minhaFileiraLinha, "", &cursor, confTabela[i], ((i == 1) ? -2 : -3)); // Se for primeira linha quero linha de coluna antes tambem
     		}
     		minhaFileiraLinha[cursor] = '\n';
 		minhaFileiraLinha[cursor+1] = '\0';
     	}
-	void anexarColuna(char *valor, int coluna) myStrCpy(minhaImpressao, valor, &cursor, confTabelaAnimais[coluna], ((i == 0) ? 2 :3); // Se for primeira linha quero linha de coluna antes tambem
+	void anexarColuna(char *valor, int coluna) myStrCpy(minhaImpressao, valor, &cursor, confTabela[coluna], ((i == 0) ? 2 :3); // Se for primeira linha quero linha de coluna antes tambem
 	void anexarFL()                            myStrCpy(minhaImpressao,minhaFileiraLinha,&cursor,strlen(minhaFileiraLinha),0); // Anexar fileira linha
 	void anexarNL()                            myStrCpy(minhaImpressao,"\n",&flI,1,0); // Anexar "New Line" (enter)
-	void anexarFileira(char **colunas, int confTabelaAnimais[]) {
-		for (int i = 1; i < confTabelaAnimais[0]; i++) {
-			anexarColuna(colunas[i], i);
-		}
+	for (int i = 1; i < confTabela[0]; i++) {
+		anexarColuna(colunas[i], i);
 	}
+}
+
+
+char *imprimirAnimais(Animal Animais[],int *tamanho) {
 	cursor = 0;
     	criacaoFileiraLinha();
     	for(int i = 0; i < (*tamanho); i++) {
