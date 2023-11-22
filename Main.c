@@ -150,7 +150,9 @@ char *imprimirAnimais(Animal Animais[],int *tamanho) {
 		Animal oa = Animais[i];
 		anexarFL();
 		// Aqui imprimo todas os conteudos da tabela por ordem
-		myStrCpy(minhaImpressao, oa.nomeAnimal,confTabelaAnimais[1+j++])
+		myStrCpy(minhaImpressao, oa.nomeAnimal,confTabelaAnimais[1+j++],3);
+		myStrCpy(minhaImpressao, posIntToChar(oa.especie),confTabelaAnimais[1+j++],3);
+		myStrCpy(minhaImpressao, );
 	}
 	anexarFL();
 	return minhaImpressao;
