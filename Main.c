@@ -64,7 +64,7 @@ void meuSort(Animal *meusAnimais, int *tamanho) {
     			}
     		}
     	}
-    }
+}
 
 void myStrCpy (char *str1, char *str2, int *i, int lee, int writeColuna) { //Msm funcao de str cpy soq ele comeca por int i dado, agregando a ele conforme escreve, e int lee, de leeway para limite de escrita, substituindo com espacos brancos | pft para escrever fileiras
         char cpyFrm[2] = {' ', '|'};
@@ -154,11 +154,10 @@ int     cursor = 0, // Posicao em que se esta escrevendo
     	char *minhaFileiraLinha = stringDinamica(1), // A linha que separa conteudo das fileiras
     		*minhaImpressao = stringDinamica(1); // A string da tabela inteira que vou montar
     	void criacaoFileiraLinha() { // Inicializa a Fileira Linha
-    		for (int i = 1; i < confTabela[0]; i++) {
-    			flT += confTabela[i]+1;
-    			minhaFileiraLinha = aumentarTamString(minhaFileiraLinha,flT+2);
+    		for (int i = 1; i < confTabela[0]; i++) flT += confTabela[i]+1;
+ 		minhaFileiraLinha = aumentarTamString(minhaFileiraLinha,flT+2);
+		for (int i = 1; i < confTabela[0]; i++)
     			myStrCpy(minhaFileiraLinha, "", &cursor, confTabela[i], ((i == 1) ? -2 : -3)); // Se for primeira linha quero linha de coluna antes tambem
-    		}
     		minhaFileiraLinha[cursor] = '\n';
 		minhaFileiraLinha[cursor+1] = '\0';
     	}
@@ -289,7 +288,7 @@ int main() {
   while (strcmp(fgets(in,50,stdin), "e")!= 0) {
 	switch(in[0]) { //controle de menus
 		case 'h' : //menu de comandos
-			printf("%s",MENUDECOMANDOS);
+			printf(MENUDECOMANDOS);
 			break;
 		case 'c' : //menu de cadastro
 			do {
