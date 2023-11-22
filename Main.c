@@ -16,6 +16,9 @@ Nomes:André Antônio da Silva Queiroz    | RA:a2575310
 #define MENU_DE_COMANDOS "\n'l' para limpar o console;\n'c' para cadastrar um cliente;\n'e' para terminar;\n\ndigite aqui: "
 
 const char ESPECIES[][] = {"York","Yorkie","Yorkshire","York fofo", "Yorkiezinho", "Yorkiiiiee >///<"};
+
+char confTANomeColunas[][] = {"Nome", "Especie", "Agressivo", "Data de Nascimento", "Nome do Cliente", "Telefone"};
+int confTabelaAnimais[] = {7,14,12,20,13,14}; //Primeiro Valor tamanho do Array
 //Type def
 
 typedef struct {
@@ -78,28 +81,6 @@ void myStrCpy (char *str1, char *str2, int *i, int lee, int writeColuna) { //Msm
 	str1[(*i)] = '\0';
 }
 
-char *baseadoEmNomePet (char *Nome, Animal *Pets, Cliente *Clientes){
-	int letras = 400;
-	char *composto = definirStringDinamica(letras);
-  void aggregate (Cliente MeuCliente, Animal MeuAnimal) {//CliNome | CliNum | nomeAnimal[50] | int especie | dataNascimento | char agressivo; //'S' sim 'N' nao
-    int i = 0;
-    char meuChar[100];
-    myStrCpy (meuChar, MeuCliente.nomeCliente, &i, 14);
-    //myStrCpy (meuChar, MeuCliente.telefoneCliente, &i, 13);
-    myStrCpy (meuChar, MeuAnimal.nomeAnimal, &i, 10);
-  	myStrCpy (meuChar, MeuAnimal.cliente->nomeCliente, &i, 14);
-    i = 0;
-    myStrCpy (composto, meuChar, &i,350);
-    composto[letras] = '\0';
-    //myStrCpy (meuChar, MeuAnimal.especie, &i, 10);
-  }
-  int sz[] = {100, 100}; // Corresponde ao tamanho de entradas em Clientes e Animais Correspondentemente
-  for (int i = 0; i < sz[1]; i++){
-  	if (strcmp (Pets[i].nomeAnimal, Nome) == 0) {
-    	aggregate (*Pets[i].cliente, Pets[i]); return composto;
- 		}
-	}
-}
 int qntdAnimaisAgressivos(Animal *MeusAnimais) {
   int contagem = 0;
   int sz = 100; // se tivermos quantia de entradas assignar aqui para otimizacao so funciona se for tudo em ordem sem pular
@@ -145,11 +126,8 @@ char *dataParaChar(Data data) {
 	return out;
 }
 
-char confTANomeColunas[][] = {"Nome", "Especie", "Agressivo", "Data de Nascimento", "Nome do Cliente", "Telefone"};
-int confTabelaAnimais[] = {7,14,12,20,13,14}; //Primeiro Valor tamanho do Array
-
 char *anexarFileira(char **colunas, int confTabela[], int PrimeiraFileira) {
-int     cursor = 0, // Posicao em que se esta escrevendo
+	int cursor = 0, // Posicao em que se esta escrevendo
 		flT = 0; // Fileira linha Tamanho
     	char *minhaFileiraLinha = stringDinamica(1), // A linha que separa conteudo das fileiras
     		*minhaImpressao = stringDinamica(1); // A string da tabela inteira que vou montar
@@ -173,6 +151,31 @@ int     cursor = 0, // Posicao em que se esta escrevendo
 	return minhaImpressao;
 }
 
+char **criarColunaAnimais(Animal oA) {
+	char coluna[][] = {     oA.nomeAnimal,
+				ESPECIE[oA.especie],
+				oA.agressivo,
+				dataParaChar(oA.dataNascimento),
+				oA.cliente->nomeCliente,
+				oA.cliente->telefoneCliente};
+	return coluna;
+}
+
+char *baseadoEmNomePet (char *Nome, Animal *Pets, int tamanhoVetorAnimais){
+	char impressao[400];
+  	for (int i = 0; i < tamanhoVetorAnimais; i++){
+  		if (strcmp (Pets[i].nomeAnimal, Nome) == 0) {
+			char *primeiraFileira   = anexarFileira(confTANomeColunas,confTabelaAnimais,1);
+			char *fileiraDeConteudo = anexarFileira(criarColunaAnimais(Pets[i]),confTabelaAnimais,0);
+			int tamanhoDaPrimeiraFileira = strlen(primeiraFileira);
+			int tamanhoFileiraDeConteudo = strlen(fileiraDeConteudo);
+			strcpy  (impressao, primeiraFileira);                                             // Copiar a primeira fileira para impressao
+			myStrCpy(impressao, fileiraDeConteudo, &tamanhoDaPrimeiraFileira, tamanhoFileiraDeConteudo, 0); // Copiar fileira de conteudo
+			return impressao;
+ 		}
+	}
+	return "Pet nao encontrado";
+}
 
 char *imprimirAnimais(Animal Animais[],int *tamanho) {
 	int cursor = 0;
