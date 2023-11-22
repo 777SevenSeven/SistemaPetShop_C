@@ -166,7 +166,8 @@ int ValidarTelefone(char telefoneCliente[15]) {
     }
     return 1; // Válido
 }
-
+	
+//Função de validar Datas
 int ValidarData(int dia, int mes, int ano) {
     // Verifica se o dia está entre 1 e 21 (utilizei 21 pois temos a regra de não permitir datas futuras)
     if (!(dia >= 1 && dia <= 21)) {
