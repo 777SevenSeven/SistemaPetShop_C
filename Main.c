@@ -48,7 +48,7 @@ typedef struct {
 //Funcs
 
 //retornar a ordem alfabetica das entradas atravez dum array array[posicao alfabetica] = posicaoRealNoArrayDeEntrada
-char* definirStringDinamica(int tamanho) return (char*) malloc(tamanho*sizeof(char));
+char* stringDinamica(int tamanho) return (char*) malloc(tamanho*sizeof(char));
 
 char* aumentarTamString(char *string, int tamanho) return (char*) realloc(string,tamanho*sizeof(char));
 
@@ -145,14 +145,14 @@ char *dataParaChar(Data data) {
 	return out;
 }
 
-char confNomeColunas[][] = {"Nome", "Especie", "Agressivo", "Data de Nascimento", "Nome do Cliente", "Telefone"};
+char confTANomeColunas[][] = {"Nome", "Especie", "Agressivo", "Data de Nascimento", "Nome do Cliente", "Telefone"};
 int confTabelaAnimais[] = {7,14,12,20,13,14}; //Primeiro Valor tamanho do Array
 
-char *anexarFileira(char **colunas, int confTabela[]) {
+char *anexarFileira(char **colunas, int confTabela[], int PrimeiraFileira) {
 int     cursor = 0, // Posicao em que se esta escrevendo
 		flT = 0; // Fileira linha Tamanho
-    	char *minhaFileiraLinha = definirStringDinamica(1), // A linha que separa conteudo das fileiras
-    		*minhaImpressao = definirStringDinamica(1); // A string da tabela inteira que vou montar
+    	char *minhaFileiraLinha = stringDinamica(1), // A linha que separa conteudo das fileiras
+    		*minhaImpressao = stringDinamica(1); // A string da tabela inteira que vou montar
     	void criacaoFileiraLinha() { // Inicializa a Fileira Linha
     		for (int i = 1; i < confTabela[0]; i++) {
     			flT += confTabela[i]+1;
@@ -165,30 +165,31 @@ int     cursor = 0, // Posicao em que se esta escrevendo
 	void anexarColuna(char *valor, int coluna) myStrCpy(minhaImpressao, valor, &cursor, confTabela[coluna], ((i == 0) ? 2 :3); // Se for primeira linha quero linha de coluna antes tambem
 	void anexarFL()                            myStrCpy(minhaImpressao,minhaFileiraLinha,&cursor,strlen(minhaFileiraLinha),0); // Anexar fileira linha
 	void anexarNL()                            myStrCpy(minhaImpressao,"\n",&flI,1,0); // Anexar "New Line" (enter)
-	for (int i = 1; i < confTabela[0]; i++) {
+	if (primeiraFileira == 1) anexarFL();
+	for (int i = 0; i < confTabela[0]; i++) {
 		anexarColuna(colunas[i], i);
 	}
+	anexarNL();
+	anexarFL();
+	return minhaImpressao;
 }
 
 
 char *imprimirAnimais(Animal Animais[],int *tamanho) {
-	cursor = 0;
-    	criacaoFileiraLinha();
+	int cursor = 0;
+	char *minhaImpressao = stringDinamica(1);
+	anexarFileira(confTAColunas, confTabelaAnimais, 1);
     	for(int i = 0; i < (*tamanho); i++) {
 		int j = 0;
-		Animal oa = Animais[i];
-		char colunas[][] = {    oa.nomeAnimal,
-					ESPECIE[oa.especie],
-					oa.agressivo,
-					dataParaChar(oa.dataNascimento),
-					oa.cliente->nomeCliente,
-					oa.cliente->telefoneCliente};
-		anexarFL();
-		anexarFileira(colunas, confTabelaAnimais)
-		anexarNL();
+		Animal oA = Animais[i];
+		char colunas[][] = {    oA.nomeAnimal,
+					ESPECIE[oA.especie],
+					oA.agressivo,
+					dataParaChar(oA.dataNascimento),
+					oA.cliente->nomeCliente,
+					oA.cliente->telefoneCliente};
+		anexarFileira(colunas, confTabelaAnimais, 0);
 	}
-	anexarFL();
-	anexarNL()
 	return minhaImpressao;
 }
 
