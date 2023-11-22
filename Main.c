@@ -63,16 +63,15 @@ void meuSort(Animal *meusAnimais, int *tamanho) {
 
 //write coluna | -3 escrv s sub | -2 escrv p e s sub | -1 escrv p sub | 0 n escrv | 1 escrv p | 2 escrv p e s | 3 escreve s | **nota nao consome espaco de leeway por coluna, so anexa ao lado
 void myStrCpy (char *str1, char *str2, int *i, int lee, int writeColuna) { //Msm funcao de str cpy soq ele comeca por int i dado, agregando a ele conforme escreve, e int lee, de leeway para limite de escrita, substituindo com espacos brancos | pft para escrever fileiras
-    char cpyFrm[2] = {' ', '|'};
-	if (writeColuna < 0) {cpyFrm[0] = '-'; cpyFrm[1] = '+';}
-	int len = strlen(str2);
-	if (writeColuna > -3 && writeColuna < 3 && writeColuna != 0) str1[(*i)] = cpyFrm[1];
-	(*i)++;
-    for (int j = (*i);(*i)-j < lee-1; (*i)++) {
-    	str1[(*i)] = ((len > (*i)-j) ? str2[(*i)-j] : cpyFrm[0]);
-    }
-	if (writeColuna > 1 || writeColuna < -1) {str1[(*i)] = cpyFrm[1]; (*i)++;}
-    str1[(*i)] = '\0';
+        char cpyFrm[2] = {' ', '|'};
+    	if (writeColuna < 0) {cpyFrm[0] = '-'; cpyFrm[1] = '+';}
+    	int len = strlen(str2);
+    	if (writeColuna > -3 && writeColuna < 3 && writeColuna != 0) {str1[(*i)] = cpyFrm[1]; (*i)++;}
+        for (int j = (*i);(*i)-j < lee-1; (*i)++) {
+        	str1[(*i)] = ((len > (*i)-j) ? str2[(*i)-j] : cpyFrm[0]); //se escrevo primeira coluna copio de um a menos para um a mai
+        }
+    	if (writeColuna > 1 || writeColuna < -1) {str1[(*i)] = cpyFrm[1]; (*i)++;}
+	str1[(*i)] = '\0';
 }
 
 char *baseadoEmNomePet (char *Nome, Animal *Pets, Cliente *Clientes){
