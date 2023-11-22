@@ -13,7 +13,7 @@ Nomes:André Antônio da Silva Queiroz    | RA:a2575310
 #define DIA 1
 #define MES 2
 #define ANO 1997
-#define MENU_DE_COMANDOS "\n'c' para cadastrar um cliente;\n'e' para terminar;\n\ndigite aqui: "
+#define MENU_DE_COMANDOS "\n'l' para limpar o console;\n'c' para cadastrar um cliente;\n'e' para terminar;\n\ndigite aqui: "
 
 const char ESPECIES[][] = {"York","Yorkie","Yorkshire","York fofo", "Yorkiezinho", "Yorkiiiiee >///<"};
 //Type def
@@ -280,32 +280,35 @@ int cadastrarCliente(Cliente *MeusClientes, int *tamanhoClientes) {
 } //tava faltando aqui, acho q corto qndo colou, se estiver errado so tirar
 
 int main() {
-  char[50] in;
-  tamanhos[] = {0,0}; //quantidade de entradas por vetor ordem: MeusClientes, MeusAnimais
-  Cliente MeusClientes[100];
-  Animal MeusAnimais[100];
-	printf("'h' para comandos, 'e' para terminar;\n");
-  while (strcmp(fgets(in,50,stdin), "e")!= 0) {
-	switch(in[0]) { //controle de menus
-		case 'h' : //menu de comandos
-			printf(MENUDECOMANDOS);
-			break;
-		case 'c' : //menu de cadastro
-			do {
-				cadastrarCliente();
-				printf("Deseja cadastrar outro cliente? 's' para sim, 'n' para não: ");
+	char[51] in; // Variavel que guarda a entrada do Usuario no console | maior entrada valida e de 50, precisamos +1 pelo \n que fgets() pega
+	tamanhos[] = {0,0}; // Quantidade de entradas por vetor ordem: MeusClientes, MeusAnimais
+	Cliente MeusClientes[100]; // Inicializacao dos vetores
+	Animal MeusAnimais[100];
+	printf("Bem Vindo!\n'h' para comandos, 'e' para terminar;\n"); // Mensagem de inicio
+	while (strcmp(fgets(in,50,stdin), "e\n")!= 0) { // Enquanto o que se lee, nao for 'e', continuemos leendo os comandos..
+		switch(in[0]) { // Controle de menus
+			case 'h' : // Menu de comandos
+				printf(MENUDECOMANDOS);
+				break;
+			case 'c' : // Menu de cadastro
 				do {
-					fgets(in,50,stdin);
-				} while (in[0] != 'n' || in[0] != 's')
-				if (in[0] == 'n') break;
-			} while(1)
-			break;
-		case 'a' : //menu impressao de animais alfabeticamente
-			meuSort(MeusAnimais,&tamanhos[1]);
-			printf("%s\n", imprimirAnimais(MeusAnimais,&tamanhos[1]));
-			break;
-	}
-	free();
-  }
-  return 0;
+					cadastrarCliente(); // Funcao cadastro cliente
+					printf("Deseja cadastrar outro cliente? 's' para sim, 'n' para não: ");
+					do {                // Enquanto a resposta nao for valida, continue lendo
+						fgets(in,50,stdin);
+					} while (in[0] != 'n' || in[0] != 's')
+					if (in[0] == 'n') break; // Se a resposta for Nao, pare de cadastrar, se nao, continue
+				} while(1)
+				break;
+			case 'a' : // Menu impressao de animais alfabeticamente
+				meuSort(MeusAnimais,&tamanhos[1]); // Organizar os Animais Alfabeticamente
+				printf("%s\n", imprimirAnimais(MeusAnimais,&tamanhos[1])); // Imprimir a Tabela dos Animais
+				break;
+			case 'l' : // Commando limpar o console
+				system("clear");
+				break;
+		}
+		free(); // Limpar memoria alocada dinamicamente (Strings dinamicas)
+  	}
+  	return 0;
 }
