@@ -48,7 +48,7 @@ typedef struct {
 //Funcs
 
 //retornar a ordem alfabetica das entradas atravez dum array array[posicao alfabetica] = posicaoRealNoArrayDeEntrada
-char* definirStringDinamica(char *string, int tamanho) return (char*) malloc(string,tamanho*sizeof(char));
+char* definirStringDinamica(int tamanho) return (char*) malloc(tamanho*sizeof(char));
 
 char* aumentarTamString(char *string, int tamanho) return (char*) realloc(string,tamanho*sizeof(char));
 
@@ -80,7 +80,7 @@ void myStrCpy (char *str1, char *str2, int *i, int lee, int writeColuna) { //Msm
 
 char *baseadoEmNomePet (char *Nome, Animal *Pets, Cliente *Clientes){
 	int letras = 400;
-	char *composto = (char *) malloc (sizeof (char) * letras);
+	char *composto = definirStringDinamica(letras);
   void aggregate (Cliente MeuCliente, Animal MeuAnimal) {//CliNome | CliNum | nomeAnimal[50] | int especie | dataNascimento | char agressivo; //'S' sim 'N' nao
     int i = 0;
     char meuChar[100];
@@ -112,7 +112,7 @@ int qntdAnimaisAgressivos(Animal *MeusAnimais) {
 char *posIntToChar(int in) {
   int i = 1+(int) log10(in);
   int mx = i;
-  char *myChar = (char *) malloc(sizeof(char)*(i+2));
+  char *myChar = definirStringDinamica(i+2);
   while(i >= 1) {
       int toInt = in/pow(10,i-1);
       myChar[mx-i] = 48+toInt;
@@ -145,30 +145,31 @@ char *dataParaChar(Data data) {
 	return out;
 }
 
-int confTabelaAnimais[] = {5,14,12,24,56} //Primeiro Valor tamanho do Array
+char confNomeColunas[][] = {"Nome", "Especie", "Agressivo", "Data de Nascimento", "Nome do Cliente", "Telefone"};
+int confTabelaAnimais[] = {7,14,12,20,13,14}; //Primeiro Valor tamanho do Array
 char *imprimirAnimais(Animal Animais[],int *tamanho) {
-    	int     pos = 0, // Posicao em que se esta escrevendo
+    	int     cursor = 0, // Posicao em que se esta escrevendo
 		flT = 0; // Fileira linha Tamanho
-    	char *minhaFileiraLinha = (char*) malloc(sizeof(char)),
-    		*minhaImpressao = (char*) malloc(sizeof(char));
-    	void criacaoFileiraLinha() {
+    	char *minhaFileiraLinha = definirStringDinamica(1), // A linha que separa conteudo das fileiras
+    		*minhaImpressao = definirStringDinamica(1); // A string da tabela inteira que vou montar
+    	void criacaoFileiraLinha() { // Inicializa a Fileira Linha
     		for (int i = 1; i < confTabelaAnimais[0]; i++) {
-    			flC += confTabelaAnimais[i]+1;
-    			minhaFileiraLinha = (char*) realloc(minhaFileiraLinha,sizeof(char)*(flC+2));
-    			myStrCpy(minhaFileiraLinha,"",&flI,confTabelaAnimais[i], ((i == 1) ? -2 : -3));
+    			flT += confTabelaAnimais[i]+1;
+    			minhaFileiraLinha = aumentarTamString(minhaFileiraLinha,flT+2);
+    			myStrCpy(minhaFileiraLinha, "", &cursor, confTabelaAnimais[i], ((i == 1) ? -2 : -3)); // Se for primeira linha quero linha de coluna antes tambem
     		}
-    		minhaFileiraLinha[flI] = '\n';
-		minhaFileiraLinha[flI+1] = '\0';
+    		minhaFileiraLinha[cursor] = '\n';
+		minhaFileiraLinha[cursor+1] = '\0';
     	}
-	void anexarColuna(char *valor, int coluna) myStrCpy(minhaImpressao, valor, &flI, confTabelaAnimais[coluna], 3);
-	void anexarFL()                            myStrCpy(minhaImpressao,minhaFileiraLinha,&flI,strlen(minhaFileiraLinha),0);
-	void anexarNL()                            myStrCpy(minhaImpressao,"\n",&flI,1,0);
+	void anexarColuna(char *valor, int coluna) myStrCpy(minhaImpressao, valor, &cursor, confTabelaAnimais[coluna], ((i == 0) ? 2 :3); // Se for primeira linha quero linha de coluna antes tambem
+	void anexarFL()                            myStrCpy(minhaImpressao,minhaFileiraLinha,&cursor,strlen(minhaFileiraLinha),0); // Anexar fileira linha
+	void anexarNL()                            myStrCpy(minhaImpressao,"\n",&flI,1,0); // Anexar "New Line" (enter)
 	void anexarFileira(char **colunas, int confTabelaAnimais[]) {
 		for (int i = 1; i < confTabelaAnimais[0]; i++) {
-			anexarColuna(colunas[i], &i);
+			anexarColuna(colunas[i], i);
 		}
 	}
-	flI = 0;
+	cursor = 0;
     	criacaoFileiraLinha();
     	for(int i = 0; i < (*tamanho); i++) {
 		int j = 0;
@@ -186,7 +187,7 @@ char *imprimirAnimais(Animal Animais[],int *tamanho) {
 	anexarFL();
 	anexarNL()
 	return minhaImpressao;
-    }
+}
 
 //Função de validar nomes
   int nomeValido (char *in) {//Returns 1 em valido 0 em invalido
@@ -305,68 +306,3 @@ int main() {
   }
   return 0;
 }
-
-		/* IGNORAR
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
-int main()
-{
-    void myStrCpy (char *str1, char *str2, int *i, int lee, int writeColuna) { //Msm funcao de str cpy soq ele comeca por int i dado, agregando a ele conforme escreve, e int lee, de leeway para limite de escrita, substituindo com espacos brancos | pft para escrever fileiras
-        char meuString[24], meuSRR[24];
-        int testInt = -1;
-        void strAAA() {
-            strcpy(meuString,str1);
-            strcpy(meuSRR,str2);
-        }
-        char cpyFrm[2] = {' ', '|'};
-        strAAA();
-    	if (writeColuna < 0) {cpyFrm[0] = '-'; cpyFrm[1] = '+';}
-    	int len = strlen(str2);
-    	if (writeColuna > -3 && writeColuna < 3 && writeColuna != 0) str1[(*i)] = cpyFrm[1];
-    	strAAA();
-    	(*i)++;
-        for (int j = (*i);(*i)-j < lee-1; (*i)++) {
-        	testInt = (*i);
-        	str1[(*i)] = ((len > (*i)-j) ? str2[(*i)-j] : cpyFrm[0]); //se escrevo primeira coluna copio de um a menos para um a mai
-        
-            strAAA();
-            
-        }
-    	if (writeColuna > 1 || writeColuna < -1) {str1[(*i)] = cpyFrm[1]; (*i)++;}
-    	strAAA();
-        str1[(*i)] = '\0';
-        strAAA();
-        
-    }
-    int confTabelaAnimais[] = {4,12,5,3}; //20
-    char *imprimirAnimais(int *tamanho) {
-    	int flI = 0, flC = 0;
-    	char *minhaFileiraLinha = (char*) malloc(sizeof(char)),
-    		*minhaFileira,
-    		*minhaImpressao = (char*) malloc(sizeof(char));
-    	void criacaoFileiraLinha() {
-    		for (int i = 1; i < confTabelaAnimais[0]; i++) {
-    			flC += confTabelaAnimais[i]+1;
-    			minhaFileiraLinha = (char*) realloc(minhaFileiraLinha,sizeof(char)*(flC+2));
-    			myStrCpy(minhaFileiraLinha,"",&flI,confTabelaAnimais[i],-3);
-    		}
-    		char copiaDaMinhaFileiraCompleta[flC+2];
-    		strcpy(copiaDaMinhaFileiraCompleta,minhaFileiraLinha);
-    		flI = 0;
-    		myStrCpy(minhaFileiraLinha,copiaDaMinhaFileiraCompleta,&flI,flC,-1);
-    		minhaFileiraLinha[flI] = '\n';
-    	}
-    	criacaoFileiraLinha();
-    	minhaFileiraLinha[flC-1] = '\0'; 
-        return minhaFileiraLinha;
-    }
-    int a = 5;
-    char *mf = (char*) malloc(sizeof(char)*100);
-    mf = imprimirAnimais(&a);
-    puts(mf);
-    printf("\n%d",(int)strlen(mf));
-    return 0;
-*/
