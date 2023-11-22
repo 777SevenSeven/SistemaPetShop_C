@@ -129,25 +129,31 @@ int charToPosInt(char *in) {
 }
 
 int confTabelaAnimais[] = {5,14,12,24,56} //Primeiro Valor tamanho do Array
-char *imprimirAnimais(int *tamanho) {
+char *imprimirAnimais(Animal Animais[],int *tamanho) {
     	int flI = 0, flC = 0;
     	char *minhaFileiraLinha = (char*) malloc(sizeof(char)),
-    		*minhaFileira,
     		*minhaImpressao = (char*) malloc(sizeof(char));
     	void criacaoFileiraLinha() {
-    		flC += confTabelaAnimais[1]+1;
-    		minhaFileiraLinha = (char*) realloc(minhaFileiraLinha,sizeof(char)*(flC+2));
-    		myStrCpy(minhaFileiraLinha,"",&flI,confTabelaAnimais[1],-2);
-    		for (int i = 2; i < confTabelaAnimais[0]; i++) {
+    		for (int i = 1; i < confTabelaAnimais[0]; i++) {
     			flC += confTabelaAnimais[i]+1;
     			minhaFileiraLinha = (char*) realloc(minhaFileiraLinha,sizeof(char)*(flC+2));
-    			myStrCpy(minhaFileiraLinha,"",&flI,confTabelaAnimais[i],-3);
+    			myStrCpy(minhaFileiraLinha,"",&flI,confTabelaAnimais[i], ((i == 1) ? -2 : -3));
     		}
     		minhaFileiraLinha[flI] = '\n';
+		minhaFileiraLinha[flI+1] = '\0';
     	}
+	void anexarFL() myStrCpy(minhaImpressao,minhaFileiraLinha,&flI,strlen(minhaFileiraLinha),0);
+	flI = 0;
     	criacaoFileiraLinha();
-    	minhaFileiraLinha[flC-1] = '\0';
-	
+    	for(int i = 0; i < (*tamanho); i++) {
+		int j = 0;
+		Animal oa = Animais[i];
+		anexarFL();
+		// Aqui imprimo todas os conteudos da tabela por ordem
+		myStrCpy(minhaImpressao, oa.nomeAnimal,confTabelaAnimais[1+j++])
+	}
+	anexarFL();
+	return minhaImpressao;
     }
 
 //Função de validar nomes
