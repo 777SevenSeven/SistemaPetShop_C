@@ -17,8 +17,13 @@ Nomes:André Antônio da Silva Queiroz    | RA:a2575310
 
 const char ESPECIES[][] = {"York","Yorkie","Yorkshire","York fofo", "Yorkiezinho", "Yorkiiiiee >///<"};
 
-char tabelaAnimaisNomeColunas[][] = {"Nome", "Especie", "Agressivo", "Data de Nascimento", "Nome do Cliente", "Telefone"};
-int confTabelaAnimais[] = {7,14,12,20,13,14}; //Primeiro Valor tamanho do Array
+// Configuracao Tabela de Animais Aggressivos
+char tabelaAnimaisAggressivosNomeColunas[][] = {"Quantidade"}; // O nome das colunas quando tabeladas
+int confTabelaAnimaisAggressivos[]           = {2,13}; // Representa Tamanho de cada coluna em ordem, o primeiro valor e o tamanho do Vetor
+
+// Configuracao Tabela Animais Completa
+char tabelaAnimaisNomeColunas[][]            = {"Nome", "Especie", "Agressivo", "Data de Nascimento", "Nome do Cliente", "Telefone"};
+int confTabelaAnimais[]                      = {7,14,12,20,13,14}; // Primeiro Valor tamanho do Array
 //Type def
 
 typedef struct {
@@ -79,15 +84,6 @@ void myStrCpy (char *str1, char *str2, int *i, int lee, int writeColuna) { //Msm
         }
     	if (writeColuna > 1 || writeColuna < -1) {str1[(*i)] = cpyFrm[1]; (*i)++;}
 	str1[(*i)] = '\0';
-}
-
-int qntdAnimaisAgressivos(Animal *MeusAnimais) {
-  int contagem = 0;
-  int sz = 100; // se tivermos quantia de entradas assignar aqui para otimizacao so funciona se for tudo em ordem sem pular
-  for (int i = 0; i < sz; i++) {
-    if (MeusAnimais[i].agressivo == 'S') contagem++;
-  }
-  return contagem;
 }
 
 char *posIntToChar(int in) {
@@ -151,6 +147,25 @@ char *anexarFileira(char **colunas, int confTabela[], int PrimeiraFileira) {
 	return minhaImpressao;
 }
 
+char *qntdAnimaisAgressivos(Animal *MeusAnimais, int quantidadeDeAnimais) {
+	int contagem = 0,
+	    tamanhoPrimeiraFileira; // Se refere a posicao no string da primeira fileira, pra escrever a partir dela na segunda
+	char impressao[400],
+	     confColunaComQuantidadeDeAgressivos[1][4];
+	     primeiraFileira*; // nn sei se pode
+	     fileiraDeConteudo*;
+	for (int i = 0; i < quantidadeDeAnimais; i++) {
+  		if (MeusAnimais[i].  == 'S') contagem++;
+  	}
+	strcpy(colunaComQuantidadeDeAgressivos[0],posIntToChar(contagem)); // Montar a coluna com o numero de Aggressivos
+	strcpy(primeiraFileira, anexarFileira(tabelaAnimaisAggressivosNomeColunas,confTabelaAnimaisAggressivos,1));
+	strcpy(fileiraDeConteudo, anexarFileira(colunaComQuantidadeDeAgressivos,confTabelaAnimaisAggressivos,0));
+	tamanhoPrimeiraFileira = strlen(primeiraFileira);
+	strcpy(impressao, primeiraFileira);
+	myStrCpy(impressao, fileiraDeConteudo, &tamanhoPrimeiraFileira, strlen(fileiraConteudo),0);
+	return impressao;
+}
+
 char **criarColunaAnimais(Animal oA) {
 	char coluna[][] = {     oA.nomeAnimal,
 				ESPECIE[oA.especie],
@@ -165,7 +180,7 @@ char *baseadoEmNomePet (char *Nome, Animal *Pets, int tamanhoVetorAnimais){
 	char impressao[400];
   	for (int i = 0; i < tamanhoVetorAnimais; i++){
   		if (strcmp (Pets[i].nomeAnimal, Nome) == 0) {
-			char *primeiraFileira   = anexarFileira(tabelaAnimaisNomeColunas,tabelaAnimaisNomeColunas,1);
+			char *primeiraFileira   = anexarFileira(tabelaAnimaisNomeColunas,confTabelaAnimais,1); //nn sei se pode
 			char *fileiraDeConteudo = anexarFileira(criarColunaAnimais(Pets[i]),confTabelaAnimais,0);
 			int tamanhoDaPrimeiraFileira = strlen(primeiraFileira);
 			int tamanhoFileiraDeConteudo = strlen(fileiraDeConteudo);
@@ -335,6 +350,9 @@ int main() {
 				break;
 			case 'l' : // Commando limpar o console
 				system("clear");
+				break;
+			case 'q' : // Mostrar quantidade de Animais Agressivos
+				printf("%s\n", qntdAnimaisAgressivos(MeusAnimais, tamanhos[1]));
 				break;
 		}
 		free(); // Limpar memoria alocada dinamicamente (Strings dinamicas)
