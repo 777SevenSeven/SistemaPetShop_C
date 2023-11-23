@@ -242,34 +242,42 @@ char *imprimirAnimais(Animal Animais[],int *tamanho) {
 	return minhaImpressao;
 }
 
-//Função de validar nomes
-  int nomeValido (char *in) {//Returns 1 em valido 0 em invalido
+// Função para validar nomes
+int nomeValido(char *in) {
     int valid = 0;
-    for (int i = 0; i < strlen(in); i++) {
-	    if (in[i] < 65 || (in[i] > 90 && in[i] < 97) || in[i] > 122) {
-    	    valid = -1;
-    	    break;
-    	} else valid++;
-    }
-    if (valid >= 3) return 1;
-    else return 0;
-  }
 
-//Função de validar Telefones
-int ValidarTelefone(char telefoneCliente[15]) {
+    for (int i = 0; i < strlen(in); i++) {
+        if ((in[i] < 65 || (in[i] > 90 && in[i] < 97) || in[i] > 122) && in[i] != ' ') { //os números 65, 90, 97 e 122 estão em formato da representação ASCII
+            valid = -1;
+            break;
+            } else if (in[i] != ' ') {
+            valid++;
+            }
+        }
+
+    if (valid >= 3) {
+        return 1; // Válido
+        } else {
+        return 0; // Inválido
+        }
+    }
+
+// Função para validar telefones
+    int validarTelefone(char telefoneCliente[15]) {
     // Verifica se o telefone tem tamanho entre 11 e 12 e se o primeiro caractere é '0'
     if (!(strlen(telefoneCliente) >= 11 && strlen(telefoneCliente) <= 12 && telefoneCliente[0] == '0')) {
-        return -1; // Inválido
+        return 0; // Inválido
     }
-	
+
     // Verifica se todos os caracteres restantes são dígitos numéricos válidos
     for (int j = 1; j < strlen(telefoneCliente); j++) {
         if (telefoneCliente[j] < '0' || telefoneCliente[j] > '9') {
-            return -1; // Inválido
+            return 0; // Inválido
+            }
         }
+
+        return 1; // Válido
     }
-    return 1; // Válido
-}
 	
 //Função de validar Datas
 int ValidarData(int dia, int mes, int ano) {
