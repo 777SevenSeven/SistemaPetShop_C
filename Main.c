@@ -367,29 +367,31 @@ int ValidarData(int dia, int mes, int ano) {
 }
 
 // Função para cadastrar os clientes
-int cadastrarCliente(Cliente *MeusClientes, int *tamanhoClientes) {
+Cliente* cadastrarCliente(Cliente *MeusClientes, int *tamanhoClientes) {
     char nomeCliente[50];
     char telefoneCliente[15];
 
 // Recebe o nome do cliente e armazena dentro do char
- do {
+do { 
     printf("Nome do cliente: ");
     fgets(nomeCliente, sizeof(nomeCliente) / sizeof(char), stdin); 
     nomeCliente[strcspn(nomeCliente, "\n")] = '\0';
 
     // Irá realizar a validação do nome
     if (!nomeValido(nomeCliente)) {
-        printf("Nome inválido, insira um nome válido ou E para desistir.\n");
+        printf("Nome inválido, E para desistir, qualquer coisa pra continuar.\n");
         fgets(nomeCliente, sizeof(nomeCliente) / sizeof(char), stdin);
-        nomeDoCliente[strcspn(nomeDoCliente, "\n")] = '\0';
+        nomeCliente[strcspn(nomeCliente, "\n")] = '\0';
 		
 	// Caso o usuário desista de inserir, ele pode pressionar E ou e para desistir
-        if (nomeDoCliente == 'E' || nomeDoCliente == 'e') return 0;
+        if (nomeCliente[0] == 'E' || nomeCliente[0] == 'e') return 0;
 
         // Continue para a próxima iteração do loop para que o usuário insira o nome novamente
         continue;
-    }
+    } else break;
+ }
 
+do {
     // Recebe o telefone do cliente e armazena dentro do char
     printf("Telefone do cliente: ");
     fgets(telefoneCliente, sizeof(telefoneCliente) / sizeof(char), stdin);
@@ -397,43 +399,46 @@ int cadastrarCliente(Cliente *MeusClientes, int *tamanhoClientes) {
 
     // irá realizar a validação do telefone
     if (!ValidarTelefone(telefoneCliente)) {
-        printf("Telefone inválido, insira um telefone válido ou E para desistir.\n");
-        fgets(opcao, sizeof(opcao)/sizeof(char), stdin);
-        opcao[strcspn(opcao, "\n")] = '\0';
+        printf("Telefone inválido, E para desistir, qualquer coisa pra continuar.\n");
+        fgets(telefoneCliente, sizeof(telefoneCliente)/sizeof(char), stdin);
+        telefoneCliente[strcspn(telefoneCliente, "\n")] = '\0';
 
         // Caso o usuário desista de inserir, ele pode pressionar E ou e para desistir
-		opcao[0] = toupper(opcao[0]); //transformar em uppercase p facilitar a verificação
-	if (opcao[0] == 'E') return 0;
+	if (telefoneCliente[0] == 'E' || telefoneCliente[0] == 'e') return 0;
 
         // Continue para a próxima iteração do loop para que o usuário insira o telefone novamente
         continue;
-    }
+    } else break;
+}
 
-    // Se chegou até aqui, os dados são válidos
-    break;
-	 
-} while (1);
-(*tamanhoClientes)++;
-return MeusCientes[(*tamanhoClientes)-1];
+strcpy(meusClientes[(*tamanho)].nomeCliente, nomeCliente);
+strcpy(meusClientes[(*tamanho)].telefoneCliente, telefoneCliente);
+(*tamanhoClientes)++; 
+return &meusClientes[(*tamanho)-1];
 }
 
 // Função de cadastrar os pets
-int cadastrarPet(Animal *MeusAnimais, int *tamanhoAnimais, Cliente *MeusClientes, int tamanhoClientes) {
-	char nomeAnimal[50], agressivo, escolhaClienteStr[6];
+int cadastrarPet(Animal *MeusAnimais, int *tamanhoAnimais, Cliente *MeusClientes, int *tamanhoClientes) {
+	char nomeAnimal[50], agressivo, escolhaClienteStr[50];
 	int especie, diaNascimento, mesNascimento, anoNascimento;
 	Cliente *ClienteEscolhido;
+	Animal meuPet;
+	int especiePet;	
+    Data dataNascimento;
    
-	printf("Já possui cadastro? S para sim, N para não ou E para desistir: "); //Usuario irá informar se ele possui cadastro para cadastrar um pet
 	while (1) {
+		printf("Já possui cadastro? S para sim, N para não ou E para desistir: "); //Usuario irá informar se ele possui cadastro para cadastrar um pet
     	fgets(escolhaClienteStr, sizeof(escolhaClienteStr)/sizeof(char), stdin);
-		escolherClientesStr[0] = toupper(escolherClientesStr[0]); //transformar em uppercase p facilitar a verificação
+		escolherClientesStr = toupper(escolherClientesStr, 50); //transformar em uppercase p facilitar a verificação
     	if (escolherClienteStr[0] == 'S') {
             // Chama a função que retorna um vetor para listar os clientes
-            int *clientesEncontrados = mapaListagemClientesPorPesquisa(MeusClientes, tamanhoClientes, "");
-    		
+			printf("Termo de Pesquisa: ");
+    		fgets(escolhaClienteStr, sizeof(escolhaClienteStr)/sizeof(char), stdin);
+            int *clientesEncontrados = mapaListagemClientesPorPesquisa(MeusClientes, *tamanhoClientes, escolherClientesStr);
+
     		if (clientesEncontrados[0] > 0) {
-                	// Se houver clientes, o usuário vai escolher um número
-    	            int numeroEscolhido;
+			do {
+    	            int numeroEscolhido; // Se houver clientes, o usuário vai escolher um número
     	            char numeroEscolhidoStr[5];
     	            printf("Digite o número correspondente ao cliente desejado: ");
     	            fgets(numeroEscolhidoStr, sizeof(numeroEscolhidoStr)/sizeof(char), stdin);
@@ -446,9 +451,10 @@ int cadastrarPet(Animal *MeusAnimais, int *tamanhoAnimais, Cliente *MeusClientes
                         ClienteEscolhido = &MeusClientes[clientesEncontrados[numeroEscolhido]]; //Essa parte vai atribuir o endereço de memória do cliente escolhido ao ponteiro ClienteEscolhido
                         break;
                     }
-    		} else if {
+			}	while(1);
+    		} else {
                 printf("Nenhum cliente encontrado.\n");
-                return -1;
+                continue;
             }
         } else if (escolherClienteStr[0] == 'N') {
             // Se ele escolher N ele vai ser redirecionado pro cadastro
@@ -460,7 +466,7 @@ int cadastrarPet(Animal *MeusAnimais, int *tamanhoAnimais, Cliente *MeusClientes
             printf("Escolha inválida. Digite S, N ou E.\n");
             continue; 
 		}
-
+	}
 	// TRAVEI AQUI Ó -----------
 		
 
@@ -477,10 +483,10 @@ int cadastrarPet(Animal *MeusAnimais, int *tamanhoAnimais, Cliente *MeusClientes
         break;  
     } while (1); 
 
+
 	// Informar a espécie do pet
 	printf("Qual dessas opções é seu pet? \n");
-    	imprimirTabelaEspecies()
-	int especiePet;
+    imprimirTabelaEspecies()
 
 	// Essa parte vai receber qual é a espécie do pet e vai armazenar
 	do {
@@ -494,20 +500,20 @@ int cadastrarPet(Animal *MeusAnimais, int *tamanhoAnimais, Cliente *MeusClientes
             printf("Escolha inválida. Digite um número válido.\n") 
 		    continue;
         }
-    } while (especiePet < 1 || especiePet > sizeof(ESPECIES)/sizeof(ESPECIES[0]));
+		break;
+    } while (1);
 
 	// Aqui é onde será definido a data de nascimento do pet e armazenada no struct data
-    Data dataNascimento;
 	do {
         printf("Digite a data de nascimento do seu Pet: (DD/MM/AAAA): ");
-        char dataNascimentoStr[11];
+        char dataNascimentoStr[12];
         fgets(dataNascimentoStr, sizeof(dataNascimentoStr)/sizeof(char), stdin); //Vai armazenar o valor
 
 	int diaNascimento, mesNascimento, anoNascimento; //Aqui eu declarei cada variavel especifica p armazenar
-	sscanf(dataNascimentoStr, "%d/%d/%d", &diaNascimento, &mesNascimento, &anoNascimento); //usei o sscanf p poder analisar a string dataNascimentoStr, ai ele extrai os valores formatados com dia/mes/ano
+	sscanf(dataNascimentoStr, "%d/%d/%d", &dataNascimento.dia, &dataNascimento.mes, &dataNascimento.ano); //usei o sscanf p poder analisar a string dataNascimentoStr, ai ele extrai os valores formatados com dia/mes/ano
 
 	// Aqui vai fazer a verificação da data de nascimento
-	if (ValidarData(diaNascimento, mesNascimento, anoNascimento) == -1) {
+	if (ValidarData(dataNascimento.dia, dataNascimento.mes, dataNascimento.ano) == 0) {
             printf("Data de nascimento inválida. Digite novamente.\n");
             continue;
         }
@@ -515,19 +521,16 @@ int cadastrarPet(Animal *MeusAnimais, int *tamanhoAnimais, Cliente *MeusClientes
     } while (1);
 
 	// Aqui vai ser a parte pra ver se o pet é agressivo ou não
-	Animal meuPet
 	do {
     	printf("O seu Pet é agressivo? (S para sim, N para não): "); 
     	char agressivoStr[2]; 
     	fgets(agressivoStr, sizeof(agressivoStr)/sizeof(char), stdin);
-
-	agressivoStr[0] = toupper(agressivoStr[0]); // Transformar em uppercase p facilitar a verificação
+//Retirar o \n!!!!
+		
+	agressivoStr = toupper(agressivoStr, 2); // Transformar em uppercase p facilitar a verificação
     // Verificar se o usuário digitou S ou N, se S ou N, armazenar na struct Animal
-    if (agressivoStr[0] == 'S') {
-        meuPet.agressivo = 'S';
-        break;
-    } else if (agressivoStr[0] == 'N') {
-        meuPet.agressivo = 'N';
+    if (agressivoStr[0] == 'S' || agressivoStr[0] == 'N') {
+        meuPet.agressivo = agressivoStr[0];
         break;
     } else {
         printf("Escolha inválida. Digite S para sim ou N para não.\n");
@@ -535,6 +538,13 @@ int cadastrarPet(Animal *MeusAnimais, int *tamanhoAnimais, Cliente *MeusClientes
     }
 } while (1);
 	meuPet.cliente = ClienteEscolhido;  //associando o pet ao cliente
+	meuPet.nomeAnimal = nomeAnimal;
+	meuPet.especie = especiePet;
+	meuPet.dataNascimento = dataNascimento;
+	meusAnimais[(*tamanhoAnimais)] = meuPet;
+	(*tamanhoAnimais)++; 
+	return 1;
+}
 
 // Função para buscar o cliente e imprimir os seus dados e do pet, se existir
 void buscarClienteImprimir(Cliente *Clientes, int tamanhoClientes, Animal *MeusAnimais, int tamanhoAnimais) {
