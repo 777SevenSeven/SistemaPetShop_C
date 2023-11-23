@@ -13,9 +13,13 @@ Nomes:André Antônio da Silva Queiroz    | RA:a2575310
 #define DIA 1
 #define MES 2
 #define ANO 1997
-#define MENU_DE_COMANDOS "\n'q' para mostrar quantidade de animais agressivos\n'a' para listar animais;\n'l' para limpar o console;\n'c' para cadastrar um cliente;\n'e' para terminar;\n\ndigite aqui: "
+#define MENU_DE_COMANDOS "\n'a' para cadastrar um novo animal;\n'q' para mostrar quantidade de animais agressivos\n'p' para listar animais;\n'l' para limpar o console;\n'c' para cadastrar um cliente;\n'e' para terminar;\n\ndigite aqui: "
 
 const char ESPECIES[][] = {"York","Yorkie","Yorkshire","York fofo", "Yorkiezinho", "Yorkiiiiee >///<"};
+
+// Configuracao Tabela de Pesquisa por Clientes
+char tabelaPesquisaClientesNomeColunas[][]   = {"#","Nome"};
+int confTabelaPesquisaClientes[]             = {3,2,14};
 
 // Configuracao Tabela de Animais Aggressivos
 char tabelaAnimaisAggressivosNomeColunas[][] = {"Quantidade"}; // O nome das colunas quando tabeladas
@@ -64,43 +68,27 @@ int *vetorIntDinamico(int tamanho) return (int*) malloc(tamanho*sizeof(int));
 
 int *aumentarVetorInt(int *vetor, int tamanho) return (int*) realloc(vetor,tamanho*sizeof(int));
 
-int find(char from[], char to[]) {
-    	int cursor = 0,
-            valid;
-    	while (from[cursor] != '\0') {
-        valid = 0;
-        for (int i = 0; i < strlen(to) && cursor+i < strlen(from); i++) {
-            	if (!(from[cursor+i] == to[i])) {
-                	break;
-            	} else if (i+1 == strlen(to)) valid = 1;
-        }
-        if (valid == 1) break;
-        	cursor++;
-    	}
-    	return valid;
-}
-
-int *mapaListagemClientesPorPesquisa(Cliente *Clientes, int tamanho, char[] termo) {
-	int meuVetor[101],
-	    i = 1;
-	for (int j = 0; j < tamanho; j++) {
-		if (find(Clientes[j].nomeCliente, termo) == 1) {
-			meuVetor[i] = j;
-			i++;
-		}
-	}
-	meuVetor[0] = i;
-	return meuVetor;
-}
-
-void meuSort(Animal *meusAnimais, int *tamanho) {
+void sortAnimais(Animal *meusAnimais, int tamanho) {
     	Animal meuAnimal;
-    	for (int x = 0; x < (*tamanho)-1; x++) {
-    		for (int y = x+1; y < (*tamanho); y++) {
+    	for (int x = 0; x < tamanho-1; x++) {
+    		for (int y = x+1; y < tamanho; y++) {
     			if (strcmp(meusAnimais[x].nomeAnimal, meusAnimais[y].nomeAnimal) > 0) {
     				meuAnimal = meusAnimais[x];
     				meusAnimais[x] = meusAnimais[y];
     				meusAnimais[y] = meuAnimal;
+    			}
+    		}
+    	}
+}
+
+void sortClientes(Cliente *meusClientes, int tamanho) {
+    	Cliente meuCliente;
+    	for (int x = 0; x < tamanho-1; x++) {
+    		for (int y = x+1; y < tamanho; y++) {
+    			if (strcmp(meusClientes[x].nomeCliente, meusClientes[y].nomeCliente) > 0) {
+    				meuCliente = meusClientes[x];
+    				meusClientes[x] = meusClientes[y];
+    				meusClientes[y] = meuCliente;
     			}
     		}
     	}
@@ -177,6 +165,49 @@ char *anexarFileira(char **colunas, int confTabela[], int PrimeiraFileira) {
 	anexarNL();
 	anexarFL();
 	return minhaImpressao;
+}
+
+int find(char from[], char to[]) {
+    	int cursor = 0,
+            valid;
+    	while (from[cursor] != '\0') {
+        valid = 0;
+        for (int i = 0; i < strlen(to) && cursor+i < strlen(from); i++) {
+            	if (!(from[cursor+i] == to[i])) {
+                	break;
+            	} else if (i+1 == strlen(to)) valid = 1;
+        }
+        if (valid == 1) break;
+        	cursor++;
+    	}
+    	return valid;
+}
+
+char **criarColunaPesquisaClientes(Cliente oC, int numero) {
+	char coluna[][] = {     posIntToChar(numero),
+	                        oC.nomeCliente};
+	return coluna;
+}
+
+int *mapaListagemClientesPorPesquisa(Cliente *Clientes, int tamanho, char[] termo) {
+	int meuVetor[101],
+	    i = 1
+	    tamanhoTabela;
+	char minhaTabela[1000];
+	strcpy(minhaTabela, anexarFileira(tabelaPesquisaClientesNomeColuna,confPesquisaClientes,1)); // Colocar primeira fileira na tabela
+	for (int j = 0; j < tamanho; j++) {
+		if (find(Clientes[j].nomeCliente, termo) == 1) {
+			char *novaFileira = anexarFileira(criarColunaPesquisaClientes(Clientes[j],i), confPesquisaClientes, 0));
+			int tamanhoNovaFileira = strlen(novaFileira);
+			tamanhoTabela = strlen(minhaTabela);
+			myStrCpy(minhaTabela, novaFileira, &tamanhoTabela, tamanhoNovaFileira, 0);
+			meuVetor[i] = j;
+			i++;
+		}
+	}
+	meuVetor[0] = i-1; // meuVetor[0] Vai ser a quantidade de valores retornados
+	if (meuVetor[0] > 0) printf("%s\n",minhaTabela);
+	return meuVetor;
 }
 
 char *qntdAnimaisAgressivos(Animal *MeusAnimais, int quantidadeDeAnimais) {
@@ -366,7 +397,10 @@ int main() {
 			case 'h' : // Menu de comandos
 				printf(MENUDECOMANDOS);
 				break;
-			case 'c' : // Menu de cadastro
+			case 'a' : // Menu de cadastro de animal
+
+				break;
+			case 'c' : // Menu de cadastro de cliente
 				do {
 					cadastrarCliente(); // Funcao cadastro cliente
 					printf("Deseja cadastrar outro cliente? 's' para sim, 'n' para não: ");
@@ -376,8 +410,8 @@ int main() {
 					if (in[0] == 'n') break; // Se a resposta for Nao, pare de cadastrar, se nao, continue
 				} while(1)
 				break;
-			case 'a' : // Menu impressao de animais alfabeticamente
-				meuSort(MeusAnimais,&tamanhos[1]); // Organizar os Animais Alfabeticamente
+			case 'p' : // Menu impressao de animais alfabeticamente
+				sortAnimais(MeusAnimais,&tamanhos[1]); // Organizar os Animais Alfabeticamente
 				printf("%s\n", imprimirAnimais(MeusAnimais,&tamanhos[1])); // Imprimir a Tabela dos Animais
 				break;
 			case 'l' : // Commando limpar o console
@@ -387,7 +421,7 @@ int main() {
 				printf("%s\n", qntdAnimaisAgressivos(MeusAnimais, tamanhos[1]));
 				break;
 		}
-		free(); // Limpar memoria alocada dinamicamente (Strings dinamicas)
+		free(); // Limpar memoria alocada dinamicamente (Strings dinamicas/ Vetores inteiros Dinamicos)
   	}
   	return 0;
 }
