@@ -15,7 +15,7 @@ Nomes:André Antônio da Silva Queiroz    | RA:a2575310
 #define ANO 1997
 #define MENU_DE_COMANDOS "\n'a' para cadastrar um novo animal;\n'q' para mostrar quantidade de animais agressivos\n'p' para listar animais;\n'l' para limpar o console;\n'c' para cadastrar um cliente;\n'e' para terminar;\n\ndigite aqui: "
 
-const char ESPECIES[][] = {"York","Yorkie","Yorkshire","York fofo", "Yorkiezinho", "Yorkiiiiee >///<"};
+const char ESPECIES[][] = {"Cachorro","Gato","Hamster","Pássaro", "Coelho"};
 
 // Configuracao Tabela de Pesquisa por Clientes
 char tabelaPesquisaClientesNomeColunas[][]   = {"#","Nome"};
