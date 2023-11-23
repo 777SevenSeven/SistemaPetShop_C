@@ -388,7 +388,75 @@ int cadastrarPet(Animal *MeusAnimais, int *tamanhoAnimais, Cliente *MeusClientes
 	int especie;
 	int diaNascimento, mesNascimento, anoNascimento;
 	char agressivo;
+	char escolhaClienteStr[2];
 
+	printf("Você já possui cadastro? S para sim e N para não: "); //Usuario irá informar se ele possui cadastro para cadastrar um pet
+	fgets(escolhaClienteStr, sizeof(escolhaClienteStr)/sizeof(char), stdin);
+	
+
+	if (escolherClienteStr[0] == 'S' || escolherClienteStr[0] == 's') {
+        // Chama a função que retorna um vetor para listar os clientes
+        	int *clientesEncontrados = mapaListagemClientesPorPesquisa(MeusClientes, tamanhoClientes, "");
+		
+		if (clientesEncontrados[0] > 0) {
+            	// Se houver clientes, o usuário vai escolher um número
+	            int numeroEscolhido;
+	            char numeroEscolhidoStr[5];
+	            printf("Digite o número correspondente ao cliente desejado: ");
+	            fgets(numeroEscolhidoStr, sizeof(numeroEscolhidoStr)/sizeof(char), stdin);
+	            numeroEscolhido = atoi(numeroEscolhidoStr);
+
+		if (numeroEscolhido < 1 || numeroEscolhido > clientesEncontrados[0]) {
+	                printf("Escolha inválida. Digite um número válido.\n");
+	                continue;
+            }
+
+		} else {
+            printf("Nenhum cliente encontrado.\n");
+            return -1;
+        }
+    } else if (escolherClienteStr[0] == 'N' || escolherClienteStr[0] == 'n') {
+        // Se ele escolher N ele vai ser redirecionado pro cadastro
+        int resultadoCadastro = cadastrarCliente(MeusClientes, tamanhoClientes);
+	} else {
+        printf("Escolha inválida. Digite S ou N.\n");
+        continue; 
+    }
+
+	// TRAVEI AQUI Ó -----------
+		
+
+	// Informar o nome do pet
+    do {
+        printf("Nome do seu Pet: ");
+        fgets(nomePet, sizeof(nomeAnimal) / sizeof(char), stdin);
+        nomeAnimal[strcspn(nomeAnimal, "\n")] = '\0';
+
+        // Validação do nome do pet
+        if (!nomeValido(nomeAnimal)) {
+            printf("Nome inválido. Digite um nome válido.\n");
+            continue;
+        }
+        break;  // Se chegou até aqui, o nome é válido
+    } while (1); 
+
+	// Informar a espécie do pet
+	printf("Qual dessas opções é seu pet? \n");
+    	for (int i = 0; i < sizeof(ESPECIES)/sizeof(ESPECIES[0]); i++) {
+        	printf("%d. %s\n", i + 1, ESPECIES[i]);
+    }
+
+    do {
+        printf("Digite o número da espécie de seu Pet: ");
+        char opcao[2];
+        fgets(opcao, sizeof(opcao)/sizeof(char), stdin);
+        especiePet = atoi(opcao);
+
+        if (especiePet < 1 || especiePet > sizeof(ESPECIES)/sizeof(ESPECIES[0])) {
+            printf("Escolha inválida. Digite um número válido.\n") 
+		    continue;
+        }
+    } while (especiePet < 1 || especiePet > sizeof(ESPECIES)/sizeof(ESPECIES[0]));
 
 
 
