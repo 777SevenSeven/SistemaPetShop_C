@@ -382,6 +382,10 @@ return 1;
 
 // Função de cadastrar os pets
 int cadastrarPet(Animal *MeusAnimais, int *tamanhoAnimais, Cliente *MeusClientes, int tamanhoClientes) {
+	char nomeAnimal[50];
+	int especie;
+	int diaNascimento, mesNascimento, anoNascimento;
+	char agressivo;
 
 
 
