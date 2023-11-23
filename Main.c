@@ -63,15 +63,19 @@ typedef struct {
 
 //Funcs
 
-//retornar a ordem alfabetica das entradas atravez dum array array[posicao alfabetica] = posicaoRealNoArrayDeEntrada
+//funcao que cria uma string de tamnaho dinamico
 char *stringDinamica(int tamanho) return (char*) malloc(tamanho*sizeof(char));
 
+//funcao que aumenta tamanho de string dinamico
 char *aumentarTamString(char *string, int tamanho) return (char*) realloc(string,tamanho*sizeof(char));
 
+//funcao que cria um vetor de inteiros de tamnaho dinamico
 int *vetorIntDinamico(int tamanho) return (int*) malloc(tamanho*sizeof(int));
 
+//funcao que aumenta tamanho de vetor inteiro dinamico
 int *aumentarVetorInt(int *vetor, int tamanho) return (int*) realloc(vetor,tamanho*sizeof(int));
 
+// funcao que transforma uma string de minuscula para maiuscula
 char *toupper(char in[], int tamanho) {
 	char *cpy = stringDinamica(tamanho);
     	for (int i = 0; i < tamanho; i++) {
@@ -80,6 +84,7 @@ char *toupper(char in[], int tamanho) {
     	return cpy;
 }
 
+// funcao que organiza animais alfabeticamente
 void sortAnimais(Animal *meusAnimais, int tamanho) {
     	Animal meuAnimal;
     	for (int x = 0; x < tamanho-1; x++) {
@@ -93,6 +98,7 @@ void sortAnimais(Animal *meusAnimais, int tamanho) {
     	}
 }
 
+//função que organiza os clientes alfabeticamente
 void sortClientes(Cliente *meusClientes, int tamanho) {
     	Cliente meuCliente;
     	for (int x = 0; x < tamanho-1; x++) {
@@ -106,7 +112,9 @@ void sortClientes(Cliente *meusClientes, int tamanho) {
     	}
 }
 
-void myStrCpy (char *str1, char *str2, int *i, int lee, int writeColuna) { //Msm funcao de str cpy soq ele comeca por int i dado, agregando a ele conforme escreve, e int lee, de leeway para limite de escrita, substituindo com espacos brancos | pft para escrever fileiras
+//função que copia a segunda string na primeira a partir do ponto i, escrevendo nela lee characteres vazios, tem configuracao adaptada para montar uma coluna, ou fileira de linha
+//Msm funcao de str cpy soq ele comeca por int i dado, agregando a ele conforme escreve, e int lee, de leeway para limite de escrita, substituindo com espacos brancos | pft para escrever fileiras
+void myStrCpy (char *str1, char *str2, int *i, int lee, int writeColuna) { 
         char cpyFrm[2] = {' ', '|'};
     	if (writeColuna < 0) {cpyFrm[0] = '-'; cpyFrm[1] = '+';}
     	int len = strlen(str2);
@@ -118,6 +126,7 @@ void myStrCpy (char *str1, char *str2, int *i, int lee, int writeColuna) { //Msm
 	str1[(*i)] = '\0';
 }
 
+//função que transforma um numero inteiro positivo em um char
 char *posIntToChar(int in) {
   	int i = 1+(int) log10(in);
   	int mx = i;
@@ -132,6 +141,7 @@ char *posIntToChar(int in) {
   	return myChar;
 }
 
+//função que transforma uma data em string e retorna ela
 char *dataParaChar(Data data) {
 	int i = 0;
 	char out[12];
@@ -145,6 +155,7 @@ char *dataParaChar(Data data) {
 	return out;
 }
 
+//função que anexa retorna uma fileira de tabela baseada nas configuracoes de coluna e coluna tamanho, pode ser primeira fileira ou nao
 char *anexarFileira(char **colunas, int confTabela[], int PrimeiraFileira) {
 	int cursor = 0, // Posicao em que se esta escrevendo
 		flT = 0; // Fileira linha Tamanho
@@ -170,6 +181,7 @@ char *anexarFileira(char **colunas, int confTabela[], int PrimeiraFileira) {
 	return minhaImpressao;
 }
 
+//função que procura para ver se o termo to se encontra no string from
 int find(char from[], char to[]) {
 	if (strcmp(to,"") == 0) return 1;
     	int cursor = 0,
@@ -187,12 +199,14 @@ int find(char from[], char to[]) {
     	return valid;
 }
 
+//função que cria a configuracao de coluna da tabela de especies dada o numero inteiro da especie
 char **criarColunaEspecies(int numero) {
 	char coluna[][] = {     atoi(numero),
 				ESPECIES[numero]};
 	return coluna;
 }
 
+//função que ele imprime a tabela de todas as especies com o numero associado
 void imprimirTabelaEspecies() {
 	int quantidadeEspecies = sizeof(ESPECIES) / sizeof(int);
 	printf("%s",annexarFileira(tabelaEspecies,confTabelaEspecies));
@@ -201,12 +215,14 @@ void imprimirTabelaEspecies() {
 	}
 }
 
+//função que cria configuracao da fileira de impressao de tabela de Cliente com o numero associado // usada na busca de clientes cadastrados
 char **criarColunaPesquisaClientes(Cliente oC, int numero) {
 	char coluna[][] = {     posIntToChar(numero),
 	                        oC.nomeCliente};
 	return coluna;
 }
 
+//função que organiza os clientes alfabeticamente, depois ele procura por clientes que foram pesquisados por string termo, e faz a tabela com eles // se o termo for vazio quer dizer que é pra imprimir tudo
 int *mapaListagemClientesPorPesquisa(Cliente *Clientes, int tamanho, char[] termo) {
 	sortClientes(Clientes, tamanho); // Organizar os clientes em ordem alfabetica pra ficar mais bonitinho
 	int meuVetor[101],
@@ -229,6 +245,7 @@ int *mapaListagemClientesPorPesquisa(Cliente *Clientes, int tamanho, char[] term
 	return meuVetor;
 }
 
+//função retorna a tabela de quantidade de animais agressivos para ser impresso
 char *qntdAnimaisAgressivos(Animal *MeusAnimais, int quantidadeDeAnimais) {
 	int contagem = 0,
 	    tamanhoPrimeiraFileira; // Se refere a posicao no string da primeira fileira, pra escrever a partir dela na segunda
@@ -248,6 +265,7 @@ char *qntdAnimaisAgressivos(Animal *MeusAnimais, int quantidadeDeAnimais) {
 	return impressao;
 }
 
+// funcao que retorna a configuracao de uma coluna de uma tabela de animais baseado em um animal especifico, essa conf e usada na funcao de impressao para criar uma fileira da tabela
 char **criarColunaAnimais(Animal oA) {
 	char coluna[][] = {     oA.nomeAnimal,
 				ESPECIE[oA.especie],
@@ -258,6 +276,7 @@ char **criarColunaAnimais(Animal oA) {
 	return coluna;
 }
 
+// função que retorna uma tabela de uma fileira com as caracteristicas do animal com o nome para ser impresso
 char *baseadoEmNomePet (char *Nome, Animal *Pets, int tamanhoVetorAnimais){
 	char impressao[400];
   	for (int i = 0; i < tamanhoVetorAnimais; i++){
@@ -274,6 +293,7 @@ char *baseadoEmNomePet (char *Nome, Animal *Pets, int tamanhoVetorAnimais){
 	return "Pet nao encontrado";
 }
 
+// função que leva o tamanho do vetor animais, e o vetor | ele organiza alfabeticamente, e depois retorna uma tabela com todos os animais e suas caracteristicas para ser impresso
 char *imprimirAnimais(Animal Animais[],int *tamanho) {
 	int cursor = 0;
 	char *minhaImpressao = stringDinamica(1);
