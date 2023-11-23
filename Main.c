@@ -399,10 +399,10 @@ int cadastrarPet(Animal *MeusAnimais, int *tamanhoAnimais, Cliente *MeusClientes
 	char nomeAnimal[50], agressivo, escolhaClienteStr[6];
 	int especie, diaNascimento, mesNascimento, anoNascimento;
 	Cliente *ClienteEscolhido;
-    printf("Já possui cadastro? S para sim, N para não: "); //Usuario irá informar se ele possui cadastro para cadastrar um pet
+   
+	printf("Já possui cadastro? S para sim, N para não ou E para desistir: "); //Usuario irá informar se ele possui cadastro para cadastrar um pet
 	while (1) {
     	fgets(escolhaClienteStr, sizeof(escolhaClienteStr)/sizeof(char), stdin);
-
 		escolherClientesStr[0] = toupper(escolherClientesStr[0]); //transformar em uppercase p facilitar a verificação
     	if (escolherClienteStr[0] == 'S') {
             // Chama a função que retorna um vetor para listar os clientes
@@ -420,21 +420,23 @@ int cadastrarPet(Animal *MeusAnimais, int *tamanhoAnimais, Cliente *MeusClientes
     	                printf("Escolha inválida. Digite um número válido.\n");
     	                continue;
                     } else {
-                        ClienteEscolhido = &MeusClientes[clientesEncontrados[numeroEscolhido]];
+                        ClienteEscolhido = &MeusClientes[clientesEncontrados[numeroEscolhido]]; //Essa parte vai atribuir o endereço de memória do cliente escolhido ao ponteiro ClienteEscolhido
                         break;
                     }
-    		} else {
+    		} else if {
                 printf("Nenhum cliente encontrado.\n");
                 return -1;
             }
         } else if (escolherClienteStr[0] == 'N') {
             // Se ele escolher N ele vai ser redirecionado pro cadastro
             ClienteEscolhido = cadastrarCliente(MeusClientes, tamanhoClientes);
-    	} else {
-            printf("Escolha inválida. Digite S ou N.\n");
+    	} else if (escolhaClienteStr[0] == 'E') {
+            // Se ele escolher E, desiste
+            return -1;
+	} else {
+            printf("Escolha inválida. Digite S, N ou E.\n");
             continue; 
-        }
-	}
+		}
 
 	// TRAVEI AQUI Ó -----------
 		
