@@ -343,7 +343,7 @@ int ValidarData(int dia, int mes, int ano) {
 }
 
 // Função para ar os clientes
-int arCliente(Cliente *MeusClientes, int *tamanhoClientes) {
+Cliente* cadastrarCliente(Cliente *MeusClientes, int *tamanhoClientes) {
     char nomeCliente[50];
     char telefoneCliente[15];
 
