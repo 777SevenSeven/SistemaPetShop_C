@@ -191,6 +191,7 @@ char **criarColunaPesquisaClientes(Cliente oC, int numero) {
 }
 
 int *mapaListagemClientesPorPesquisa(Cliente *Clientes, int tamanho, char[] termo) {
+	sortClientes(Clientes, tamanho); // Organizar os clientes em ordem alfabetica pra ficar mais bonitinho
 	int meuVetor[101],
 	    i = 1
 	    tamanhoTabela;
@@ -380,7 +381,7 @@ int cadastrarCliente(Cliente *MeusClientes, int *tamanhoClientes) {
 } while (1);
 
 return 1;
-
+}
 // Função de cadastrar os pets
 int cadastrarPet(Animal *MeusAnimais, int *tamanhoAnimais, Cliente *MeusClientes, int tamanhoClientes) {
 	char nomeAnimal[50];
