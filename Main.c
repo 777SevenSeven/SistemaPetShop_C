@@ -120,15 +120,6 @@ char *posIntToChar(int in) {
   	return myChar;
 }
 
-int charToPosInt(char *in) {
-  	int myInt = 0;
-  	for (int i = 0; i < strlen(in); i++) {
-  		myInt *= 10;
-      		myInt += in[i]-48;
-  	}
-  	return myInt;
-}
-
 char *dataParaChar(Data data) {
 	int i = 0;
 	char out[12];
