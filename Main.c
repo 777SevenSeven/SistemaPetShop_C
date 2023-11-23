@@ -107,26 +107,26 @@ void myStrCpy (char *str1, char *str2, int *i, int lee, int writeColuna) { //Msm
 }
 
 char *posIntToChar(int in) {
-  int i = 1+(int) log10(in);
-  int mx = i;
-  char *myChar = definirStringDinamica(i+2);
-  while(i >= 1) {
-      int toInt = in/pow(10,i-1);
-      myChar[mx-i] = 48+toInt;
-      in -= toInt*pow(10,i-1);
-      i--;
-  }
-  myChar[mx] = '\0';
-  return myChar;
+  	int i = 1+(int) log10(in);
+  	int mx = i;
+ 	char *myChar = definirStringDinamica(i+2);
+	while(i >= 1) {
+      		int toInt = in/pow(10,i-1);
+      		myChar[mx-i] = 48+toInt;
+      		in -= toInt*pow(10,i-1);
+      		i--;
+  	}
+  	myChar[mx] = '\0';
+  	return myChar;
 }
 
 int charToPosInt(char *in) {
-  int myInt = 0;
-  for (int i = 0; i < strlen(in); i++) {
-      myInt *= 10;
-      myInt += in[i]-48;
-  }
-  return myInt;
+  	int myInt = 0;
+  	for (int i = 0; i < strlen(in); i++) {
+  		myInt *= 10;
+      		myInt += in[i]-48;
+  	}
+  	return myInt;
 }
 
 char *dataParaChar(Data data) {
@@ -168,6 +168,7 @@ char *anexarFileira(char **colunas, int confTabela[], int PrimeiraFileira) {
 }
 
 int find(char from[], char to[]) {
+	if (strcmp(to,"") == 0) return 1;
     	int cursor = 0,
             valid;
     	while (from[cursor] != '\0') {
