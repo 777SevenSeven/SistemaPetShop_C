@@ -17,6 +17,10 @@ Nomes:André Antônio da Silva Queiroz    | RA:a2575310
 
 const char ESPECIES[][] = {"Cachorro","Gato","Hamster","Pássaro", "Coelho"};
 
+// Configuracao Tabela de Especies
+char tabelaEspecies[][]                      = {"#","Especie"};
+int confTabelaEspecies[]                     = {3,2,14};
+
 // Configuracao Tabela de Pesquisa por Clientes
 char tabelaPesquisaClientesNomeColunas[][]   = {"#","Nome"};
 int confTabelaPesquisaClientes[]             = {3,2,14};
@@ -173,6 +177,20 @@ int find(char from[], char to[]) {
         	cursor++;
     	}
     	return valid;
+}
+
+char **criarColunaEspecies(int numero) {
+	char coluna[][] = {     atoi(numero),
+				ESPECIES[numero]};
+	return coluna;
+}
+
+void imprimirTabelaEspecies() {
+	int quantidadeEspecies = sizeof(ESPECIES) / sizeof(int);
+	printf("%s",annexarFileira(tabelaEspecies,confTabelaEspecies));
+	for (int i = 0; i < quantidadeEspecies; i++) {
+		printf("%s",annexarFileira(criarColunaEspecies(i),confTabelaEspecies));
+	}
 }
 
 char **criarColunaPesquisaClientes(Cliente oC, int numero) {
