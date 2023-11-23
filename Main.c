@@ -15,7 +15,7 @@ Nomes:André Antônio da Silva Queiroz    | RA:a2575310
 #define ANO 1997
 #define MENU_DE_COMANDOS "\n'a' para cadastrar um novo animal;\n'q' para mostrar quantidade de animais agressivos\n'p' para listar animais;\n'l' para limpar o console;\n'c' para cadastrar um cliente;\n'e' para terminar;\n\ndigite aqui: "
 
-const char ESPECIES[] = {"Cachorro","Gato","Hamster","Pássaro", "Coelho"};
+const char ESPECIES[][14] = {"Cachorro","Gato","Hamster","Pássaro", "Coelho"};
 
 // Configuracao Tabela de Especies
 char tabelaEspecies[][]                      = {"#","Especie"};
@@ -563,7 +563,7 @@ void buscarClienteImprimir(Cliente *Clientes, int tamanhoClientes, Animal *MeusA
 ///////////////
 
 int main() {
-	char[51] in; // Variavel que guarda a entrada do Usuario no console | maior entrada valida e de 50, precisamos +1 pelo \n que fgets() pega
+	char[5] in; // Variavel que guarda a entrada do Usuario no console | maior entrada valida e de 50, precisamos +1 pelo \n que fgets() pega
 	tamanhos[] = {0,0}; // Quantidade de entradas por vetor ordem: MeusClientes, MeusAnimais
 	Cliente MeusClientes[100]; // Inicializacao dos vetores
 	Animal MeusAnimais[100];
@@ -585,6 +585,20 @@ int main() {
 					} while (in[0] != 'n' || in[0] != 's')
 					if (in[0] == 'n') break; // Se a resposta for Nao, pare de cadastrar, se nao, continue
 				} while(1)
+				break;
+			case 'b' : // Buscar cliente pelo nome e demonstrar dados
+
+				break;
+			case 's' : // Buscar pet pelo nome e demostrar dados
+				do {
+					fgets(in,50,stdin);
+					in[strcspn(in,'\n')] = '\0';
+					printf("%s\n",baseadoEmNomePet(in,MeusAnimais,tamanhos[1]));
+					{
+						printf("'c' para imprimir novamente, 'e' para sair.\nDigite aqui: ");
+						fgets(in,50,stdin);
+					} while (in[0] != 'e' || in[0] != 'c');
+				} while (in[0] == 'c');
 				break;
 			case 'p' : // Menu impressao de animais alfabeticamente
 				sortAnimais(MeusAnimais,&tamanhos[1]); // Organizar os Animais Alfabeticamente
