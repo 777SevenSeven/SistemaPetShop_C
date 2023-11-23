@@ -72,6 +72,14 @@ int *vetorIntDinamico(int tamanho) return (int*) malloc(tamanho*sizeof(int));
 
 int *aumentarVetorInt(int *vetor, int tamanho) return (int*) realloc(vetor,tamanho*sizeof(int));
 
+char *toupper(char in[], int tamanho) {
+	char *cpy = stringDinamica(tamanho);
+    	for (int i = 0; i < tamanho; i++) {
+	    cpy[i] = ((in[i] >= 'a' && in[i] <= 'z') ? in[i] + ('A' - 'a') : in[i]);
+	}
+    return cpy;
+}
+
 void sortAnimais(Animal *meusAnimais, int tamanho) {
     	Animal meuAnimal;
     	for (int x = 0; x < tamanho-1; x++) {
