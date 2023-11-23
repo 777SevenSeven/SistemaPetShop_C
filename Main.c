@@ -388,8 +388,8 @@ Cliente* cadastrarCliente(Cliente *MeusClientes, int *tamanhoClientes) {
     break;
 
 } while (1);
-
-return 1;
+(*tamanhoClientes)++;
+return MeusCientes[(*tamanhoClientes)-1];
 }
 // Função de cadastrar os pets
 int cadastrarPet(Animal *MeusAnimais, int *tamanhoAnimais, Cliente *MeusClientes, int tamanhoClientes) {
