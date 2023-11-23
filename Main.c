@@ -15,7 +15,7 @@ Nomes:André Antônio da Silva Queiroz    | RA:a2575310
 #define ANO 1997
 #define MENU_DE_COMANDOS "\n'a' para cadastrar um novo animal;\n'q' para mostrar quantidade de animais agressivos\n'p' para listar animais;\n'l' para limpar o console;\n'c' para cadastrar um cliente;\n'e' para terminar;\n\ndigite aqui: "
 
-const char ESPECIES[][] = {"Cachorro","Gato","Hamster","Pássaro", "Coelho"};
+const char ESPECIES[] = {"Cachorro","Gato","Hamster","Pássaro", "Coelho"};
 
 // Configuracao Tabela de Especies
 char tabelaEspecies[][]                      = {"#","Especie"};
@@ -455,6 +455,7 @@ int cadastrarPet(Animal *MeusAnimais, int *tamanhoAnimais, Cliente *MeusClientes
 	// Informar a espécie do pet
 	printf("Qual dessas opções é seu pet? \n");
     	imprimirTabelaEspecies()
+	int especiePet;
 
 	// Essa parte vai receber qual é a espécie do pet e vai armazenar
 	do {
@@ -509,6 +510,41 @@ int cadastrarPet(Animal *MeusAnimais, int *tamanhoAnimais, Cliente *MeusClientes
     }
 } while (1);
 	meuPet.cliente = ClienteEscolhido;  //associando o pet ao cliente
+
+// Função para buscar o cliente e imprimir os seus dados e do pet, se existir
+void buscarClienteImprimir(Cliente *Clientes, int tamanhoClientes, Animal *MeusAnimais, int tamanhoAnimais) {
+    char nomeBusca[50];
+
+	printf("Digite o nome do cliente que deseja procurar: ");
+    fgets(nomeBusca, sizeof(nomeBusca)/sizeof(char), stdin); // Solicita uma entrada de nome para realizar a busca
+    nomeBusca[strcspn(nomeBusca, "\n")] = '\0';
+
+	for (int i = 0; i < tamanhoClientes; i++) {
+        if (strcmp(Clientes[i].nomeCliente, nomeBusca) == 0) { //Percorre o loop e vê se o cliente existe
+            // Cliente encontrado, imprime os dados
+            printf("\nDados do Cliente:\n");
+            printf("Nome: %s\n", Clientes[i].nomeCliente);
+            printf("Telefone: %s\n", Clientes[i].telefoneCliente);
+
+ 			printf("\nPets do Cliente:\n");
+    for (int j = 0; j < tamanhoAnimais; j++) { // Percorre o loop de pet e vê se tem pet cadastrado
+                if (MeusAnimais[j].cliente == &Clientes[i]) {
+                    // Pet encontrado, imprime os dados
+                    printf("Nome do Pet: %s\n", MeusAnimais[j].nomeAnimal);
+                    printf("Espécie: %s\n", ESPECIES[MeusAnimais[j].especie]);
+                    printf("Agressivo: %c\n", MeusAnimais[j].agressivo);
+                    printf("Data de Nascimento: %02d/%02d/%04d\n", MeusAnimais[j].dataNascimento.dia, MeusAnimais[j].dataNascimento.mes, MeusAnimais[j].dataNascimento.ano);
+                    printf("-------------------------\n");
+					} else {
+						printf("O cliente não possui pets."); 
+            	} 
+		}
+            return; // Cliente encontrado e impresso, a função pode encerrar
+        } 
+    }
+	printf("Cliente não encontrado.\n");
+	continue;
+}
 
 
 
