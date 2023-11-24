@@ -7,11 +7,11 @@ Nomes:André Antônio da Silva Queiroz    | RA:a2575310
 */
 #include <math.h>
 #include <string.h>
-#include <stdio.h>
+#include <stdio.h> //bibliotecas que o professor pediu para que tenha no máximo.
 #include <stdlib.h>
 
 #define DIA 1
-#define MES 2
+#define MES 2 //Definimos as informações da data aqui em cima, para facilitar o encontro para a manuntenção dessas informações, entre os membros.
 #define ANO 1997
 
 #define MENU_DE_COMANDOS "\n'a' para cadastrar um novo animal;\n'q' para mostrar quantidade de animais agressivos\n'p' para listar animais;\n'l' para limpar o console;\n'c' para cadastrar um cliente;\n'e' para terminar;\n\ndigite aqui: "
