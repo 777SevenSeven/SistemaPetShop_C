@@ -352,21 +352,21 @@ int nomeValido(char *in) {
 	
 //Função de validar Datas
 int ValidarData(int dia, int mes, int ano) {
-    // Verifica se o dia está entre 1 e 21 (utilizei 21 pois temos a regra de não permitir datas futuras)
-    if ((dia < 1 && dia > DIA)) {
+// Verifica se o ano é maior ou igual a 1900 (mínimo) ou 2023 (atual)
+    if (ano < 1977 || ano > ANO) { 
         return 0; // Inválido
-    }
-
+    }   else if(ano == ANO) {
+	   
     // Verifica se o mês está entre 1 e 11  (utilizei 11 pois temos a regra de não permitir datas futuras)
-    if (mes < 1 && mes > MES) {
+    if (mes < 1 || mes > MES) {
         return 0; // Inválido
-    }
-
-    // Verifica se o ano é maior ou igual a 1900 (mínimo) ou 2023 (atual)
-    if (ano < 1977 && ano > ANO) { 
+    } else if(mes == MES) {
+	    
+if ((dia < 1 || dia > DIA)) { // Verifica se o dia está entre 1 e 21 (utilizei 21 pois temos a regra de não permitir datas futuras)
         return 0; // Inválido
-    }
-
+    		}
+	} 
+}  
     // Se todas as verificações passarem, a data é válida
     return 1;
 }
