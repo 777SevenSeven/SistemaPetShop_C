@@ -19,20 +19,21 @@ Nomes:André Antônio da Silva Queiroz    | RA:a2575310
 const char ESPECIES[][14] = {"Cachorro","Gato","Hamster","Pássaro", "Coelho"};
 
 // Configuracao Tabela de Especies
-char tabelaEspecies[][]                      = {"#","Especie"};
+char *tabelaEspecies[14]                      = {"#","Especie"};
 int confTabelaEspecies[]                     = {3,2,14} ;// Primeiro Valor tamanho do Vetor
 
 // Configuracao Tabela de Pesquisa por Clientes
-char tabelaPesquisaClientesNomeColunas[][]   = {"#","Nome"};
+char *tabelaPesquisaClientesNomeColunas[14]   = {"#","Nome"};
 int confTabelaPesquisaClientes[]             = {3,2,14};
 
 // Configuracao Tabela de Animais Aggressivos
-char tabelaAnimaisAggressivosNomeColunas[][] = {"Quantidade"}; // O nome das colunas quando tabeladas
+char *tabelaAnimaisAggressivosNomeColunas[14] = {"Quantidade"}; // O nome das colunas quando tabeladas
 int confTabelaAnimaisAggressivos[]           = {2,13}; // Representa Tamanho de cada coluna em ordem, o primeiro valor e o tamanho do Vetor
 
 // Configuracao Tabela Animais Completa
-char tabelaAnimaisNomeColunas[][]            = {"Nome", "Especie", "Agressivo", "Data de Nascimento", "Nome do Cliente", "Telefone"};
+char *tabelaAnimaisNomeColunas[20]            = {"Nome", "Especie", "Agressivo", "Data de Nascimento", "Nome do Cliente", "Telefone"};
 int confTabelaAnimais[]                      = {7,14,12,20,13,14}; 
+
 //Type def
 
 typedef struct {
@@ -65,17 +66,19 @@ typedef struct {
 //Funcs
 
 //funcao que cria uma string de tamnaho dinamico
-char *stringDinamica(int tamanho) return (char*) malloc(tamanho*sizeof(char));
+char *stringDinamica(int tamanho) {char *out = (char*) malloc(tamanho*sizeof(char)); return out;}
 
-char *aumentarTamString(char *string, int tamanho) return (char*) realloc(string,tamanho*sizeof(char)); //funcao que aumenta tamanho de string dinamico
+char *aumentarTamString(char *string, int tamanho) {char *out = (char*) realloc(string,tamanho*sizeof(char)); return out;}//funcao que aumenta tamanho de string dinamico
+
+char **vetorStringsDinamicos(int tamanhoVetor, int tamanhoString) {char **out = (char**) malloc(sizeof(char)*tamanhoVetor*tamanhoString); return out;}
 
 //funcao que cria um vetor de inteiros de tamnaho dinamico
-int *vetorIntDinamico(int tamanho) return (int*) malloc(tamanho*sizeof(int));
+int *vetorIntDinamico(int tamanho) {int *out = (int*) malloc(tamanho*sizeof(int)); return out;}
 
-int *aumentarVetorInt(int *vetor, int tamanho) return (int*) realloc(vetor,tamanho*sizeof(int)); //funcao que aumenta tamanho de vetor inteiro dinamico
+int *aumentarVetorInt(int *vetor, int tamanho) {int *out = (int*) realloc(vetor,tamanho*sizeof(int)); return out;} //funcao que aumenta tamanho de vetor inteiro dinamico
 
 // funcao que transforma uma string de minuscula para maiuscula
-char *toupper(char in[], int tamanho) {
+char *toUpper(char in[], int tamanho) {
 	char *cpy = stringDinamica(tamanho);
     	for (int i = 0; i < tamanho; i++) {
 	    cpy[i] = ((in[i] >= 'a' && in[i] <= 'z') ? in[i] + ('A' - 'a') : in[i]);
@@ -129,7 +132,7 @@ void myStrCpy (char *str1, char *str2, int *i, int lee, int writeColuna) {
 char *posIntToChar(int in) {
   	int i = 1+(int) log10(in); // Olha quantidade de numeros
   	int mx = i; // Quantidade maxima de numeros
- 	char *myChar = definirStringDinamica(i+2); // Criar string com tamanho de Numeros+2
+ 	char *myChar = stringDinamica(i+2); // Criar string com tamanho de Numeros+2
 	while(i >= 1) {
       		int toInt = in/pow(10,i-1); // Dividir para ficar so um numero positivo com o resto em virgulas
       		myChar[mx-i] = 48+toInt; // Colocar a letra do numero na string
@@ -143,9 +146,9 @@ char *posIntToChar(int in) {
 //função que transforma uma data em string e retorna ela
 char *dataParaChar(Data data) {
 	int i = 0;
-	char out[12];
-	void anexarValor(char *valor, int letras) myStrCpy(out,valor,&i,letras,0);
-	void anexarBarra() anexarValor("/",1);
+	char *out = stringDinamica(12);
+	void anexarValor(char *valor, int letras) {myStrCpy(out,valor,&i,letras,0);}
+	void anexarBarra() {anexarValor("/",1);}
 	anexarValor(posIntToChar(data.dia),2);
 	anexarBarra();
 	anexarValor(posIntToChar(data.mes),2);
@@ -156,22 +159,22 @@ char *dataParaChar(Data data) {
 }
 
 //função que anexa retorna uma fileira de tabela baseada nas configuracoes de coluna e coluna tamanho, pode ser primeira fileira ou nao
-char *anexarFileira(char **colunas, int confTabela[], int PrimeiraFileira) {
+char *anexarFileira(char **colunas, int confTabela[], int primeiraFileira) {
 	int cursor = 0, // Posicao em que se esta escrevendo
 		flT = 0; // Fileira linha Tamanho
     	char *minhaFileiraLinha = stringDinamica(1), // A linha que separa conteudo das fileiras
     		*minhaImpressao = stringDinamica(1); // A string da tabela inteira que vou montar
     	void criacaoFileiraLinha() { // Inicializa a Fileira Linha
     		for (int i = 1; i < confTabela[0]; i++) flT += confTabela[i]+1; // Contar tamanho total da fielira
- 		minhaFileiraLinha = aumentarTamString(minhaFileiraLinha,flT+2);
-		for (int i = 1; i < confTabela[0]; i++)
+ 		    minhaFileiraLinha = aumentarTamString(minhaFileiraLinha,flT+2);
+		    for (int i = 1; i < confTabela[0]; i++)
     			myStrCpy(minhaFileiraLinha, "", &cursor, confTabela[i], ((i == 1) ? -2 : -3)); // -2 quer dizer que irá criar o inicial e o segundo, -3 vai acrescentando
     		minhaFileiraLinha[cursor] = '\n';
-		minhaFileiraLinha[cursor+1] = '\0';
+		    minhaFileiraLinha[cursor+1] = '\0';
     	}
-	void anexarColuna(char *valor, int coluna) myStrCpy(minhaImpressao, valor, &cursor, confTabela[coluna], ((i == 0) ? 2 : 3); // Se for primeira linha quero linha de coluna antes tambem
-	void anexarFL()                            myStrCpy(minhaImpressao,minhaFileiraLinha,&cursor,strlen(minhaFileiraLinha),0); // Anexar fileira linha
-	void anexarNL()                            myStrCpy(minhaImpressao,"\n",&flI,1,0); // Anexar "New Line" (enter)
+	void anexarColuna(char *valor, int coluna) {myStrCpy(minhaImpressao, valor, &cursor, confTabela[coluna], ((coluna == 0) ? 2 : 3));} // Se for primeira linha quero linha de coluna antes tambem
+	void anexarFL()                            {myStrCpy(minhaImpressao,minhaFileiraLinha,&cursor,strlen(minhaFileiraLinha),0);} // Anexar fileira linha
+	void anexarNL()                            {myStrCpy(minhaImpressao,"\n",&cursor,1,0);} // Anexar "New Line" (enter)
 	if (primeiraFileira == 1) anexarFL();
 	for (int i = 0; i < confTabela[0]; i++) {
 		anexarColuna(colunas[i], i);
@@ -201,38 +204,40 @@ int find(char from[], char to[]) {
 
 //função que cria a configuracao de coluna da tabela de especies dada o numero inteiro da especie
 char **criarColunaEspecies(int numero) {
-	char coluna[][] = {     atoi(numero),
-				ESPECIES[numero]};
+	char **coluna = vetorStringsDinamicos(2,14);
+	strcpy(coluna[0], posIntToChar(numero));
+	strcpy(coluna[1], ESPECIES[numero]);
 	return coluna;
 }
 
 //função que ele imprime a tabela de todas as especies com o numero associado
 void imprimirTabelaEspecies() {
 	int quantidadeEspecies = sizeof(ESPECIES) / sizeof(int);
-	printf("%s",annexarFileira(tabelaEspecies,confTabelaEspecies,1));
+	printf("%s",anexarFileira(tabelaEspecies,confTabelaEspecies,1));
 	for (int i = 0; i < quantidadeEspecies; i++) {
-		printf("%s",annexarFileira(criarColunaEspecies(i),confTabelaEspecies,2));
+		printf("%s",anexarFileira(criarColunaEspecies(i),confTabelaEspecies,2));
 	}
 }
 
 //função que cria configuracao da fileira de impressao de tabela de Cliente com o numero associado // usada na busca de clientes cadastrados
 char **criarColunaPesquisaClientes(Cliente oC, int numero) { //oC O Cliente
-	char coluna[][] = {     posIntToChar(numero),
-	                        oC.nomeCliente};
+	char **coluna = vetorStringsDinamicos(2,14);
+	strcpy(coluna[0], posIntToChar(numero));
+	strcpy(coluna[1], oC.nomeCliente);
 	return coluna;
 }
 
 //função que organiza os clientes alfabeticamente, depois ele procura por clientes que foram pesquisados por string termo, e faz a tabela com eles // se o termo for vazio quer dizer que é pra imprimir tudo
-int *mapaListagemClientesPorPesquisa(Cliente *Clientes, int tamanho, char[] termo) {
+int *mapaListagemClientesPorPesquisa(Cliente *Clientes, int tamanho, char termo[]) {
 	sortClientes(Clientes, tamanho); // Organizar os clientes em ordem alfabetica pra ficar mais bonitinho
-	int meuVetor[101],
-	    i = 1
+	int *meuVetor = vetorIntDinamico(101),
+	    i = 1,
 	    tamanhoTabela;
 	char minhaTabela[1000];
-	strcpy(minhaTabela, anexarFileira(tabelaPesquisaClientesNomeColuna,confPesquisaClientes,1)); // Colocar primeira fileira na tabela
+	strcpy(minhaTabela, anexarFileira(tabelaPesquisaClientesNomeColunas,confTabelaPesquisaClientes,1)); // Colocar primeira fileira na tabela
 	for (int j = 0; j < tamanho; j++) {
 		if (find(Clientes[j].nomeCliente, termo) == 1) { // Se eu encontrar baseado no conceito da pesquisa:
-			char *novaFileira = anexarFileira(criarColunaPesquisaClientes(Clientes[j],i), confPesquisaClientes, 0));
+			char *novaFileira = anexarFileira(criarColunaPesquisaClientes(Clientes[j],i), confTabelaPesquisaClientes, 0);
 			int tamanhoNovaFileira = strlen(novaFileira);
 			tamanhoTabela = strlen(minhaTabela);
 			myStrCpy(minhaTabela, novaFileira, &tamanhoTabela, tamanhoNovaFileira, 0);
@@ -249,36 +254,39 @@ int *mapaListagemClientesPorPesquisa(Cliente *Clientes, int tamanho, char[] term
 char *qntdAnimaisAgressivos(Animal *MeusAnimais, int quantidadeDeAnimais) {
 	int contagem = 0,
 	    tamanhoPrimeiraFileira; // Se refere a posicao no string da primeira fileira, pra escrever a partir dela na segunda
-	char impressao[400],
-	     confColunaComQuantidadeDeAgressivos[1][4];
-	     primeiraFileira*; // nn sei se pode
-	     fileiraDeConteudo*;
+	char *impressao = stringDinamica(1000),
+	     confColunaComQuantidadeDeAgressivos[1][4],
+	     *primeiraFileira, // nn sei se pode
+	     *fileiraDeConteudo;
 	for (int i = 0; i < quantidadeDeAnimais; i++) {
   		if (MeusAnimais[i].agressivo  == 'S') contagem++;
   	}
-	strcpy(colunaComQuantidadeDeAgressivos[0],posIntToChar(contagem)); // Montar a coluna com o numero de Aggressivos
-	strcpy(primeiraFileira, anexarFileira(tabelaAnimaisAggressivosNomeColunas,confTabelaAnimaisAggressivos,1));
-	strcpy(fileiraDeConteudo, anexarFileira(colunaComQuantidadeDeAgressivos,confTabelaAnimaisAggressivos,0));
-	tamanhoPrimeiraFileira = strlen(primeiraFileira);
-	strcpy(impressao, primeiraFileira);
-	myStrCpy(impressao, fileiraDeConteudo, &tamanhoPrimeiraFileira, strlen(fileiraConteudo),0);
+  	//tem q montar a tabela direito dnv
+	strcpy(tabelaAnimaisAggressivosNomeColunas[0],posIntToChar(contagem));
+	//strcpy(primeiraFileira, anexarFileira(tabelaAnimaisAggressivosNomeColunas,confTabelaAnimaisAggressivos,1));
+	//strcpy(fileiraDeConteudo, anexarFileira(colunaComQuantidadeDeAgressivos,confTabelaAnimaisAggressivos,0));
+	//tamanhoPrimeiraFileira = strlen(primeiraFileira);
+	//strcpy(impressao, primeiraFileira);
+	//myStrCpy(impressao, fileiraDeConteudo, &tamanhoPrimeiraFileira, strlen(fileiraConteudo),0);
 	return impressao;
 }
 
 // funcao que retorna a configuracao de uma coluna de uma tabela de animais baseado em um animal especifico, essa conf e usada na funcao de impressao para criar uma fileira da tabela
 char **criarColunaAnimais(Animal oA) {
-	char coluna[][] = {     oA.nomeAnimal,
-				ESPECIE[oA.especie],
-				oA.agressivo,
-				dataParaChar(oA.dataNascimento),
-				oA.cliente->nomeCliente,
-				oA.cliente->telefoneCliente};
+    char **coluna = vetorStringsDinamicos(6, 20);
+    char stringDeAgressivo[] = {oA.agressivo,'\0'};
+	strcpy(coluna[0], oA.nomeAnimal);
+	strcpy(coluna[1], ESPECIES[oA.especie]);
+	strcpy(coluna[2], stringDeAgressivo);
+	strcpy(coluna[3], dataParaChar(oA.dataNascimento));
+	strcpy(coluna[4], oA.cliente->nomeCliente);
+	strcpy(coluna[5], oA.cliente->telefoneCliente);
 	return coluna;
 }
 
 // função que retorna uma tabela de uma fileira com as caracteristicas do animal com o nome para ser impresso
 char *baseadoEmNomePet (char *Nome, Animal *Pets, int tamanhoVetorAnimais){
-	char impressao[1000];
+	char *impressao = stringDinamica(1000);
   	for (int i = 0; i < tamanhoVetorAnimais; i++){
   		if (strcmp (Pets[i].nomeAnimal, Nome) == 0) {
 			char *primeiraFileira   = anexarFileira(tabelaAnimaisNomeColunas,confTabelaAnimais,1); //nn sei se pode
@@ -310,20 +318,20 @@ int nomeValido(char *in) {
     int valid = 0;
 
     for (int i = 0; i < strlen(in); i++) {
-        if ((in[i] < 'A' || (in[i] > 'Z' && in[i] < 'a') || in[i] > 'z') && in[i] != ' ') { //se o vetor de nomes, a letra (coringa) for menor que A ou maior que Z (minusculo e maiusculo) e não tiver um espaço (nomecomposto)
+        if ((in[i] < 'A' || (in[i] > 'Z' && in[i] < 'a') || in[i] > 'z') && in[i] != ' ') { 
             valid = -1;
             break;
-            } else if (in[i] != ' ') { //caso contrário, se tiver um espaço (para casos de nome composto) : valido++
+            } else if (in[i] != ' ') {
             valid++;
             }
         }
 
-    if (valid >= 3) { //pois tem que ter 3 letras ou mais.
+    if (valid >= 3) { //pois tem que ter 3 letras
         return 1; // Válido
         } else {
         return 0; // Inválido
-        }
-    }
+    }
+}
 
 // Função para validar telefones
     int validarTelefone(char telefoneCliente[15]) {
@@ -344,21 +352,21 @@ int nomeValido(char *in) {
 	
 //Função de validar Datas
 int ValidarData(int dia, int mes, int ano) {
-// Verifica se o ano é maior ou igual a 1900 (mínimo) ou 2023 (atual)
-    if (ano < 1977 || ano > ANO) { 
+    // Verifica se o dia está entre 1 e 21 (utilizei 21 pois temos a regra de não permitir datas futuras)
+    if ((dia < 1 && dia > DIA)) {
         return 0; // Inválido
-    }   else if(ano == ANO) {
-	   
+    }
+
     // Verifica se o mês está entre 1 e 11  (utilizei 11 pois temos a regra de não permitir datas futuras)
-    if (mes < 1 || mes > MES) {
+    if (mes < 1 && mes > MES) {
         return 0; // Inválido
-    } else if(mes == MES) {
-	    
-if ((dia < 1 || dia > DIA)) { // Verifica se o dia está entre 1 e 21 (utilizei 21 pois temos a regra de não permitir datas futuras)
+    }
+
+    // Verifica se o ano é maior ou igual a 1900 (mínimo) ou 2023 (atual)
+    if (ano < 1977 && ano > ANO) { 
         return 0; // Inválido
-    		}
-	} 
-}  
+    }
+
     // Se todas as verificações passarem, a data é válida
     return 1;
 }
@@ -426,7 +434,7 @@ int cadastrarPet(Animal *MeusAnimais, int *tamanhoAnimais, Cliente *MeusClientes
 	while (1) {
 		printf("Já possui cadastro? S para sim, N para não ou E para desistir: "); //Usuario irá informar se ele possui cadastro para cadastrar um pet
     	fgets(escolhaClienteStr, sizeof(escolhaClienteStr)/sizeof(char), stdin);
-		escolherClientesStr = toupper(escolherClientesStr, 50); //transformar em uppercase p facilitar a verificação
+		escolherClientesStr = toUpper(escolherClientesStr, 50); //transformar em uppercase p facilitar a verificação
     	if (escolherClienteStr[0] == 'S') {
             // Chama a função que retorna um vetor para listar os clientes
 			printf("Termo de Pesquisa: ");
@@ -585,28 +593,28 @@ void buscarClienteImprimir(Cliente *Clientes, int tamanhoClientes, Animal *MeusA
 ///////////////
 
 int main() {
-	char[5] in; // Variavel que guarda a entrada do Usuario no console | maior entrada valida e de 50, precisamos +1 pelo \n que fgets() pega
-	tamanhos[] = {0,0}; // Quantidade de entradas por vetor ordem: MeusClientes, MeusAnimais
+	char in[51]; // Variavel que guarda a entrada do Usuario no console | maior entrada valida e de 50, precisamos +1 pelo \n que fgets() pega
+	int tamanhos[] = {0,0}; // Quantidade de entradas por vetor ordem: MeusClientes, MeusAnimais
 	Cliente MeusClientes[100]; // Inicializacao dos vetores
 	Animal MeusAnimais[100];
 	printf("Bem Vindo!\n'h' para comandos, 'e' para terminar;\n"); // Mensagem de inicio
 	while (strcmp(fgets(in,50,stdin), "e\n")!= 0) { // Enquanto o que se lee, nao for 'e', continuemos leendo os comandos..
 		switch(in[0]) { // Controle de menus
 			case 'h' : // Menu de comandos
-				printf(MENUDECOMANDOS);
+				printf(MENU_DE_COMANDOS);
 				break;
 			case 'a' : // Menu de cadastro de animal
 
 				break;
 			case 'c' : // Menu de cadastro de cliente
 				do {
-					cadastrarCliente(); // Funcao cadastro cliente
+					cadastrarCliente(MeusClientes,&tamanhos[0]); // Funcao cadastro cliente
 					printf("Deseja cadastrar outro cliente? 's' para sim, 'n' para não: ");
 					do {                // Enquanto a resposta nao for valida, continue lendo
 						fgets(in,50,stdin);
-					} while (in[0] != 'n' || in[0] != 's')
+					} while (in[0] != 'n' || in[0] != 's');
 					if (in[0] == 'n') break; // Se a resposta for Nao, pare de cadastrar, se nao, continue
-				} while(1)
+				} while(1);
 				break;
 			case 'b' : // Buscar cliente pelo nome e demonstrar dados
 
@@ -614,7 +622,7 @@ int main() {
 			case 's' : // Buscar pet pelo nome e demostrar dados
 				do {
 					fgets(in,50,stdin);
-					in[strcspn(in,'\n')] = '\0';
+					in[strcspn(in,"\n")] = '\0';
 					printf("%s\n",baseadoEmNomePet(in,MeusAnimais,tamanhos[1]));
 					{
 						printf("'c' para imprimir novamente, 'e' para sair.\nDigite aqui: ");
@@ -623,7 +631,7 @@ int main() {
 				} while (in[0] == 'c');
 				break;
 			case 'p' : // Menu impressao de animais alfabeticamente
-				sortAnimais(MeusAnimais,&tamanhos[1]); // Organizar os Animais Alfabeticamente
+				sortAnimais(MeusAnimais,tamanhos[1]); // Organizar os Animais Alfabeticamente
 				printf("%s\n", imprimirAnimais(MeusAnimais,&tamanhos[1])); // Imprimir a Tabela dos Animais
 				break;
 			case 'l' : // Commando limpar o console
@@ -633,7 +641,6 @@ int main() {
 				printf("%s\n", qntdAnimaisAgressivos(MeusAnimais, tamanhos[1]));
 				break;
 		}
-		free(); // Limpar memoria alocada dinamicamente (Strings dinamicas/ Vetores inteiros Dinamicos)
   	}
   	return 0;
 }
