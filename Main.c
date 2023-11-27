@@ -18,21 +18,25 @@ Nomes:André Antônio da Silva Queiroz    | RA:a2575310
 
 const char ESPECIES[][14] = {"Cachorro","Gato","Hamster","Pássaro", "Coelho"};
 
+// Configuracao Tabela de Animais Por Especie
+char *tabelaAnimaisPorEspecie[14]             = {"Especie", "Nome", "Data de Nascimento", "Agressivo"};
+int confTabelaAnimaisPorEspecie               = {5, 14, 14, 10, 2}; // Primeiro Valor tamanho do Vetor
+
 // Configuracao Tabela de Especies
 char *tabelaEspecies[14]                      = {"#","Especie"};
-int confTabelaEspecies[]                     = {3,2,14} ;// Primeiro Valor tamanho do Vetor
+int confTabelaEspecies[]                      = {3, 2, 14} ;
 
 // Configuracao Tabela de Pesquisa por Clientes
 char *tabelaPesquisaClientesNomeColunas[14]   = {"#","Nome"};
-int confTabelaPesquisaClientes[]             = {3,2,14};
+int confTabelaPesquisaClientes[]              = {3, 2, 14};
 
 // Configuracao Tabela de Animais Aggressivos
 char *tabelaAnimaisAggressivosNomeColunas[14] = {"Quantidade"}; // O nome das colunas quando tabeladas
-int confTabelaAnimaisAggressivos[]           = {2,13}; // Representa Tamanho de cada coluna em ordem, o primeiro valor e o tamanho do Vetor
+int confTabelaAnimaisAggressivos[]            = {2, 13}; // Representa Tamanho de cada coluna em ordem, o primeiro valor e o tamanho do Vetor
 
 // Configuracao Tabela Animais Completa
 char *tabelaAnimaisNomeColunas[20]            = {"Nome", "Especie", "Agressivo", "Data de Nascimento", "Nome do Cliente", "Telefone"};
-int confTabelaAnimais[]                      = {7,14,12,20,13,14}; 
+int confTabelaAnimais[]                       = {7, 14, 12, 2, 10, 13, 14}; 
 
 //Type def
 
@@ -93,6 +97,21 @@ void sortAnimais(Animal *meusAnimais, int tamanho) {
     		for (int y = x+1; y < tamanho; y++) {
     			if (strcmp(meusAnimais[x].nomeAnimal, meusAnimais[y].nomeAnimal) > 0) {
     				meuAnimal = meusAnimais[x];
+    				meusAnimais[x] = meusAnimais[y];
+    				meusAnimais[y] = meuAnimal;
+    			}
+    		}
+    	}
+}
+
+void sortAnimaisEspecie(Animal *meusAnimais, int tamanho) {
+	Animal meuAnimal;
+    	for (int x = 0; x < tamanho-1; x++) {
+    		for (int y = x+1; y < tamanho; y++) {
+			// se a especie for pra vir depois                  ou                                   alfabeticamente depois             e      mesma especie
+    			if (meusAnimais[x].especie > meusAnimais[y].especie || ((strcmp(meusAnimais[x].nomeAnimal, meusAnimais[y].nomeAnimal) > 0) && (meusAnimais[x].especie == meusAnimais[y].especie)) ) {
+    				// trocar a ordem
+				meuAnimal = meusAnimais[x];
     				meusAnimais[x] = meusAnimais[y];
     				meusAnimais[y] = meuAnimal;
     			}
@@ -250,6 +269,24 @@ int *mapaListagemClientesPorPesquisa(Cliente *Clientes, int tamanho, char termo[
 	return meuVetor;
 }
 
+char **criarColunaTabelaAnimaisPorEspecie(Animal oA) { //oC O Cliente
+	char **coluna = vetorStringsDinamicos(5,14);
+    	char stringDeAgressivo[] = {oA.agressivo,'\0'};
+	strcpy(coluna[0], ESPECIES[oA.especie]);
+	strcpy(coluna[1], oA.nomeAnimal);
+	strcpy(coluna[2], dataParaChar(oA.dataNascimento));
+	strcpy(coluna[3], stringDeAgressivo));
+	return coluna;
+}
+
+void imprimirTabelaAnimaisPorEspecie(Animal *Animais, int tamanho) {
+	sortAnimaisEspecie(Animais, tamanho);
+	printf("%s",anexarFileira(tabelaAnimaisPorEspecie,confTabelaAnimaisPorEspecie,1));
+	for (int i = 0; i < tamanho; i++) {
+		printf("%s",anexarFileira(criarColunaTabelaAnimaisPorEspecie(Animais[i]),confTabelaEspecies,2));
+	}
+}
+
 //função retorna a tabela de quantidade de animais agressivos para ser impresso
 char *qntdAnimaisAgressivos(Animal *MeusAnimais, int quantidadeDeAnimais) {
 	int contagem = 0,
@@ -302,15 +339,25 @@ char *baseadoEmNomePet (char *Nome, Animal *Pets, int tamanhoVetorAnimais){
 }
 
 // função que leva o tamanho do vetor animais, e o vetor | ele organiza alfabeticamente, e depois retorna uma tabela com todos os animais e suas caracteristicas para ser impresso
-char *imprimirAnimais(Animal Animais[],int *tamanho) {
+void imprimirAnimais(Animal Animais[],int *tamanho) {
 	int cursor = 0;
 	char *minhaImpressao = stringDinamica(1);
-	anexarFileira(tabelaAnimaisNomeColunas, confTabelaAnimais, 1);
+	printf("%s", anexarFileira(tabelaAnimaisNomeColunas, confTabelaAnimais, 1));
     	for(int i = 0; i < (*tamanho); i++) {
 		Animal oA = Animais[i];// oA de O Animal
-		anexarFileira(criarColunaAnimais(oA), confTabelaAnimais, 0);
+		printf("%s", anexarFileira(criarColunaAnimais(oA), confTabelaAnimais, 0));
 	}
-	return minhaImpressao;
+}
+
+void imprimirAnimaisAniversariantes(Animal Animais[],int *tamanho, int mes, int dia) {
+	int cursor = 0;
+	char *minhaImpressao = stringDinamica(1);
+	printf("%s", anexarFileira(tabelaAnimaisNomeColunas, confTabelaAnimais, 1));
+    	for(int i = 0; i < (*tamanho); i++) {
+		Animal oA = Animais[i];// oA de O Animal
+		if (animalAniversariante(oA.dataNascimento.dia,oA.dataNascimento.mes,dia,mes) == 1)
+			printf("%s", anexarFileira(criarColunaAnimais(oA), confTabelaAnimais, 0));
+	}
 }
 
 // Função para validar nomes
@@ -632,7 +679,7 @@ int main() {
 				break;
 			case 'p' : // Menu impressao de animais alfabeticamente
 				sortAnimais(MeusAnimais,tamanhos[1]); // Organizar os Animais Alfabeticamente
-				printf("%s\n", imprimirAnimais(MeusAnimais,&tamanhos[1])); // Imprimir a Tabela dos Animais
+				imprimirAnimais(MeusAnimais,&tamanhos[1]); // Imprimir a Tabela dos Animais
 				break;
 			case 'l' : // Commando limpar o console
 				system("clear");
