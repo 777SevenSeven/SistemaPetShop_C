@@ -181,9 +181,6 @@ char *anexarFileira(char **colunas, int confTabela[], int PrimeiraFileira) {
 	return minhaImpressao;
 }
 
-"Affonso"
-"fo"
-
 //função que procura para ver se o termo to se encontra no string from
 int find(char from[], char to[]) {
 	if (strcmp(to,"") == 0) return 1; // se nn tem nada pra procurar ele encontrou
