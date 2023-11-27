@@ -310,15 +310,15 @@ int nomeValido(char *in) {
     int valid = 0;
 
     for (int i = 0; i < strlen(in); i++) {
-        if ((in[i] < 'A' || (in[i] > 'Z' && in[i] < 'a') || in[i] > 'z') && in[i] != ' ') { 
+        if ((in[i] < 'A' || (in[i] > 'Z' && in[i] < 'a') || in[i] > 'z') && in[i] != ' ') { //se o vetor de nomes, a letra (coringa) for menor que A ou maior que Z (minusculo e maiusculo) e não tiver um espaço (nomecomposto)
             valid = -1;
             break;
-            } else if (in[i] != ' ') {
+            } else if (in[i] != ' ') { //caso contrário, se tiver um espaço (para casos de nome composto) : valido++
             valid++;
             }
         }
 
-    if (valid >= 3) { //pois tem que ter 3 letras
+    if (valid >= 3) { //pois tem que ter 3 letras ou mais.
         return 1; // Válido
         } else {
         return 0; // Inválido
@@ -344,21 +344,21 @@ int nomeValido(char *in) {
 	
 //Função de validar Datas
 int ValidarData(int dia, int mes, int ano) {
-    // Verifica se o dia está entre 1 e 21 (utilizei 21 pois temos a regra de não permitir datas futuras)
-    if ((dia < 1 && dia > DIA)) {
+// Verifica se o ano é maior ou igual a 1900 (mínimo) ou 2023 (atual)
+    if (ano < 1977 || ano > ANO) { 
         return 0; // Inválido
-    }
-
+    }   else if(ano == ANO) {
+	   
     // Verifica se o mês está entre 1 e 11  (utilizei 11 pois temos a regra de não permitir datas futuras)
-    if (mes < 1 && mes > MES) {
+    if (mes < 1 || mes > MES) {
         return 0; // Inválido
-    }
-
-    // Verifica se o ano é maior ou igual a 1900 (mínimo) ou 2023 (atual)
-    if (ano < 1977 && ano > ANO) { 
+    } else if(mes == MES) {
+	    
+if ((dia < 1 || dia > DIA)) { // Verifica se o dia está entre 1 e 21 (utilizei 21 pois temos a regra de não permitir datas futuras)
         return 0; // Inválido
-    }
-
+    		}
+	} 
+}  
     // Se todas as verificações passarem, a data é válida
     return 1;
 }
