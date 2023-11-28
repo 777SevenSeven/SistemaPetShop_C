@@ -705,8 +705,8 @@ char *tabelaAnimaisAggressivosNomeColunas[14] = {"Quantidade"}; // O nome das co
 int confTabelaAnimaisAggressivos[]            = {2, 13}; // Representa Tamanho de cada coluna em ordem, o primeiro valor e o tamanho do Vetor
 
 // Configuracao Tabela Animais Completa
-char *tabelaAnimaisNomeColunas[40]            = {"Nome", "Especie", "Agressivo", "Data de Nascimento", "Nome do Cliente", "Telefone"};
-int confTabelaAnimais[]                       = {7, 14, 12, 2, 10, 13, 14}; 
+char *tabelaAnimaisNomeColunas[40]            = {"Dono", "Telefone", "Nome", "Especie", "Agressivo", "DOB"};
+int confTabelaAnimais[]                       = {7, 14, 14, 14, 14, 11, 5};
 
 //Type def
 
@@ -1346,4 +1346,5 @@ int main() {
 		}
   	}
   	return 0;
-} */
+}
+*/
