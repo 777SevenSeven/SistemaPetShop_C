@@ -438,47 +438,47 @@ Cliente* cadastrarCliente(Cliente *MeusClientes, int *tamanhoClientes) {
     char nomeCliente[50];
     char telefoneCliente[15];
 
-// Recebe o nome do cliente e armazena dentro do char
-do { 
-    printf("Nome do cliente: ");
-    fgets(nomeCliente, sizeof(nomeCliente) / sizeof(char), stdin); 
-    nomeCliente[strcspn(nomeCliente, "\n")] = '\0';
-
-    // Irá realizar a validação do nome
-    if (!nomeValido(nomeCliente)) {
-        printf("Nome inválido, E para desistir, ou algum botão para continuar\n");
-        fgets(nomeCliente, sizeof(nomeCliente) / sizeof(char), stdin);
+    // Recebe o nome do cliente e armazena dentro do char
+    do { 
+        printf("Nome do cliente: ");
+        fgets(nomeCliente, sizeof(nomeCliente) / sizeof(char), stdin); 
         nomeCliente[strcspn(nomeCliente, "\n")] = '\0';
-		
-	// Caso o usuário desista de inserir, ele pode pressionar E ou e para desistir
-        if (nomeCliente[0] == 'E' || nomeCliente[0] == 'e') return 0;
 
-        // Continue para a próxima iteração do loop para que o usuário insira o nome novamente
-        continue;
-    } else break;
- } while (1);
+        // Irá realizar a validação do nome
+        if (!nomeValido(nomeCliente)) {
+            printf("Nome inválido, E para desistir, ou algum botão para continuar\n");
+            fgets(nomeCliente, sizeof(nomeCliente) / sizeof(char), stdin);
+            nomeCliente[strcspn(nomeCliente, "\n")] = '\0';
+            
+            // Caso o usuário desista de inserir, ele pode pressionar E ou e para desistir
+            if (nomeCliente[0] == 'E' || nomeCliente[0] == 'e') return 0;
 
-do {
-    // Recebe o telefone do cliente e armazena dentro do char
-    printf("Telefone do cliente: ");
-    fgets(telefoneCliente, sizeof(telefoneCliente) / sizeof(char), stdin);
-    telefoneCliente[strcspn(telefoneCliente, "\n")] = '\0';
+            // Continue para a próxima iteração do loop para que o usuário insira o nome novamente
+            continue;
+        } else break;
+    } while (1);
 
-    // irá realizar a validação do telefone
-    if (!ValidarTelefone(telefoneCliente)) {
-        printf("Telefone inválido, E para desistir, ou algum botão para continuar.\n");
-        fgets(telefoneCliente, sizeof(telefoneCliente)/sizeof(char), stdin);
+    do {
+        // Recebe o telefone do cliente e armazena dentro do char
+        printf("Telefone do cliente: ");
+        fgets(telefoneCliente, sizeof(telefoneCliente) / sizeof(char), stdin);
         telefoneCliente[strcspn(telefoneCliente, "\n")] = '\0';
-        
-	if (telefoneCliente[0] == 'E' || telefoneCliente[0] == 'e') return 0; // Caso o usuário desista de inserir, ele pode pressionar E ou e para desistir
-        continue; // Continue para a próxima iteração do loop para que o usuário insira o telefone novamente
-    } else break;
-} while (1);
 
-strcpy(meusClientes[(*tamanho)].nomeCliente, nomeCliente);
-strcpy(meusClientes[(*tamanho)].telefoneCliente, telefoneCliente);
-(*tamanhoClientes)++; 
-return &meusClientes[(*tamanho)-1];
+        // irá realizar a validação do telefone
+        if (!ValidarTelefone(telefoneCliente)) {
+            printf("Telefone inválido, E para desistir, ou algum botão para continuar.\n");
+            fgets(telefoneCliente, sizeof(telefoneCliente)/sizeof(char), stdin);
+            telefoneCliente[strcspn(telefoneCliente, "\n")] = '\0';
+            
+            if (telefoneCliente[0] == 'E' || telefoneCliente[0] == 'e') return 0; // Caso o usuário desista de inserir, ele pode pressionar E ou e para desistir
+            continue; // Continue para a próxima iteração do loop para que o usuário insira o telefone novamente
+        } else break;
+    } while (1);
+
+    strcpy(MeusClientes[(*tamanhoClientes)].nomeCliente, nomeCliente);
+    strcpy(MeusClientes[(*tamanhoClientes)].telefoneCliente, telefoneCliente);
+    (*tamanhoClientes)++; 
+    return &MeusClientes[(*tamanhoClientes)-1]; // O ponteiro aponta para a última posição válida da lista de clientes, que é MeusClientes[(*tamanhoClientes)-1]
 }
 
 // Função de cadastrar os pets
@@ -563,7 +563,7 @@ int cadastrarPet(Animal *MeusAnimais, int *tamanhoAnimais, Cliente *MeusClientes
     } while (1);
 
     meuPet.cliente = ClienteEscolhido;
-    strcpy(meuPet.nome, nomeAnimal);
+    strcpy(meuPet.nomeAnimal, nomeAnimal);
     meuPet.especie = especiePet;
     meuPet.dataNascimento = dataNascimento;
     MeusAnimais[(*tamanhoAnimais)] = meuPet;
@@ -590,24 +590,23 @@ void buscarClienteImprimir(Cliente *Clientes, int tamanhoClientes, Animal *MeusA
  			printf("\nPets do Cliente:\n");
     for (int j = 0; j < tamanhoAnimais; j++) { // Percorre o loop de pet e vê se tem pet cadastrado
                 if (MeusAnimais[j].cliente == &Clientes[i]) {
-                    // Pet encontrado, imprime os dados
-					encontrei = 1;
+					encontrei = 1; // Pet encontrado, imprime os dados
                     printf("Nome do Pet: %s\n", MeusAnimais[j].nomeAnimal);
                     printf("Espécie: %s\n", ESPECIES[MeusAnimais[j].especie]);
                     printf("Agressivo: %c\n", MeusAnimais[j].agressivo);
                     printf("Data de Nascimento: %02d/%02d/%04d\n", MeusAnimais[j].dataNascimento.dia, MeusAnimais[j].dataNascimento.mes, MeusAnimais[j].dataNascimento.ano);
                     printf("-------------------------\n");
-					}
-		}
-			if (encontrei == 0) 
-						printf("O cliente não possui pets."); 
-            return; // Cliente encontrado e impresso, a função pode encerrar
+				}
+			}
+			if (encontrei == 0) {
+				printf("O cliente não possui pets."); 
+			}
+			return;
         } 
     }
+	
 	printf("Cliente não encontrado.\n");
-	continue;
 }
-
 
 
 ///////////////
