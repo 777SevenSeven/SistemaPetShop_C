@@ -1023,13 +1023,23 @@ char *baseadoEmNomePet (char *Nome, Animal *Pets, int tamanhoVetorAnimais){
 }
 
 // função que leva o tamanho do vetor animais, e o vetor | ele organiza alfabeticamente, e depois retorna uma tabela com todos os animais e suas caracteristicas para ser impresso
-void imprimirAnimais(Animal Animais[],int *tamanho) {
-	int cursor = 0;
-	printf("%s", anexarFileira(tabelaAnimaisNomeColunas, confTabelaAnimais, 1));
-    for(int i = 0; i < (*tamanho); i++) {
+char* imprimirAnimais(Animal Animais[],int *tamanho) {
+	int cursor = 0,
+ 		resultadosEncontrados = 0;
+ 	char *impressao = stringDinamica(1),
+  		fileira[1000];
+    	strcpy(fileira, anexarFileira(tabelaAnimaisNomeColunas, confTabelaAnimais, 1));
+     	impressao = aumentarTamString(impressao, (int) (strlen(fileira)+2));
+	myStrCpy(impressao, fileira, &cursor, strlen(fileira),0);
+    	for(int i = 0; i < (*tamanho); i++) {
+     		resultadosEncontrados = 1;
 		Animal oA = Animais[i];// oA de O Animal
-		printf("%s", anexarFileira(criarColunaAnimais(oA), confTabelaAnimais, 0));
+		strcpy(fileira,  anexarFileira(criarColunaAnimais(oA), confTabelaAnimais, 0));
+     		impressao = aumTamString(impressao, (int) (strlen(fileira)+2+cursor));
+		myStrCpy(impressao, fileira, &cursor, strlen(fileira),0);
 	}
+ 	if (resultadosEncontrados == 0) return "Nenhum Resultado Encontrado\n";
+  	else return impressao;
 }
 
 void imprimirAnimaisAniversariantes(Animal Animais[],int *tamanho, int mes, int dia) {
