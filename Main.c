@@ -5,12 +5,14 @@ Nomes:André Antônio da Silva Queiroz    | RA:a2575310
 ......Mathias Vinicius Carcano Ferretti | RA:a2575396
 ......Gabriel Henrique Prado Affonso    | RA:a2618044
 */
+//bibliotecas que o professor pediu para que tenha no máximo.
 #include <math.h>
 #include <string.h>
-#include <stdio.h> //bibliotecas que o professor pediu para que tenha no máximo.
+#include <stdio.h>
 #include <stdlib.h>
 
-#define DIA 1 //Definimos as informações da data aqui em cima, para facilitar o encontro para a manuntenção dessas informações, entre os membros.
+//Definimos as informações da data aqui em cima, para facilitar o encontro para a manuntenção dessas informações, entre os membros.
+#define DIA 1
 #define MES 2 
 #define ANO 1997
 
