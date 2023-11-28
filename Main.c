@@ -396,24 +396,39 @@ int nomeValido(char *in) {
 
         return 1; // Válido
     }
-	
-//Função de validar Datas
+
+// Função para verificar se um dia é válido em um determinado mês
+int verificarDiaValido(int dia, int mes, int ano) {
+    int tamanhoMes[] = {0, 31, ((ano%4==0) ? 29 : 28), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31}; //aqui tem uma verificação para casos de anos bissextos
+    
+    if (dia >= 1 && dia <= tamanhoMes[mes]) {
+        return 1; // É VALIDO !!
+        } else  {
+            return 0; // INVALIDO !!
+        }
+    }
+
 int ValidarData(int dia, int mes, int ano) {
-// Verifica se o ano é maior ou igual a 1900 (mínimo) ou 2023 (atual)
-    if (ano < 1977 || ano > ANO) { 
+    if (ano < 1977 || ano > ANO) { //se o ano for válido entre: o enviado e o atual.
         return 0; // Inválido
-    }   else if(ano == ANO) {
-	   
-    // Verifica se o mês está entre 1 e 11  (utilizei 11 pois temos a regra de não permitir datas futuras)
-    if (mes < 1 || mes > MES) {
-        return 0; // Inválido
-    } else if(mes == MES) {
-	    
-if ((dia < 1 || dia > DIA)) { // Verifica se o dia está entre 1 e 21 (utilizei 21 pois temos a regra de não permitir datas futuras)
-        return 0; // Inválido
+    }   else if(ano == ANO) { //caso contrário, ele verificará se o ano que enviamos, é o ano atual.
+        if (mes < 1 || mes > MES) { //se o mês for menor que 1 ou o mês for maior que o mês atual:
+            return 0; // Inválido
+        } else if(mes == MES) { //caso contrário, se o mês for igual ao mês atual:
+            if (dia < 1 || dia > DIA) { // Verifica se o dia está entre 1 e 21 (utilizei 21 pois temos a regra de não permitir datas futuras)
+                return 0; // Inválido
     		}
-	} 
-}  
+	    }
+	    else {
+	         return verificarDiaValido(dia,mes,ano); //caso seja um mês valido e atual: ele retorna se está correto ou não.
+	    }
+    }  else { //se nenhuma daquelas condições, for verificada, verificará então essa:
+        if (mes < 1 || mes > 12) { //se o mês for menor que 1 ou o mês for maior que 12
+            return 0; // Inválido
+        } else { //caso contrário:
+            return verificarDiaValido(dia,mes,ano); //ele retorna se o dia em fevereiro baseado no bissexto é válido
+        }
+    }
     // Se todas as verificações passarem, a data é válida
     return 1;
 }
