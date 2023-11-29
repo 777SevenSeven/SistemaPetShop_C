@@ -431,40 +431,51 @@ int nomeValido(char *in) {
         return 1; // Válido
     }
 
-// Função para verificar se um dia é válido em um determinado mês
+//função que verifica os dias validos dependendo do mês de inscrição
 int verificarDiaValido(int dia, int mes, int ano) {
-    int tamanhoMes[] = {0, 31, ((ano%4==0) ? 29 : 28), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31}; //aqui tem uma verificação para casos de anos bissextos
-    
-    if (dia >= 1 && dia <= tamanhoMes[mes]) {
-        return 1; // É VALIDO !!
-        } else  {
-            return 0; // INVALIDO !!
+    int tamanhoMes[] = {0, 31, ((ano % 4 == 0) ? 29 : 28), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+
+    return (dia >= 1 && dia <= tamanhoMes[mes]);
+}
+
+//função que valida a data dependendo do ano que o usuário se cadastrou
+int validarData(int dia, int mes, int ano) {
+    if (ano < 1977 || ano > ANO) {
+        return 0; // Inválido
+    } else if (ano == ANO) {
+        if (mes < 1 || mes > MES) {
+            return 0; // Inválido
+        } else if (mes == MES) {
+            return (dia >= 1 && dia <= DIA);
+        } else {
+            return verificarDiaValido(dia, mes, ano);
         }
+    } else {
+        return (mes >= 1 && mes <= 12) && verificarDiaValido(dia, mes, ano);
+    }
+}
+
+//função que verifica se o animal é aniversariante
+int animalAniversariante(int diaInscricao, int mesInscricao, int diaAniversario, int mesAniversario) {
+    int tamanhoMes[] = {0, 31, ((ANO % 4 == 0) ? 29 : 28), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+
+    // Se o mês de aniversário é igual ao mês de inscrição, verifica se o dia de aniversário é posterior ao de inscrição
+    if (mesAniversario == mesInscricao && diaAniversario > diaInscricao) {
+        return diaAniversario - diaInscricao <= 7;
     }
 
-int ValidarData(int dia, int mes, int ano) {
-    if (ano < 1977 || ano > ANO) { //se o ano for válido entre: o enviado e o atual.
-        return 0; // Inválido
-    }   else if(ano == ANO) { //caso contrário, ele verificará se o ano que enviamos, é o ano atual.
-        if (mes < 1 || mes > MES) { //se o mês for menor que 1 ou o mês for maior que o mês atual:
-            return 0; // Inválido
-        } else if(mes == MES) { //caso contrário, se o mês for igual ao mês atual:
-            if (dia < 1 || dia > DIA) { // Verifica se o dia está entre 1 e 21 (utilizei 21 pois temos a regra de não permitir datas futuras)
-                return 0; // Inválido
-    		}
-	    }
-	    else {
-	         return verificarDiaValido(dia,mes,ano); //caso seja um mês valido e atual: ele retorna se está correto ou não.
-	    }
-    }  else { //se nenhuma daquelas condições, for verificada, verificará então essa:
-        if (mes < 1 || mes > 12) { //se o mês for menor que 1 ou o mês for maior que 12
-            return 0; // Inválido
-        } else { //caso contrário:
-            return verificarDiaValido(dia,mes,ano); //ele retorna se o dia em fevereiro baseado no bissexto é válido
-        }
+    // Se o mês de aniversário é posterior ao mês de inscrição
+    if (mesAniversario > mesInscricao) {
+        // Calcula os dias restantes no mês de inscrição
+        int diasRestantes = tamanhoMes[mesInscricao] - diaInscricao;
+
+        // Calcula os dias desde o dia seguinte ao da inscrição até o dia do aniversário no mês seguinte
+        int diasParaAniversario = diasRestantes + diaAniversario;
+
+        return diasParaAniversario <= 7;
     }
-    // Se todas as verificações passarem, a data é válida
-    return 1;
+
+    return 0; // Caso contrário, não está aniversariando nos próximos 7 dias
 }
 
 // Função para cadastrar os clientes
