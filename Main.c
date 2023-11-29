@@ -456,16 +456,16 @@ int validarData(int dia, int mes, int ano) {
 }
 
 //função que verifica se o animal é aniversariante
-int animalAniversariante(int diaInscricao, int mesInscricao, int diaAniversario, int mesAniversario) {
+int animalAniversariante(int diaInscricao, int mesInscricao) {
     int tamanhoMes[] = {0, 31, ((ANO % 4 == 0) ? 29 : 28), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 
     // Se o mês de aniversário é igual ao mês de inscrição, verifica se o dia de aniversário é posterior ao de inscrição
-    if (mesAniversario == mesInscricao && diaAniversario > diaInscricao) {
-        return diaAniversario - diaInscricao <= 7;
+    if (MES == mesInscricao && DIA > diaInscricao) {
+        return DIA - diaInscricao <= 7;
     }
 
     // Se o mês de aniversário é posterior ao mês de inscrição
-    if (mesAniversario > mesInscricao) {
+    if (MES > mesInscricao) {
         // Calcula os dias restantes no mês de inscrição
         int diasRestantes = tamanhoMes[mesInscricao] - diaInscricao;
 
