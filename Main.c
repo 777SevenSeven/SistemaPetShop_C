@@ -945,10 +945,10 @@ char *anexarFileira(char **colunas, int confTabela[], int primeiraFileira) {
 		    cursor = 0;
     	}
 	void anexarColuna(char *valor, int coluna) {
-	    minhaImpressao = aumentarTamString(minhaImpressao, (int) (strlen(valor)+cursor+15) ); // nn sei pq caralhos ta funcionando com 15 e com menos me da erro??????
+	    minhaImpressao = aumentarTamString(minhaImpressao, confTabela[coluna]+cursor+2 ); // nn sei pq caralhos ta funcionando com 15 e com menos me da erro??????
 	    myStrCpy(minhaImpressao, valor, &cursor, confTabela[coluna], ((coluna == 1) ? 2 : 3));} // Se for primeira linha quero linha de coluna antes tambem
 	void anexarFL() {
-	    minhaImpressao = aumentarTamString(minhaImpressao, (int) (flT+cursor+2));
+	    minhaImpressao = aumentarTamString(minhaImpressao, flT+cursor+2 );
 	    myStrCpy(minhaImpressao,minhaFileiraLinha,&cursor,strlen(minhaFileiraLinha),0);} // Anexar fileira linha
 	void anexarNL() {
 	    minhaImpressao = aumentarTamString(minhaImpressao, cursor+2 );
