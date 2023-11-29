@@ -669,12 +669,13 @@ int main() {
 // NAO DELETAR NEM FUDENDO E O MEU CODIGO CORRIGIDO DE ALGMS FUNCOES, DPS COLOCO DIREITINH
 
 /*
+/*
 Trabalho Final da Disciplina de Algoritmos 01: Gerenciador de PetShop.
 Turma: EC41A.2023_01.C11 / Data:18/04/2023.
 Nomes:André Antônio da Silva Queiroz    | RA:a2575310
 ......Mathias Vinicius Carcano Ferretti | RA:a2575396
 ......Gabriel Henrique Prado Affonso    | RA:a2618044
-
+*
 #include <math.h>
 #include <string.h>
 #include <stdio.h> //bibliotecas que o professor pediu para que tenha no máximo.
@@ -742,9 +743,25 @@ typedef struct {
 //funcao que cria uma string de tamnaho dinamico
 char *stringDinamica(int tamanho) {char *out = (char*) malloc(tamanho*sizeof(char)); return out;}
 
-char *aumentarTamString(char *string, int tamanho) {char *out = (char*) realloc(string,tamanho*sizeof(char)); return out;}//funcao que aumenta tamanho de string dinamico
+char *aumentarTamString(char *string, int tamanho) {
+    int tam = tamanho;
+    printf("a"
+    );
+    return (char*) realloc(string,tamanho*sizeof(char));
+    //
+    //return out;
+    
+}//funcao que aumenta tamanho de string dinamico
 
-char **vetorStringsDinamicos(int tamanhoVetor, int tamanhoString) {char **out = (char**) malloc(sizeof(char)*tamanhoVetor*tamanhoString); return out;}
+
+
+char **vetorStringsDinamicos(int tamanhoVetor, int tamanhoString) {
+    char **out = (char**) malloc(sizeof(char*)*tamanhoVetor);
+    for (int i = 0; i < tamanhoVetor; i++) {
+        out[i] = stringDinamica(tamanhoString);
+    }
+    return out;
+}
 
 //funcao que cria um vetor de inteiros de tamnaho dinamico
 int *vetorIntDinamico(int tamanho) {int *out = (int*) malloc(tamanho*sizeof(int)); return out;}
@@ -864,7 +881,7 @@ char *anexarFileira(char **colunas, int confTabela[], int primeiraFileira) {
 		    cursor = 0;
     	}
 	void anexarColuna(char *valor, int coluna) {
-	    minhaImpressao = aumentarTamString(minhaImpressao, (int) (strlen(valor)+cursor+2) );
+	    minhaImpressao = aumentarTamString(minhaImpressao, (int) (strlen(valor)+cursor+20) ); // i dont know how but i know its from here
 	    myStrCpy(minhaImpressao, valor, &cursor, confTabela[coluna], ((coluna == 1) ? 2 : 3));} // Se for primeira linha quero linha de coluna antes tambem
 	void anexarFL() {
 	    minhaImpressao = aumentarTamString(minhaImpressao, (int) (flT+cursor+2));
@@ -994,14 +1011,15 @@ char *qntdAnimaisAgressivos(Animal *MeusAnimais, int quantidadeDeAnimais) {
 
 // funcao que retorna a configuracao de uma coluna de uma tabela de animais baseado em um animal especifico, essa conf e usada na funcao de impressao para criar uma fileira da tabela
 char **criarColunaAnimais(Animal oA) {
-    char **coluna = vetorStringsDinamicos(6, 20);
+    char **coluna = vetorStringsDinamicos(6,20);// vetorStringsDinamicos(6, 20);
     char stringDeAgressivo[] = {oA.agressivo,'\0'};
-	strcpy(coluna[0], oA.nomeAnimal);
-	strcpy(coluna[1], ESPECIES[oA.especie]);
-	strcpy(coluna[2], stringDeAgressivo);
-	strcpy(coluna[3], dataParaChar(oA.dataNascimento));
-	strcpy(coluna[4], oA.cliente->nomeCliente);
-	strcpy(coluna[5], oA.cliente->telefoneCliente);
+    printf("%s",oA.nomeAnimal);
+	strcpy(coluna[0], "A");//oA.cliente->nomeCliente);
+	strcpy(coluna[1], "A");//oA.cliente->telefoneCliente);
+	strcpy(coluna[2], "A");//oA.nomeAnimal);
+	strcpy(coluna[3], "A");//ESPECIES[oA.especie]);
+	strcpy(coluna[4], "B");//stringDeAgressivo);
+	strcpy(coluna[5], "A");//dataParaChar(oA.dataNascimento));
 	return coluna;
 }
 
@@ -1032,10 +1050,13 @@ char* imprimirAnimais(Animal Animais[],int *tamanho) {
      	impressao = aumentarTamString(impressao, (int) (strlen(fileira)+2));
 	myStrCpy(impressao, fileira, &cursor, strlen(fileira),0);
     	for(int i = 0; i < (*tamanho); i++) {
+    	    int c;
      		resultadosEncontrados = 1;
 		Animal oA = Animais[i];// oA de O Animal
-		strcpy(fileira,  anexarFileira(criarColunaAnimais(oA), confTabelaAnimais, 0));
-     		impressao = aumTamString(impressao, (int) (strlen(fileira)+2+cursor));
+		strcpy(fileira,  anexarFileira(criarColunaAnimais(oA), confTabelaAnimais, 0));// this anexar
+		c = (int) (strlen(fileira)+30+cursor);
+		printf("a");
+     		impressao = aumentarTamString(impressao, (int) (strlen(fileira)+30+cursor));
 		myStrCpy(impressao, fileira, &cursor, strlen(fileira),0);
 	}
  	if (resultadosEncontrados == 0) return "Nenhum Resultado Encontrado\n";
@@ -1306,9 +1327,12 @@ void buscarClienteImprimir(Cliente *Clientes, int tamanhoClientes, Animal *MeusA
 
 int main() {
 	char in[51]; // Variavel que guarda a entrada do Usuario no console | maior entrada valida e de 50, precisamos +1 pelo \n que fgets() pega
-	int tamanhos[] = {0,0}; // Quantidade de entradas por vetor ordem: MeusClientes, MeusAnimais
+	int tamanhos[] = {0,1}; // Quantidade de entradas por vetor ordem: MeusClientes, MeusAnimais
 	Cliente MeusClientes[100]; // Inicializacao dos vetores
 	Animal MeusAnimais[100];
+	strcpy(MeusAnimais[0].nomeAnimal,"Amigo");
+	//strcpy(MeusAnimais[0].cliente->telefoneCliente, "012341235623");
+	MeusAnimais[0].agressivo = 'S';
 	printf("Bem Vindo!\n'h' para comandos, 'e' para terminar;\n"); // Mensagem de inicio
 	while (strcmp(fgets(in,50,stdin), "e\n")!= 0) { // Enquanto o que se lee, nao for 'e', continuemos leendo os comandos..
 		switch(in[0]) { // Controle de menus
@@ -1345,7 +1369,7 @@ int main() {
 				break;
 			case 'p' : // Menu impressao de animais alfabeticamente
 				sortAnimais(MeusAnimais,tamanhos[1]); // Organizar os Animais Alfabeticamente
-				imprimirAnimais(MeusAnimais,&tamanhos[1]); // Imprimir a Tabela dos Animais
+				printf("%s",imprimirAnimais(MeusAnimais,&tamanhos[1])); // Imprimir a Tabela dos Animais
 				break;
 			case 'l' : // Commando limpar o console
 				system("clear");
@@ -1356,5 +1380,4 @@ int main() {
 		}
   	}
   	return 0;
-}
 */
