@@ -641,6 +641,42 @@ void servicosMaisUtilizados(Servico servicos[], int numServicos) {
     }
 }
 
+void pagarConta(Servico servicos[], int numContas) {
+    printf("Contas Pendentes:\n"); 
+    for (int i = 0; i < numContas; i++) {
+        // Vai percorrer todo o loop e exibirá uma lista de contas pendentes de pagamento
+        if (servicos[i].pago == 'N') {
+            printf("%d. Conta %d - Não paga\n", i + 1, servicos[i].identificador);
+        }
+    }
+
+    if (numContas == 0) {
+        printf("Não há contas pendentes.\n");
+        return;
+    }
+
+    printf("Escolha o número da conta que deseja verificar (1 a %d): ", numContas);
+
+    int escolha;
+    scanf("%d", &escolha);
+
+    if (escolha >= 1 && escolha <= numContas) {
+        printf("A Conta %d não foi paga. Deseja pagar agora? (S/N): ", servicos[escolha - 1].identificador);
+    
+        char resposta;
+        scanf(" %c", &resposta);
+
+        if (resposta == 'S' || resposta == 's') {
+            printf("Você pagou a Conta %d.\n", servicos[escolha - 1].identificador);
+            servicos[escolha - 1].pago = 'S';
+        } else {
+            printf("A Conta %d não foi paga.\n", servicos[escolha - 1].identificador);
+        }
+    } else {
+        printf("Escolha inválida.\n");
+    }
+}
+
 
 ///////////////
 
