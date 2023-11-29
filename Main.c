@@ -16,6 +16,8 @@ Nomes:André Antônio da Silva Queiroz    | RA:a2575310
 #define MES 2 
 #define ANO 1997
 
+#define MAX_SERVICO 3
+
 #define MENU_DE_COMANDOS "\n'a' para cadastrar um novo animal;\n'q' para mostrar quantidade de animais agressivos\n'p' para listar animais;\n'l' para limpar o console;\n'c' para cadastrar um cliente;\n'e' para terminar;\n\ndigite aqui: "
 
 const char ESPECIES[][14] = {"Cachorro","Gato","Hamster","Pássaro", "Coelho"};
@@ -610,6 +612,35 @@ void buscarClienteImprimir(Cliente *Clientes, int tamanhoClientes, Animal *MeusA
 	printf("Cliente não encontrado.\n");
 }
 
+// Função para mostrar o serviço mais utilizado
+void servicosMaisUtilizados(Servico servicos[], int numServicos) {
+	int tipoServicoContagem[MAX_SERVICO] = {0}; // Ele vai pegar todos elementes do array e inicializar em zero, isso vai servir p poder ver com qual recorrencia os serviços são usados
+	int maxQuantidade = 0;
+    int tiposServicosMaisUtilizados[MAX_TIPOS_SERVICO];
+    int contadorTiposServicos = 0;
+
+		for (int i = 0; i < numServicos; i++) {
+			tipoServicoContagem[servicos[i].tipoServico]++; //vai pegar o tipo de serviço e acrescentar +1 sempre que o serviço for escolhido
+    	}
+
+		for (int i = 0; i < MAX_SERVICO; i++) { //percorre todos os tipos de serviço possíveis começando do índice 0 até MAX_SERVICO
+		    if (tiposServicoContagem[i] > maxQuantidade) { // verifica se a contagem de ocorrências do serviço[i] é maior que a contagem máxima, se for atualiza as variáveis 
+		        maxQuantidade = tiposServicoContagem[i];
+		        contadorTiposServicos = 1; //ele redefini p 1 pq um novo máximo foi encontrado
+		        tiposServicosMaisUtilizados[0] = i;
+		    } else if (tiposServicoContagem[i] == maxQuantidade) {
+		        tiposServicosMaisUtilizados[contadorTiposServicos] = i; //aqui se dois serviços forem utilizados c a msm frequencia, vai exibir os dois, basicamente vai apontar o proximo na outra posição
+		        contadorTiposServicos++;
+		    }
+		}
+		
+		printf("Tipos de serviços mais utilizados (com %d ocorrências):\n", maxQuantidade);
+
+		for (int i = 0; i < contadorTiposServicos; i++) {
+        printf("Tipo de Serviço %d\n", tiposServicosMaisUtilizados[i]); //vai imprimir qual o serviço mais utilizado
+    }
+}
+
 
 ///////////////
 
@@ -731,11 +762,11 @@ typedef struct{
 
 typedef struct {
   int identificador;//AUTO_INCREMENT
-  Data dataServico;
+  Data datao;
   Animal *pet;
-  int tipoServico;
+  int tipoo;
   char pago; //'S' sim 'N' nao
-} Servico;
+} o;
 
 //Funcs
 
