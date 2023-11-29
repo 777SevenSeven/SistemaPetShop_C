@@ -741,7 +741,7 @@ Turma: EC41A.2023_01.C11 / Data:18/04/2023.
 Nomes:André Antônio da Silva Queiroz    | RA:a2575310
 ......Mathias Vinicius Carcano Ferretti | RA:a2575396
 ......Gabriel Henrique Prado Affonso    | RA:a2618044
-*
+
 #include <math.h>
 #include <string.h>
 #include <stdio.h> //bibliotecas que o professor pediu para que tenha no máximo.
@@ -965,7 +965,7 @@ char *anexarFileira(char **colunas, int confTabela[], int primeiraFileira) {
 	anexarNL();
 	anexarFL();
 	anexarNL();
-	minhaImpressao[cursor] = '\0';
+	minhaImpressao[cursor+1] = '\0';
 	return minhaImpressao;
 }
 
@@ -1078,12 +1078,12 @@ char *qntdAnimaisAgressivos(Animal *MeusAnimais, int quantidadeDeAnimais) {
 char **criarColunaAnimais(Animal oA) {
     char **coluna = vetorStringsDinamicos(6,20);// vetorStringsDinamicos(6, 20);
     char stringDeAgressivo[] = {oA.agressivo,'\0'};
-	strcpy(coluna[0], oA.cliente->nomeCliente);
-	strcpy(coluna[1], oA.cliente->telefoneCliente);
+	strcpy(coluna[0], "a");//oA.cliente->nomeCliente);
+	strcpy(coluna[1], "a");//oA.cliente->telefoneCliente);
 	strcpy(coluna[2], oA.nomeAnimal);
 	strcpy(coluna[3], ESPECIES[oA.especie]);
 	strcpy(coluna[4], stringDeAgressivo);
-	strcpy(coluna[5], dataParaChar(oA.dataNascimento)); // data para char ainda nn funciona
+	strcpy(coluna[5], "a");//dataParaChar(oA.dataNascimento)); // data para char ainda nn funciona
 	return coluna;
 }
 
@@ -1106,24 +1106,20 @@ char *baseadoEmNomePet (char *Nome, Animal *Pets, int tamanhoVetorAnimais){
 
 // função que leva o tamanho do vetor animais, e o vetor | ele organiza alfabeticamente, e depois retorna uma tabela com todos os animais e suas caracteristicas para ser impresso
 char* imprimirAnimais(Animal Animais[],int *tamanho) {
-	int cursor = 0,
- 		resultadosEncontrados = 0;
+	if (*tamanho == 0) return "Nenhum Resultado Encontrado\n";
+	int cursor = 0;
  	char *impressao = stringDinamica(1),
   		fileira[1000];
     	strcpy(fileira, anexarFileira(tabelaAnimaisNomeColunas, confTabelaAnimais, 1));
      	impressao = aumentarTamString(impressao, (int) (strlen(fileira)+2));
 	myStrCpy(impressao, fileira, &cursor, strlen(fileira),0);
     	for(int i = 0; i < (*tamanho); i++) {
-    	    int c;
-     		resultadosEncontrados = 1;
 		Animal oA = Animais[i];// oA de O Animal
 		strcpy(fileira,  anexarFileira(criarColunaAnimais(oA), confTabelaAnimais, 0));
-		c = (int) (strlen(fileira)+30+cursor);
-     		impressao = aumentarTamString(impressao, (int) (strlen(fileira)+30+cursor));
+     	impressao = aumentarTamString(impressao, (int) (strlen(fileira)+30+cursor));
 		myStrCpy(impressao, fileira, &cursor, strlen(fileira),0);
 	}
- 	if (resultadosEncontrados == 0) return "Nenhum Resultado Encontrado\n";
-  	else return impressao;
+ 	return impressao;
 }
 
 void imprimirAnimaisAniversariantes(Animal Animais[],int *tamanho, int mes, int dia) {
@@ -1443,4 +1439,5 @@ int main() {
 		}
   	}
   	return 0;
-}*/
+}
+*/
