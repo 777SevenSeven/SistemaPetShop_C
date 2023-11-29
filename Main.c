@@ -669,7 +669,6 @@ int main() {
 // NAO DELETAR NEM FUDENDO E O MEU CODIGO CORRIGIDO DE ALGMS FUNCOES, DPS COLOCO DIREITINH
 
 /*
-/*
 Trabalho Final da Disciplina de Algoritmos 01: Gerenciador de PetShop.
 Turma: EC41A.2023_01.C11 / Data:18/04/2023.
 Nomes:André Antônio da Silva Queiroz    | RA:a2575310
@@ -745,8 +744,6 @@ char *stringDinamica(int tamanho) {char *out = (char*) malloc(tamanho*sizeof(cha
 
 char *aumentarTamString(char *string, int tamanho) {
     int tam = tamanho;
-    printf("a"
-    );
     return (char*) realloc(string,tamanho*sizeof(char));
     //
     //return out;
@@ -881,7 +878,7 @@ char *anexarFileira(char **colunas, int confTabela[], int primeiraFileira) {
 		    cursor = 0;
     	}
 	void anexarColuna(char *valor, int coluna) {
-	    minhaImpressao = aumentarTamString(minhaImpressao, (int) (strlen(valor)+cursor+20) ); // i dont know how but i know its from here
+	    minhaImpressao = aumentarTamString(minhaImpressao, (int) (strlen(valor)+cursor+15) ); // nn sei pq caralhos ta funcionando com 15 e com menos me da erro??????
 	    myStrCpy(minhaImpressao, valor, &cursor, confTabela[coluna], ((coluna == 1) ? 2 : 3));} // Se for primeira linha quero linha de coluna antes tambem
 	void anexarFL() {
 	    minhaImpressao = aumentarTamString(minhaImpressao, (int) (flT+cursor+2));
@@ -893,7 +890,8 @@ char *anexarFileira(char **colunas, int confTabela[], int primeiraFileira) {
 	    cursor ++;}
 	    //myStrCpy(minhaImpressao,"\n",&cursor,1,0);} // Anexar "New Line" (enter)
 	criacaoFileiraLinha();
-	if (primeiraFileira == 1) {anexarFL(); anexarNL();}
+	if (primeiraFileira == 1) anexarFL();
+	anexarNL();
 	for (int i = 0; i < confTabela[0]-1; i++) {
 		anexarColuna(colunas[i], i+1);
 	}
@@ -1013,13 +1011,12 @@ char *qntdAnimaisAgressivos(Animal *MeusAnimais, int quantidadeDeAnimais) {
 char **criarColunaAnimais(Animal oA) {
     char **coluna = vetorStringsDinamicos(6,20);// vetorStringsDinamicos(6, 20);
     char stringDeAgressivo[] = {oA.agressivo,'\0'};
-    printf("%s",oA.nomeAnimal);
-	strcpy(coluna[0], "A");//oA.cliente->nomeCliente);
-	strcpy(coluna[1], "A");//oA.cliente->telefoneCliente);
-	strcpy(coluna[2], "A");//oA.nomeAnimal);
-	strcpy(coluna[3], "A");//ESPECIES[oA.especie]);
-	strcpy(coluna[4], "B");//stringDeAgressivo);
-	strcpy(coluna[5], "A");//dataParaChar(oA.dataNascimento));
+	strcpy(coluna[0], oA.cliente->nomeCliente);
+	strcpy(coluna[1], oA.cliente->telefoneCliente);
+	strcpy(coluna[2], oA.nomeAnimal);
+	strcpy(coluna[3], ESPECIES[oA.especie]);
+	strcpy(coluna[4], stringDeAgressivo);
+	strcpy(coluna[5], dataParaChar(oA.dataNascimento)); // data para char ainda nn funciona
 	return coluna;
 }
 
@@ -1053,9 +1050,8 @@ char* imprimirAnimais(Animal Animais[],int *tamanho) {
     	    int c;
      		resultadosEncontrados = 1;
 		Animal oA = Animais[i];// oA de O Animal
-		strcpy(fileira,  anexarFileira(criarColunaAnimais(oA), confTabelaAnimais, 0));// this anexar
+		strcpy(fileira,  anexarFileira(criarColunaAnimais(oA), confTabelaAnimais, 0));
 		c = (int) (strlen(fileira)+30+cursor);
-		printf("a");
      		impressao = aumentarTamString(impressao, (int) (strlen(fileira)+30+cursor));
 		myStrCpy(impressao, fileira, &cursor, strlen(fileira),0);
 	}
@@ -1380,4 +1376,4 @@ int main() {
 		}
   	}
   	return 0;
-*/
+}*/
