@@ -471,7 +471,7 @@ int animalAniversariante(int diaInscricao, int mesInscricao) {
         int diasRestantes = tamanhoMes[mesInscricao] - diaInscricao;
 
         // Calcula os dias desde o dia seguinte ao da inscrição até o dia do aniversário no mês seguinte
-        int diasParaAniversario = diasRestantes + diaAniversario;
+        int diasParaAniversario = diasRestantes + DIA;
 
         return diasParaAniversario <= 7;
     }
