@@ -718,6 +718,58 @@ void pagarConta(Servico servicos[], int numContas) {
     }
 }
 
+void exibirMenuServicos() { //exibe todos os serviços
+    printf("\nMenu de Serviços:\n");
+    printf("1. BANHO - R$40,00\n");
+    printf("2. TOSA  - R$65,00\n");
+    printf("3. VACINA - R$120,00\n");
+    printf("Selecione o serviço desejado (1-3): ");
+}
+
+int obterOpcaoServico() { //recebe do cliente a opção do serviço
+    int opcao;
+    scanf("%d", &opcao);
+    while (opcao < 1 || opcao > MAX_SERVICO) {
+        printf("Opção inválida. Selecione o serviço desejado (1-3): ");
+        scanf("%d", &opcao);
+    }
+    return opcao;
+}
+
+Data obterData() { //Recebe e verifica a data do serviço
+    Data data;
+    do {
+        printf("Informe a data do serviço (DD MM AAAA): ");
+        scanf("%2d %2d %d", &data.dia, &data.mes, &data.ano);
+
+        if (!validarData(data.dia, data.mes, data.ano)) {
+            printf("Data inválida. Por favor, informe uma data válida.\n");
+        }
+
+    } while (!validarData(data.dia, data.mes, data.ano));
+	
+    return data;
+}
+
+
+Animal* buscarPet(Animal *MeusAnimais, int tamanhoAnimais, char *nomePet) { //aqui ele vai percorrer o loop de pets para ver se o pet está cadastrado
+    for (int i = 0; i < tamanhoAnimais; i++) {
+        if (strcmp(MeusAnimais[i].nomeAnimal, nomePet) == 0) {
+            return &MeusAnimais[i];
+        }
+    }
+    return 0;  // se não achar pet vai retornar 0
+}
+
+void registrarServico(Servico *novoServico, Animal *pet, int tipoServico) { // armazenar todos os valores informados ao serviço escolhido
+    novoServico->pet = pet; //aqui ele armazena o ponteiro para o animal no serviço
+    novoServico->tipoServico = tipoServico; //armazena o tipo de serviço escolhido
+    novoServico->pago = 'N'; //define pago como Não
+    novoServico->dataServico = obterData(); //armazena a data ao serviço escolhido
+}
+
+
+
 
 ///////////////
 
