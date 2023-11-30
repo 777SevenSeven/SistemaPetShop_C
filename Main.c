@@ -784,6 +784,67 @@ int main() {
 	printf("Bem Vindo!%s",INICIO); // Mensagem de inicio
 	while (strcmp(fgets(in,50,stdin), "e\n")!= 0) { // Enquanto o que se lee, nao for 'e', continuemos leendo os comandos..
 		switch(in[0]) { // Controle de menus
+			case '1' : // Menu de Cadastros
+				while (strcmp(fgets(in,50,stdin), "e\n")!= 0) {
+					printf(MENU_CADASTROS);
+					fgets(in,50,stdin);
+					switch(in[0]) {
+						case 'a' : // Cadastro Animal
+							
+							break;
+						case 'p' : // Cadastro Pet
+	
+							break;
+					}
+				}
+				break;
+			case '2' : // Menu de Servicos
+				while (strcmp(fgets(in,50,stdin), "e\n")!= 0) {
+					printf(MENU_SERVICOS);
+					fgets(in,50,stdin);
+					switch(in[0]) {
+						case 'p' : // Pagar Conta
+							
+							break;
+						case 'o' : // Comprar Servico
+	
+							break;
+					}
+				}
+				break;
+			case '3' : // Menu de listagem
+				while (strcmp(fgets(in,50,stdin), "e\n")!= 0) {
+					printf(MENU_LISTAGEM);
+					fgets(in,50,stdin);
+					switch(in[0]) {
+						case '1' : // Buscar Cliente pelo Nome
+							
+							break;
+						case '2' : // Buscar Animal pelo Nome
+	
+							break;
+						case '3' : // Listar Animais
+	
+							break;
+						case '4' : // Quantidade de Animais Agressivos
+	
+							break;
+						case '5' : // Listar Animais Separados Por Especie
+	
+							break;
+						case '6' : // Listar Animais Aniversariantes
+	
+							break;
+						case '7' : // Listar Servicos nao pagos
+	
+							break;
+						case '8' : // Listar Sevico mais Utilizado
+	
+							break;
+					}
+				}
+				break;
+			// Antigos menus
 			case 'h' : // Menu de comandos
 				printf(MENU_DE_COMANDOS);
 				break;
