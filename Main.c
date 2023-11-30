@@ -18,6 +18,7 @@ Nomes:André Antônio da Silva Queiroz    | RA:a2575310
 
 #define MAX_SERVICO 3
 
+#define INICIO "\n'h' para comandos, 'e' para terminar;\n"
 #define MENU_DE_COMANDOS "\n'a' para cadastrar um novo animal;\n'q' para mostrar quantidade de animais agressivos\n'p' para listar animais;\n'l' para limpar o console;\n'c' para cadastrar um cliente;\n'e' para terminar;\n\ndigite aqui: "
 
 const char ESPECIES[][14] = {"Cachorro","Gato","Hamster","Pássaro", "Coelho"};
@@ -772,7 +773,6 @@ void registrarServico(Servico *novoServico, Animal *pet, int tipoServico) { // a
 
 
 ///////////////
-
 int main() {
 	char in[51]; // Variavel que guarda a entrada do Usuario no console | maior entrada valida e de 50, precisamos +1 pelo \n que fgets() pega
 	int tamanhos[] = {0,1}; // Quantidade de entradas por vetor ordem: MeusClientes, MeusAnimais
@@ -781,7 +781,7 @@ int main() {
 	strcpy(MeusAnimais[0].nomeAnimal,"Amigo");
 	//strcpy(MeusAnimais[0].cliente->telefoneCliente, "012341235623");
 	MeusAnimais[0].agressivo = 'S';
-	printf("Bem Vindo!\n'h' para comandos, 'e' para terminar;\n"); // Mensagem de inicio
+	printf("Bem Vindo!%s",INICIO); // Mensagem de inicio
 	while (strcmp(fgets(in,50,stdin), "e\n")!= 0) { // Enquanto o que se lee, nao for 'e', continuemos leendo os comandos..
 		switch(in[0]) { // Controle de menus
 			case 'h' : // Menu de comandos
@@ -826,7 +826,7 @@ int main() {
 				printf("%s\n", qntdAnimaisAgressivos(MeusAnimais, tamanhos[1]));
 				break;
 		}
+		printf(INICIO);
   	}
   	return 0;
 }
-
