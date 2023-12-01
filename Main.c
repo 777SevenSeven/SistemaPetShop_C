@@ -18,11 +18,11 @@ Nomes:André Antônio da Silva Queiroz    | RA:a2575310
 
 #define MAX_SERVICO 3
 
-#define INICIO "\n'h' para comandos, 'e' para terminar;\n"
-#define MENU_DE_COMANDOS "\n'a' para cadastrar um novo animal;\n'q' para mostrar quantidade de animais agressivos\n'p' para listar animais;\n'l' para limpar o console;\n'c' para cadastrar um cliente;\n'e' para terminar;\n\ndigite aqui: "
-#define MENU_CADASTRO "Bem vindo ao Petshop🐕 {AU AU!} Digite 'p' para cadastrar pets, e 'c' para cadastrar cliente, ou pressione 'e' para terminar!\n"
-#define MENU_SERVICOS "Digite 'o' para saber os servicos que oferecemos! ou a tecla 'p' caso você deseja pagar🤑, pressione 'e' para terminar!\n"
-#define MENU_LISTAGEM "Digite '1' para buscar dados do cliente ^ w ^\nDigite '2' para buscar animal pelo nome dele '2'\nDigite '3' para ver os pets cadastrados!\nDigite '4' para saber quais os animais agressivos!\nDigite '5' para ver a lista de animais por especie\nDigite '6' para ver os pets aniversariantes\nDigite '7' para ver os servicos nao pagos (por animal)!\nDigite '8' para saber o servico mais utilizado, pressione 'e' para terminar!\n" 
+#define INICIO "\n🏠 'h' para comandos, 'e' para terminar;\n"
+#define MENU_DE_COMANDOS "\n🐾 'a' para cadastrar um novo animal;\n🦁 'q' para mostrar quantidade de animais agressivos\n📋 'p' para listar animais;\n🧹 'l' para limpar o console;\n👤 'c' para cadastrar um cliente;\n🚪 'e' para terminar;\n\ndigite aqui: "
+#define MENU_CADASTRO "Bem vindo ao Petshop 🐕 {AU AU!} Digite 'p' para cadastrar pets, e 'c' para cadastrar cliente, ou pressione 'e' para terminar!\n"
+#define MENU_SERVICOS "Digite 'o' para saber os serviços que oferecemos! ou a tecla 'p' caso você deseja pagar 🤑, pressione 'e' para terminar!\n"
+#define MENU_LISTAGEM "Digite '1' para buscar dados do cliente ^ w ^\nDigite '2' para buscar animal pelo nome dele '2'\nDigite '3' para ver os pets cadastrados!\nDigite '4' para saber quais os animais agressivos!\nDigite '5' para ver a lista de animais por espécie\nDigite '6' para ver os pets aniversariantes\nDigite '7' para ver os serviços não pagos (por animal)!\nDigite '8' para saber o serviço mais utilizado, pressione 'e' para terminar!\n"
 
 const char ESPECIES[][14] = {"Cachorro","Gato","Hamster","Pássaro", "Coelho"};
 
