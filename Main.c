@@ -317,6 +317,23 @@ void imprimirTabelaAnimaisPorEspecie(Animal *Animais, int tamanho) {
 		printf("%s",anexarFileira(criarColunaTabelaAnimaisPorEspecie(Animais[i]),confTabelaEspecies,2));
 	}
 }
+char* imprimirAnimais(Animal Animais[],int *tamanho) {
+	sortAnimaisEspecie(Animais, tamanho);
+	if (*tamanho == 0) return "Nenhum Resultado Encontrado\n";
+	int cursor = 0;
+ 	char *impressao = stringDinamica(1),
+  		fileira[1000];
+    	strcpy(fileira, anexarFileira(tabelaAnimaisPorEspecie,confTabelaAnimaisPorEspecie,1));
+     	impressao = aumentarTamString(impressao, (int) (strlen(fileira)+2));
+	myStrCpy(impressao, fileira, &cursor, strlen(fileira),0);
+    	for(int i = 0; i < (*tamanho); i++) {
+		Animal oA = Animais[i];// oA de O Animal
+		strcpy(fileira,  anexarFileira(criarColunaTabelaAnimaisPorEspecie(Animais[i]),confTabelaEspecies,2));
+     	impressao = aumentarTamString(impressao, (int) (strlen(fileira)+30+cursor));
+		myStrCpy(impressao, fileira, &cursor, strlen(fileira),0);
+	}
+ 	return impressao;
+}
 
 //função retorna a tabela de quantidade de animais agressivos para ser impresso
 char *qntdAnimaisAgressivos(Animal *MeusAnimais, int quantidadeDeAnimais) {
