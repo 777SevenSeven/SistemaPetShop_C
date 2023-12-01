@@ -697,19 +697,22 @@ void servicosMaisUtilizados(Servico servicos[], int numServicos) {
     }
 }
 
-void pagarConta(Servico servicos[], int numContas) {
+void listarContasNaoPagas(Servico servicos[], int numContas) {
     printf("Contas Pendentes:\n"); 
     for (int i = 0; i < numContas; i++) {
         // Vai percorrer todo o loop e exibirá uma lista de contas pendentes de pagamento
         if (servicos[i].pago == 'N') {
             printf("%d. Conta %d - Não paga\n", i + 1, servicos[i].identificador);
         }
-    }
-
+	}
+}
+void pagarConta(Servico servicos[], int numContas) {
     if (numContas == 0) {
         printf("Não há contas pendentes.\n");
         return;
     }
+	
+   listarContasNaoPagas(servicos, numContas);
 
     printf("Escolha o número da conta que deseja verificar (1 a %d): ", numContas);
 
@@ -733,13 +736,12 @@ void pagarConta(Servico servicos[], int numContas) {
     }
 }
 
-void exibirMenuServicos() { //exibe todos os serviços
+void comprarServicos(Animal *MeusAnimais, int tamanhoAnimais, Servico *novoServico) { //exibe todos os serviços
     printf("\nMenu de Serviços:\n");
     printf("1. BANHO - R$40,00\n");
     printf("2. TOSA  - R$65,00\n");
     printf("3. VACINA - R$120,00\n");
     printf("Selecione o serviço desejado (1-3): ");
-}
 
 int obterOpcaoServico() { //recebe do cliente a opção do serviço
     int opcao;
@@ -777,12 +779,12 @@ Animal* buscarPet(Animal *MeusAnimais, int tamanhoAnimais, char *nomePet) { //aq
 }
 
 void registrarServico(Servico *novoServico, Animal *pet, int tipoServico) { // armazenar todos os valores informados ao serviço escolhido
-    novoServico->pet = pet; //aqui ele armazena o ponteiro para o animal no serviço
-    novoServico->tipoServico = tipoServico; //armazena o tipo de serviço escolhido
-    novoServico->pago = 'N'; //define pago como Não
-    novoServico->dataServico = obterData(); //armazena a data ao serviço escolhido
+    	novoServico->pet = pet; //aqui ele armazena o ponteiro para o animal no serviço
+    	novoServico->tipoServico = tipoServico; //armazena o tipo de serviço escolhido
+    	novoServico->pago = 'N'; //define pago como Não
+    	novoServico->dataServico = obterData(); //armazena a data ao serviço escolhido
+	}
 }
-
 
 
 
@@ -792,6 +794,7 @@ int main() {
 	int tamanhos[] = {0,1}; // Quantidade de entradas por vetor ordem: MeusClientes, MeusAnimais
 	Cliente MeusClientes[100]; // Inicializacao dos vetores
 	Animal MeusAnimais[100];
+	Servico MeuServicos[100];
 	strcpy(MeusAnimais[0].nomeAnimal,"Amigo");
 	//strcpy(MeusAnimais[0].cliente->telefoneCliente, "012341235623");
 	MeusAnimais[0].agressivo = 'S';
@@ -803,32 +806,50 @@ int main() {
 					printf(MENU_CADASTROS);
 					fgets(in,50,stdin);
 					switch(in[0]) {
-						case 'c' : // Cadastro Animal
+						case 'c' : // Cadastro Cliente
 							do {
 								cadastrarCliente(MeusClientes,&tamanhos[0]); // Funcao cadastro cliente
-								printf("Deseja cadastrar outro cliente? 's' para sim, 'n' para não: ");
-								do {                // Enquanto a resposta nao for valida, continue lendo
+								printf("Cliente cadastrado com sucesso! deseja cadastrar outro cliente? 's' para sim ou 'n' para não: ");
+								do { // Enquanto a resposta nao for valida, continue lendo
 									fgets(in,50,stdin);
 								} while (in[0] != 'n' || in[0] != 's');
 								if (in[0] == 'n') break; // Se a resposta for Nao, pare de cadastrar, se nao, continue
 							} while(1);
 							break;
 						case 'p' : // Cadastro Pet
-	
+							do {
+								cadastrarPet(MeusAnimais, &tamanhos[1], MeusClientes,&tamanhos[0]);
+								printf("Pet cadastrado com sucesso! deseja cadastrar outro pet? 's' para sim ou 'n' para não: ");
+								do {	
+									fgets(in,50,stdin);
+								} while (in[0] != 'n' || in[0] != 's');
+								if (in[0] == 'n' || in[0] == 'N') break;
+							} while(1);
 							break;
-					}
-				}
-				break;
 			case '2' : // Menu de Servicos
 				while (strcmp(fgets(in,50,stdin), "e\n")!= 0) {
 					printf(MENU_SERVICOS);
 					fgets(in,50,stdin);
 					switch(in[0]) {
 						case 'p' : // Pagar Conta
-							
+							do {
+								pagarConta(MeusServicos, tamanhos[3]);
+								printf("Deseja realizar o pagamento de outra conta? 's' para sim ou'n' para não: ");	
+								do{
+									fgets(in,50,stdin);
+								} while (in[0] != 'n' || in[0] != 's');
+								if (in[0] == 'n' || in[0] == 'N') break;
+							} while(1);
 							break;
 						case 'o' : // Comprar Servico
-	
+							do {
+								comprarServicos(MeusServicos, tamanhos[1], MeusAnimais, );
+								printf("Deseja comprar outro serviço? 's' para sim ou'n' para não: ");
+								do{
+									fgets(in,50,stdin);
+								} while (in[0] != 'n' || in[0] != 's');
+								if (in[0] == 'n' || in[0] == 'N') break;
+							} while(1);
 							break;
 					}
 				}
@@ -839,7 +860,14 @@ int main() {
 					fgets(in,50,stdin);
 					switch(in[0]) {
 						case '1' : // Buscar Cliente pelo Nome
-							
+							do {
+								buscarClienteImprimir(MeusCliente, tamanhos[0]);
+								printf("Deseja buscar outro cliente? \n");
+								do {	
+									fgets(in,50,stdin);
+								} while (in[0] != 'n' || in[0] != 's');
+								if (in[0] == 'n' || in[0] == 'N') break;
+							} while(1);
 							break;
 						case '2' : // Buscar Animal pelo Nome
 							do {
@@ -867,10 +895,10 @@ int main() {
 							printf("%s\n", imprimirAnimaisAniversariantes(Animais,tamanhos[1]));
 							break;
 						case '7' : // Listar Servicos nao pagos
-	
+								listarContasNaoPagas(MeuServicos, tamanhos[3]);
 							break;
 						case '8' : // Listar Sevico mais Utilizado
-	
+								servicosMaisUtilizados(MeuServicos, tamanhos[3]);
 							break;
 					}
 				}
