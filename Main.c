@@ -865,7 +865,7 @@ int main() {
 							break;
 						case '3' : // Listar Animais
 							sortAnimais(MeusAnimais,tamanhos[1]); // Organizar os Animais Alfabeticamente
-							printf("%s",imprimirAnimais(MeusAnimais,&tamanhos[1])); // Imprimir a Tabela dos Animais
+							printf("%s", imprimirAnimais(MeusAnimais,&tamanhos[1])); // Imprimir a Tabela dos Animais
 							break;
 						case '4' : // Quantidade de Animais Agressivos
 							printf("%s\n", qntdAnimaisAgressivos(MeusAnimais, tamanhos[1]));
