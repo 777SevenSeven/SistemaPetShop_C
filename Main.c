@@ -813,7 +813,7 @@ int main() {
 					printf(MENU_CADASTROS);
 					fgets(in,50,stdin);
 					switch(in[0]) {
-						case 'c' : // Cadastro Animal
+						case 'c' : // Cadastro Cliente
 							do {
 								cadastrarCliente(MeusClientes,&tamanhos[0]); // Funcao cadastro cliente
 								printf("Deseja cadastrar outro cliente? 's' para sim, 'n' para não: ");
@@ -868,13 +868,13 @@ int main() {
 							printf("%s", imprimirAnimais(MeusAnimais,&tamanhos[1])); // Imprimir a Tabela dos Animais
 							break;
 						case '4' : // Quantidade de Animais Agressivos
-							printf("%s\n", qntdAnimaisAgressivos(MeusAnimais, tamanhos[1]));
+							printf("%s\n", qntdAnimaisAgressivos(MeusAnimais, &tamanhos[1]));
 							break;
 						case '5' : // Listar Animais Separados Por Especie
-							printf("%s\n", imprimirTabelaAnimaisPorEspecie(MeusAnimais,tamanhos[1]));
+							printf("%s\n", imprimirTabelaAnimaisPorEspecie(MeusAnimais,&tamanhos[1]));
 							break;
 						case '6' : // Listar Animais Aniversariantes
-							printf("%s\n", imprimirAnimaisAniversariantes(MeusAnimais,tamanhos[1]));
+							printf("%s\n", imprimirAnimaisAniversariantes(MeusAnimais,&tamanhos[1]));
 							break;
 						case '7' : // Listar Servicos nao pagos
 	
