@@ -811,7 +811,6 @@ int main() {
 			case '1' : // Menu de Cadastros
 				while (strcmp(fgets(in,50,stdin), "e\n")!= 0) {
 					printf(MENU_CADASTROS);
-					fgets(in,50,stdin);
 					switch(in[0]) {
 						case 'c' : // Cadastro Cliente
 							do {
@@ -832,7 +831,6 @@ int main() {
 			case '2' : // Menu de Servicos
 				while (strcmp(fgets(in,50,stdin), "e\n")!= 0) {
 					printf(MENU_SERVICOS);
-					fgets(in,50,stdin);
 					switch(in[0]) {
 						case 'p' : // Pagar Conta
 							
@@ -846,7 +844,6 @@ int main() {
 			case '3' : // Menu de listagem
 				while (strcmp(fgets(in,50,stdin), "e\n")!= 0) {
 					printf(MENU_LISTAGEM);
-					fgets(in,50,stdin);
 					switch(in[0]) {
 						case '1' : // Buscar Cliente pelo Nome
 							
