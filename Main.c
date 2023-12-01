@@ -13,8 +13,8 @@ Nomes:André Antônio da Silva Queiroz    | RA:a2575310
 
 //Definimos as informações da data aqui em cima, para facilitar o encontro para a manuntenção dessas informações, entre os membros.
 #define DIA 1
-#define MES 2 
-#define ANO 1997
+#define MES 12 
+#define ANO 2023
 
 #define MAX_SERVICO 3
 
@@ -286,11 +286,17 @@ char **criarColunaEspecies(int numero) {
 
 //função que ele imprime a tabela de todas as especies com o numero associado
 void imprimirTabelaEspecies() {
-	int quantidadeEspecies = sizeof(ESPECIES) / sizeof(int);
-	printf("%s",anexarFileira(tabelaEspecies,confTabelaEspecies,1));
-	for (int i = 0; i < quantidadeEspecies-1; i++) {
-		printf("%s",anexarFileira(criarColunaEspecies(i),confTabelaEspecies,2));
+	int quantidadeEspecies = sizeof(ESPECIES) / sizeof(ESPECIES[0]);
+	char fileira[1000];
+	strcpy(fileira, anexarFileira(tabelaEspecies,confTabelaEspecies,1));
+	fileira[strlen(fileira)-1] = '\0';
+	printf("%s", fileira);
+	for (int i = 0; i < quantidadeEspecies; i++) {
+	    strcpy(fileira, anexarFileira(criarColunaEspecies(i),confTabelaEspecies,2));
+	    fileira[strlen(fileira)-1] = '\0';
+		printf("%s",fileira);
 	}
+	printf("\n");
 }
 
 //função que cria configuracao da fileira de impressao de tabela de Cliente com o numero associado // usada na busca de clientes cadastrados
@@ -377,12 +383,12 @@ char *qntdAnimaisAgressivos(Animal *MeusAnimais, int quantidadeDeAnimais) {
 char **criarColunaAnimais(Animal oA) {
     char **coluna = vetorStringsDinamicos(6,20);// vetorStringsDinamicos(6, 20);
     char stringDeAgressivo[] = {oA.agressivo,'\0'};
-	strcpy(coluna[0], "a");//oA.cliente->nomeCliente);
-	strcpy(coluna[1], "a");//oA.cliente->telefoneCliente);
+	strcpy(coluna[0], oA.cliente->nomeCliente);
+	strcpy(coluna[1], oA.cliente->telefoneCliente);
 	strcpy(coluna[2], oA.nomeAnimal);
 	strcpy(coluna[3], ESPECIES[oA.especie]);
 	strcpy(coluna[4], stringDeAgressivo);
-	strcpy(coluna[5], "a");//dataParaChar(oA.dataNascimento)); // data para char ainda nn funciona
+	strcpy(coluna[5], dataParaChar(oA.dataNascimento)); // data para char ainda nn funciona
 	return coluna;
 }
 
@@ -393,7 +399,7 @@ char *baseadoEmNomePet (char *Nome, Animal *Pets, int tamanhoVetorAnimais){
   		if (strcmp (Pets[i].nomeAnimal, Nome) == 0) {
 			char *primeiraFileira   = anexarFileira(tabelaAnimaisNomeColunas,confTabelaAnimais,1); //nn sei se pode
 			char *fileiraDeConteudo = anexarFileira(criarColunaAnimais(Pets[i]),confTabelaAnimais,0);
-			int tamanhoDaPrimeiraFileira = strlen(primeiraFileira);
+			int tamanhoDaPrimeiraFileira = strlen(primeiraFileira) - 1;
 			int tamanhoFileiraDeConteudo = strlen(fileiraDeConteudo);
 			strcpy  (impressao, primeiraFileira);                                             // Copiar a primeira fileira para impressao
 			myStrCpy(impressao, fileiraDeConteudo, &tamanhoDaPrimeiraFileira, tamanhoFileiraDeConteudo, 0); // Copiar fileira de conteudo
@@ -552,6 +558,49 @@ Cliente* cadastrarCliente(Cliente *MeusClientes, int *tamanhoClientes) {
     return &MeusClientes[(*tamanhoClientes)-1]; // O ponteiro aponta para a última posição válida da lista de clientes, que é MeusClientes[(*tamanhoClientes)-1]
 }
 
+// Função para buscar o cliente e imprimir os seus dados e do pet, se existir
+Cliente* buscarClienteImprimir(Cliente *Clientes, int tamanhoClientes, Animal *MeusAnimais, int tamanhoAnimais, int opcao) {
+    char nomeBusca[50];
+    Cliente* ClienteEncontrado = NULL; 
+	int encontrei = 0;
+
+	printf("Digite o nome do cliente que deseja procurar: ");
+    fgets(nomeBusca, sizeof(nomeBusca)/sizeof(char), stdin); // Solicita uma entrada de nome para realizar a busca
+    nomeBusca[strcspn(nomeBusca, "\n")] = '\0';
+
+	for (int i = 0; i < tamanhoClientes; i++) {
+        if (strcmp(Clientes[i].nomeCliente, nomeBusca) == 0) { //Percorre o loop e vê se o cliente existe
+            ClienteEncontrado = &Clientes[i];
+            // Cliente encontrado, imprime os dados
+            printf("\nDados do Cliente:\n");
+            printf("Nome: %s\n", Clientes[i].nomeCliente);
+            printf("Telefone: %s\n", Clientes[i].telefoneCliente);
+
+ 			
+ 	if (opcao == 0) {
+ 	    printf("\nPets do Cliente:\n");
+    for (int j = 0; j < tamanhoAnimais; j++) { // Percorre o loop de pet e vê se tem pet cadastrado
+                if (MeusAnimais[j].cliente == &Clientes[i]) {
+					encontrei = 1; // Pet encontrado, imprime os dados
+                    printf("Nome do Pet: %s\n", MeusAnimais[j].nomeAnimal);
+                    printf("Espécie: %s\n", ESPECIES[MeusAnimais[j].especie]);
+                    printf("Agressivo: %c\n", MeusAnimais[j].agressivo);
+                    printf("Data de Nascimento: %02d/%02d/%04d\n", MeusAnimais[j].dataNascimento.dia, MeusAnimais[j].dataNascimento.mes, MeusAnimais[j].dataNascimento.ano);
+                    printf("-------------------------\n");
+				}
+			}
+			if (encontrei == 0) {
+				printf("O cliente não possui pets."); 
+			}
+ 	    }
+ 	    return ClienteEncontrado;
+        } 
+    }
+	
+	printf("Cliente não encontrado.\n");
+	return ClienteEncontrado;
+}
+
 // Função de cadastrar os pets
 int cadastrarPet(Animal *MeusAnimais, int *tamanhoAnimais, Cliente *MeusClientes, int *tamanhoClientes) {
     char nomeAnimal[50], agressivo, escolhaClienteStr[50];
@@ -561,21 +610,23 @@ int cadastrarPet(Animal *MeusAnimais, int *tamanhoAnimais, Cliente *MeusClientes
     Data dataNascimento;
 
     while (1) {
-        printf("Já possui cadastro? S para sim, N para não ou E para desistir: ");
-        fgets(escolhaClienteStr, sizeof(escolhaClienteStr) / sizeof(char), stdin);
-        if (escolhaClienteStr[0] == 'S') {
-            printf("Termo de Pesquisa: ");
-            fgets(escolhaClienteStr, sizeof(escolhaClienteStr) / sizeof(char), stdin);
-        } else if (escolhaClienteStr[0] == 'N') {
-            ClienteEscolhido = cadastrarCliente(MeusClientes, tamanhoClientes);
-            break;
-        } else if (escolhaClienteStr[0] == 'E') {
-            return -1;
-        } else {
-            printf("Escolha inválida. Digite S, N ou E.\n");
-            continue;
-        }
+    printf("Já possui cadastro? S para sim, N para não ou E para desistir: ");
+    fgets(escolhaClienteStr, sizeof(escolhaClienteStr), stdin);
+    escolhaClienteStr[strcspn(escolhaClienteStr, "\n")] = '\0';
+
+    if (escolhaClienteStr[0] == 'S') {
+        ClienteEscolhido = buscarClienteImprimir(MeusClientes, *tamanhoClientes, MeusAnimais, *tamanhoAnimais, 1);
+        break;
+    } else if (escolhaClienteStr[0] == 'N') {
+        ClienteEscolhido = cadastrarCliente(MeusClientes, tamanhoClientes);
+        break;
+    } else if (escolhaClienteStr[0] == 'E') {
+        return -1;
+    } else {
+        printf("Escolha inválida. Digite S, N ou E.\n");
+        continue;
     }
+}
 
     do {
         printf("Nome do seu Pet: ");
@@ -606,12 +657,10 @@ int cadastrarPet(Animal *MeusAnimais, int *tamanhoAnimais, Cliente *MeusClientes
     } while (1);
 
     do {
-        printf("Digite a data de nascimento do seu Pet (DD MM AAAA): ");
         char dataNascimentoStr[12];
+        printf("Digite a data de nascimento do seu Pet (DD MM AAAA): ");
         fgets(dataNascimentoStr, sizeof(dataNascimentoStr) / sizeof(char), stdin);
-
-        int diaNascimento, mesNascimento, anoNascimento;
-        sscanf(dataNascimentoStr, "%d/%d/%d", &dataNascimento.dia, &dataNascimento.mes, &dataNascimento.ano);
+        sscanf(dataNascimentoStr, "%d %d %d", &dataNascimento.dia, &dataNascimento.mes, &dataNascimento.ano);
 
         if (validarData(dataNascimento.dia, dataNascimento.mes, dataNascimento.ano) == 0) {
             printf("Data de nascimento inválida. Digite novamente.\n");
@@ -641,43 +690,6 @@ int cadastrarPet(Animal *MeusAnimais, int *tamanhoAnimais, Cliente *MeusClientes
     MeusAnimais[(*tamanhoAnimais)] = meuPet;
     (*tamanhoAnimais)++;
     return 1;
-}
-
-// Função para buscar o cliente e imprimir os seus dados e do pet, se existir
-void buscarClienteImprimir(Cliente *Clientes, int tamanhoClientes, Animal *MeusAnimais, int tamanhoAnimais) {
-    char nomeBusca[50];
-	int encontrei = 0;
-	
-	printf("Digite o nome do cliente que deseja procurar: ");
-    fgets(nomeBusca, sizeof(nomeBusca)/sizeof(char), stdin); // Solicita uma entrada de nome para realizar a busca
-    nomeBusca[strcspn(nomeBusca, "\n")] = '\0';
-
-	for (int i = 0; i < tamanhoClientes; i++) {
-        if (strcmp(Clientes[i].nomeCliente, nomeBusca) == 0) { //Percorre o loop e vê se o cliente existe
-            // Cliente encontrado, imprime os dados
-            printf("\nDados do Cliente:\n");
-            printf("Nome: %s\n", Clientes[i].nomeCliente);
-            printf("Telefone: %s\n", Clientes[i].telefoneCliente);
-
- 			printf("\nPets do Cliente:\n");
-    for (int j = 0; j < tamanhoAnimais; j++) { // Percorre o loop de pet e vê se tem pet cadastrado
-                if (MeusAnimais[j].cliente == &Clientes[i]) {
-					encontrei = 1; // Pet encontrado, imprime os dados
-                    printf("Nome do Pet: %s\n", MeusAnimais[j].nomeAnimal);
-                    printf("Espécie: %s\n", ESPECIES[MeusAnimais[j].especie]);
-                    printf("Agressivo: %c\n", MeusAnimais[j].agressivo);
-                    printf("Data de Nascimento: %02d/%02d/%04d\n", MeusAnimais[j].dataNascimento.dia, MeusAnimais[j].dataNascimento.mes, MeusAnimais[j].dataNascimento.ano);
-                    printf("-------------------------\n");
-				}
-			}
-			if (encontrei == 0) {
-				printf("O cliente não possui pets."); 
-			}
-			return;
-        } 
-    }
-	
-	printf("Cliente não encontrado.\n");
 }
 
 // Função para mostrar o serviço mais utilizado
@@ -872,7 +884,7 @@ int main() {
 					switch(in[0]) {
 						case '1' : // Buscar Cliente pelo Nome
 							do {
-								buscarClienteImprimir(MeusClientes, tamanhos[0], MeusAnimais, tamanhos[1]);
+								buscarClienteImprimir(MeusClientes, tamanhos[0], MeusAnimais, tamanhos[1], 0);
 								printf("Deseja buscar outro cliente? \n");
 								do {	
 									fgets(in,50,stdin);
