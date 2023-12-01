@@ -387,17 +387,39 @@ char* imprimirAnimais(Animal Animais[],int *tamanho) {
  	return impressao;
 }
 
-void imprimirAnimaisAniversariantes(Animal Animais[],int *tamanho, int mes, int dia) {
+void imprimirAnimaisAniversariantes(Animal Animais[],int *tamanho) {
 	int cursor = 0;
 	char *minhaImpressao = stringDinamica(1);
 	printf("%s", anexarFileira(tabelaAnimaisNomeColunas, confTabelaAnimais, 1));
     	for(int i = 0; i < (*tamanho); i++) {
 		Animal oA = Animais[i];// oA de O Animal
-		//if (animalAniversariante(oA.dataNascimento.dia,oA.dataNascimento.mes,dia,mes) == 1)
-		//	printf("%s", anexarFileira(criarColunaAnimais(oA), confTabelaAnimais, 0));
+		if (animalAniversariante(oA.dataNascimento.dia,oA.dataNascimento.mes) == 1)
+			printf("%s", anexarFileira(criarColunaAnimais(oA), confTabelaAnimais, 0));
 	}
 }
 
+char* imprimirAnimais(Animal Animais[],int *tamanho) {
+	if (*tamanho == 0) return "Nenhum Resultado Encontrado\n";
+	int cursor = 0,
+	    ctr = 0;
+ 	char *impressao = stringDinamica(1),
+  		fileira[1000];
+    	strcpy(fileira, anexarFileira(tabelaAnimaisNomeColunas, confTabelaAnimais, 1));
+     	impressao = aumentarTamString(impressao, (int) (strlen(fileira)+2));
+	myStrCpy(impressao, fileira, &cursor, strlen(fileira),0);
+    	for(int i = 0; i < (*tamanho); i++) {
+		if (animalAniversariante(oA.dataNascimento.dia,oA.dataNascimento.mes) == 1) {
+			ctr = 1;
+			Animal oA = Animais[i];// oA de O Animal
+			strcpy(fileira,  anexarFileira(criarColunaAnimais(oA), confTabelaAnimais, 0));
+	     		impressao = aumentarTamString(impressao, (int) (strlen(fileira)+30+cursor));
+			myStrCpy(impressao, fileira, &cursor, strlen(fileira),0);
+		}
+	}
+	if (ctr > 0)
+	 	return impressao;
+	else return "Nenhum Resultado Encontrado\n";
+}
 // Função para validar nomes
 int nomeValido(char *in) {
     int valid = 0;
@@ -853,7 +875,7 @@ int main() {
 	
 							break;
 						case '6' : // Listar Animais Aniversariantes
-	
+							printf("%s\n", imprimirAnimaisAniversariantes(Animais,tamanhos[1]));
 							break;
 						case '7' : // Listar Servicos nao pagos
 	
