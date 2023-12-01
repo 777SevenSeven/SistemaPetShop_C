@@ -798,6 +798,7 @@ void registrarServico(Servico *novoServico, Animal *pet, int tipoServico) { // a
 
 
 
+
 ///////////////
 int main() {
 	char in[51]; // Variavel que guarda a entrada do Usuario no console | maior entrada valida e de 50, precisamos +1 pelo \n que fgets() pega
@@ -834,7 +835,9 @@ int main() {
 								} while (in[0] != 'n' || in[0] != 's');
 								if (in[0] == 'n' || in[0] == 'N') break;
 							} while(1);
-							break;
+					}
+				}
+				break;
 			case '2' : // Menu de Servicos
 				while (strcmp(fgets(in,50,stdin), "e\n")!= 0) {
 					printf(MENU_SERVICOS);
@@ -868,7 +871,7 @@ int main() {
 					switch(in[0]) {
 						case '1' : // Buscar Cliente pelo Nome
 							do {
-								buscarClienteImprimir(MeusCliente, tamanhos[0]);
+								buscarClienteImprimir(MeusClientes, tamanhos[0]);
 								printf("Deseja buscar outro cliente? \n");
 								do {	
 									fgets(in,50,stdin);
@@ -893,7 +896,7 @@ int main() {
 							printf("%s", imprimirAnimais(MeusAnimais,&tamanhos[1])); // Imprimir a Tabela dos Animais
 							break;
 						case '4' : // Quantidade de Animais Agressivos
-							printf("%s\n", qntdAnimaisAgressivos(MeusAnimais, &tamanhos[1]));
+							printf("%s\n", qntdAnimaisAgressivos(MeusAnimais, tamanhos[1]));
 							break;
 						case '5' : // Listar Animais Separados Por Especie
 							printf("%s\n", imprimirTabelaAnimaisPorEspecie(MeusAnimais,&tamanhos[1]));
