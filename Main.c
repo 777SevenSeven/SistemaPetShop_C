@@ -333,14 +333,7 @@ char **criarColunaTabelaAnimaisPorEspecie(Animal oA) { //oC O Cliente
 	return coluna;
 }
 
-void imprimirTabelaAnimaisPorEspecie(Animal *Animais, int tamanho) {
-	sortAnimaisEspecie(Animais, tamanho);
-	printf("%s",anexarFileira(tabelaAnimaisPorEspecie,confTabelaAnimaisPorEspecie,1));
-	for (int i = 0; i < tamanho; i++) {
-		printf("%s",anexarFileira(criarColunaTabelaAnimaisPorEspecie(Animais[i]),confTabelaEspecies,2));
-	}
-}
-char* imprimirAnimais(Animal Animais[],int *tamanho) {
+char* imprimirTabelaAnimaisPorEspecie(Animal Animais[],int *tamanho) {
 	sortAnimaisEspecie(Animais, tamanho);
 	if (*tamanho == 0) return "Nenhum Resultado Encontrado\n";
 	int cursor = 0;
@@ -878,10 +871,10 @@ int main() {
 							printf("%s\n", qntdAnimaisAgressivos(MeusAnimais, tamanhos[1]));
 							break;
 						case '5' : // Listar Animais Separados Por Especie
-	
+							printf("%s\n", imprimirTabelaAnimaisPorEspecie(MeusAnimais,tamanhos[1]));
 							break;
 						case '6' : // Listar Animais Aniversariantes
-							printf("%s\n", imprimirAnimaisAniversariantes(Animais,tamanhos[1]));
+							printf("%s\n", imprimirAnimaisAniversariantes(MeusAnimais,tamanhos[1]));
 							break;
 						case '7' : // Listar Servicos nao pagos
 	
