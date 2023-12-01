@@ -387,18 +387,7 @@ char* imprimirAnimais(Animal Animais[],int *tamanho) {
  	return impressao;
 }
 
-void imprimirAnimaisAniversariantes(Animal Animais[],int *tamanho) {
-	int cursor = 0;
-	char *minhaImpressao = stringDinamica(1);
-	printf("%s", anexarFileira(tabelaAnimaisNomeColunas, confTabelaAnimais, 1));
-    	for(int i = 0; i < (*tamanho); i++) {
-		Animal oA = Animais[i];// oA de O Animal
-		if (animalAniversariante(oA.dataNascimento.dia,oA.dataNascimento.mes) == 1)
-			printf("%s", anexarFileira(criarColunaAnimais(oA), confTabelaAnimais, 0));
-	}
-}
-
-char* imprimirAnimais(Animal Animais[],int *tamanho) {
+char* imprimirAnimaisAniversariantes(Animal Animais[],int *tamanho) {
 	if (*tamanho == 0) return "Nenhum Resultado Encontrado\n";
 	int cursor = 0,
 	    ctr = 0;
