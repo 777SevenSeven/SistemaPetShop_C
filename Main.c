@@ -166,16 +166,17 @@ void myStrCpy (char *str1, char *str2, int *i, int lee, int writeColuna) {
 
 //função que transforma um numero inteiro positivo em um char
 char *posIntToChar(int in) {
-  	int i = 1+(int) log10(in); // Olha quantidade de numeros
+    int a = in;
+  	int i = ((in == 0) ? 1 : 1+(int) log10(in)); // Olha quantidade de numeros
   	int mx = i; // Quantidade maxima de numeros
- 	char *myChar = stringDinamica(i+2); // Criar string com tamanho de Numeros+2
+ 	char *myChar = stringDinamica(i+3); // Criar string com tamanho de Numeros+2
 	while(i >= 1) {
       		int toInt = in/pow(10,i-1); // Dividir para ficar so um numero positivo com o resto em virgulas
       		myChar[mx-i] = 48+toInt; // Colocar a letra do numero na string
       		in -= toInt*pow(10,i-1); // Tirar o numero ja colocado do numero composto
       		i--;
   	}
-  	myChar[mx] = '\0'; // colocar o byte nulo no fim da string
+  	myChar[mx-2] = '\0'; // colocar o byte nulo no fim da string
   	return myChar;
 }
 
@@ -287,7 +288,7 @@ char **criarColunaEspecies(int numero) {
 void imprimirTabelaEspecies() {
 	int quantidadeEspecies = sizeof(ESPECIES) / sizeof(int);
 	printf("%s",anexarFileira(tabelaEspecies,confTabelaEspecies,1));
-	for (int i = 0; i < quantidadeEspecies; i++) {
+	for (int i = 0; i < quantidadeEspecies-1; i++) {
 		printf("%s",anexarFileira(criarColunaEspecies(i),confTabelaEspecies,2));
 	}
 }
@@ -567,6 +568,7 @@ int cadastrarPet(Animal *MeusAnimais, int *tamanhoAnimais, Cliente *MeusClientes
             fgets(escolhaClienteStr, sizeof(escolhaClienteStr) / sizeof(char), stdin);
         } else if (escolhaClienteStr[0] == 'N') {
             ClienteEscolhido = cadastrarCliente(MeusClientes, tamanhoClientes);
+            break;
         } else if (escolhaClienteStr[0] == 'E') {
             return -1;
         } else {
@@ -810,11 +812,12 @@ int main() {
 	while (strcmp(fgets(in,50,stdin), "e\n")!= 0) { // Enquanto o que se lee, nao for 'e', continuemos leendo os comandos..
 		switch(in[0]) { // Controle de menus
 			case '1' : // Menu de Cadastros
+			    printf(MENU_CADASTRO);
 				while (strcmp(fgets(in,50,stdin), "e\n")!= 0) {
-					printf(MENU_CADASTRO);
 					switch(in[0]) {
 						case 'c' : // Cadastro Cliente
 							do {
+							    printf("AA");
 								cadastrarCliente(MeusClientes,&tamanhos[0]); // Funcao cadastro cliente
 								printf("Cliente cadastrado com sucesso! deseja cadastrar outro cliente? 's' para sim ou 'n' para não: ");
 								do { // Enquanto a resposta nao for valida, continue lendo
@@ -833,6 +836,7 @@ int main() {
 								if (in[0] == 'n' || in[0] == 'N') break;
 							} while(1);
 					}
+					printf(MENU_CADASTRO);
 				}
 				break;
 			case '2' : // Menu de Servicos
