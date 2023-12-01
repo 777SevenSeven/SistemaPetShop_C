@@ -334,7 +334,7 @@ char **criarColunaTabelaAnimaisPorEspecie(Animal oA) { //oC O Cliente
 }
 
 char* imprimirTabelaAnimaisPorEspecie(Animal Animais[],int *tamanho) {
-	sortAnimaisEspecie(Animais, tamanho);
+	sortAnimaisEspecie(Animais, *tamanho);
 	if (*tamanho == 0) return "Nenhum Resultado Encontrado\n";
 	int cursor = 0;
  	char *impressao = stringDinamica(1),
@@ -356,7 +356,7 @@ char *qntdAnimaisAgressivos(Animal *MeusAnimais, int quantidadeDeAnimais) {
 	int contagem = 0,
 	    cursor = 0;
 	char *impressao = stringDinamica(1),
-	     colunaComQuantidadeDeAgressivos[1][4],
+	     **colunaComQuantidadeDeAgressivos = vetorStringsDinamicos(1,4),
 	     *primeiraFileira, // nn sei se pode
   	     fileira[1000];
 	for (int i = 0; i < quantidadeDeAnimais; i++) {
@@ -430,12 +430,12 @@ char* imprimirAnimaisAniversariantes(Animal Animais[],int *tamanho) {
      	impressao = aumentarTamString(impressao, (int) (strlen(fileira)+2));
 	myStrCpy(impressao, fileira, &cursor, strlen(fileira),0);
     	for(int i = 0; i < (*tamanho); i++) {
-		if (animalAniversariante(oA.dataNascimento.dia,oA.dataNascimento.mes) == 1) {
-			ctr = 1;
 			Animal oA = Animais[i];// oA de O Animal
-			strcpy(fileira,  anexarFileira(criarColunaAnimais(oA), confTabelaAnimais, 0));
+		    if (animalAniversariante(oA.dataNascimento.dia,oA.dataNascimento.mes) == 1) {
+			    ctr = 1;
+			    strcpy(fileira,  anexarFileira(criarColunaAnimais(oA), confTabelaAnimais, 0));
 	     		impressao = aumentarTamString(impressao, (int) (strlen(fileira)+30+cursor));
-			myStrCpy(impressao, fileira, &cursor, strlen(fileira),0);
+			    myStrCpy(impressao, fileira, &cursor, strlen(fileira),0);
 		}
 	}
 	if (ctr > 0)
@@ -611,7 +611,7 @@ int cadastrarPet(Animal *MeusAnimais, int *tamanhoAnimais, Cliente *MeusClientes
         int diaNascimento, mesNascimento, anoNascimento;
         sscanf(dataNascimentoStr, "%d/%d/%d", &dataNascimento.dia, &dataNascimento.mes, &dataNascimento.ano);
 
-        if (ValidarData(dataNascimento.dia, dataNascimento.mes, dataNascimento.ano) == 0) {
+        if (validarData(dataNascimento.dia, dataNascimento.mes, dataNascimento.ano) == 0) {
             printf("Data de nascimento inválida. Digite novamente.\n");
             continue;
         }
@@ -813,7 +813,7 @@ int main() {
 		switch(in[0]) { // Controle de menus
 			case '1' : // Menu de Cadastros
 				while (strcmp(fgets(in,50,stdin), "e\n")!= 0) {
-					printf(MENU_CADASTROS);
+					printf(MENU_CADASTRO);
 					switch(in[0]) {
 						case 'c' : // Cadastro Cliente
 							do {
@@ -841,7 +841,7 @@ int main() {
 					switch(in[0]) {
 						case 'p' : // Pagar Conta
 							do {
-								pagarConta(MeusServicos, tamanhos[3]);
+								pagarConta(MeuServicos, tamanhos[3]);
 								printf("Deseja realizar o pagamento de outra conta? 's' para sim ou'n' para não: ");	
 								do{
 									fgets(in,50,stdin);
@@ -851,7 +851,7 @@ int main() {
 							break;
 						case 'o' : // Comprar Servico
 							do {
-								comprarServicos(MeusServicos, tamanhos[1], MeusAnimais, );
+								comprarServicos(MeuServicos, tamanhos[1], MeusAnimais);
 								printf("Deseja comprar outro serviço? 's' para sim ou'n' para não: ");
 								do{
 									fgets(in,50,stdin);
