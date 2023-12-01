@@ -354,22 +354,22 @@ char* imprimirTabelaAnimaisPorEspecie(Animal Animais[],int *tamanho) {
 //função retorna a tabela de quantidade de animais agressivos para ser impresso
 char *qntdAnimaisAgressivos(Animal *MeusAnimais, int quantidadeDeAnimais) {
 	int contagem = 0,
-	    tamanhoPrimeiraFileira; // Se refere a posicao no string da primeira fileira, pra escrever a partir dela na segunda
-	char *impressao = stringDinamica(1000),
-	     confColunaComQuantidadeDeAgressivos[1][4],
+	    cursor = 0;
+	char *impressao = stringDinamica(1),
+	     colunaComQuantidadeDeAgressivos[1][4],
 	     *primeiraFileira, // nn sei se pode
-	     *fileiraDeConteudo;
+  	     fileira[1000];
 	for (int i = 0; i < quantidadeDeAnimais; i++) {
   		if (MeusAnimais[i].agressivo  == 'S') contagem++;
   	}
-  	//tem q montar a tabela direito dnv
-	strcpy(tabelaAnimaisAggressivosNomeColunas[0],posIntToChar(contagem));
-	//strcpy(primeiraFileira, anexarFileira(tabelaAnimaisAggressivosNomeColunas,confTabelaAnimaisAggressivos,1));
-	//strcpy(fileiraDeConteudo, anexarFileira(colunaComQuantidadeDeAgressivos,confTabelaAnimaisAggressivos,0));
-	//tamanhoPrimeiraFileira = strlen(primeiraFileira);
-	//strcpy(impressao, primeiraFileira);
-	//myStrCpy(impressao, fileiraDeConteudo, &tamanhoPrimeiraFileira, strlen(fileiraConteudo),0);
-	return impressao;
+	strcpy(colunaComQuantidadeDeAgressivos[1],posIntToChar(contagem));
+    	strcpy(fileira, anexarFileira(tabelaAnimaisAggressivosNomeColunas,confTabelaAnimaisAggressivos,1));
+     	impressao = aumentarTamString(impressao, (int) (strlen(fileira)+2));
+	myStrCpy(impressao, fileira, &cursor, strlen(fileira),0);
+	strcpy(fileira,  anexarFileira(colunaComQuantidadeDeAgressivos,confTabelaAnimaisAggressivos,0));
+     	impressao = aumentarTamString(impressao, (int) (strlen(fileira)+30+cursor));
+	myStrCpy(impressao, fileira, &cursor, strlen(fileira),0);
+ 	return impressao;
 }
 
 // funcao que retorna a configuracao de uma coluna de uma tabela de animais baseado em um animal especifico, essa conf e usada na funcao de impressao para criar uma fileira da tabela
