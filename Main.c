@@ -817,12 +817,11 @@ int main() {
 					switch(in[0]) {
 						case 'c' : // Cadastro Cliente
 							do {
-							    printf("AA");
 								cadastrarCliente(MeusClientes,&tamanhos[0]); // Funcao cadastro cliente
 								printf("Cliente cadastrado com sucesso! deseja cadastrar outro cliente? 's' para sim ou 'n' para não: ");
 								do { // Enquanto a resposta nao for valida, continue lendo
-									fgets(in,50,stdin);
-								} while (in[0] != 'n' || in[0] != 's');
+									fgets(in,50,stdin); 
+								} while (!((in[0] == 'n') || (in[0] == 's')));
 								if (in[0] == 'n') break; // Se a resposta for Nao, pare de cadastrar, se nao, continue
 							} while(1);
 							break;
@@ -832,7 +831,7 @@ int main() {
 								printf("Pet cadastrado com sucesso! deseja cadastrar outro pet? 's' para sim ou 'n' para não: ");
 								do {	
 									fgets(in,50,stdin);
-								} while (in[0] != 'n' || in[0] != 's');
+								} while (!((in[0] == 'n') || (in[0] == 's')));
 								if (in[0] == 'n' || in[0] == 'N') break;
 							} while(1);
 					}
@@ -840,8 +839,8 @@ int main() {
 				}
 				break;
 			case '2' : // Menu de Servicos
-				while (strcmp(fgets(in,50,stdin), "e\n")!= 0) {
 					printf(MENU_SERVICOS);
+				while (strcmp(fgets(in,50,stdin), "e\n")!= 0) {
 					switch(in[0]) {
 						case 'p' : // Pagar Conta
 							do {
@@ -849,7 +848,7 @@ int main() {
 								printf("Deseja realizar o pagamento de outra conta? 's' para sim ou'n' para não: ");	
 								do{
 									fgets(in,50,stdin);
-								} while (in[0] != 'n' || in[0] != 's');
+								} while (!((in[0] == 'n') || (in[0] == 's')));
 								if (in[0] == 'n' || in[0] == 'N') break;
 							} while(1);
 							break;
@@ -859,16 +858,17 @@ int main() {
 								printf("Deseja comprar outro serviço? 's' para sim ou'n' para não: ");
 								do{
 									fgets(in,50,stdin);
-								} while (in[0] != 'n' || in[0] != 's');
+								} while (!((in[0] == 'n') || (in[0] == 's')));
 								if (in[0] == 'n' || in[0] == 'N') break;
 							} while(1);
 							break;
 					}
+					printf(MENU_SERVICOS);
 				}
 				break;
 			case '3' : // Menu de listagem
-				while (strcmp(fgets(in,50,stdin), "e\n")!= 0) {
 					printf(MENU_LISTAGEM);
+				while (strcmp(fgets(in,50,stdin), "e\n")!= 0) {
 					switch(in[0]) {
 						case '1' : // Buscar Cliente pelo Nome
 							do {
@@ -876,7 +876,7 @@ int main() {
 								printf("Deseja buscar outro cliente? \n");
 								do {	
 									fgets(in,50,stdin);
-								} while (in[0] != 'n' || in[0] != 's');
+								} while (!((in[0] == 'n') || (in[0] == 's')));
 								if (in[0] == 'n' || in[0] == 'N') break;
 							} while(1);
 							break;
@@ -912,6 +912,7 @@ int main() {
 								servicosMaisUtilizados(MeuServicos, tamanhos[3]);
 							break;
 					}
+					printf(MENU_LISTAGEM);
 				}
 				break;
 			case 'h' : // Menu de comandos
@@ -920,8 +921,8 @@ int main() {
 			case 'l' : // Commando limpar o console
 				system("clear");
 				break;
-			printf(INICIO);
   		}
+		printf(INICIO);
 	}
   	return 0;
 }
