@@ -792,8 +792,15 @@ int main() {
 					printf(MENU_CADASTROS);
 					fgets(in,50,stdin);
 					switch(in[0]) {
-						case 'a' : // Cadastro Animal
-							
+						case 'c' : // Cadastro Animal
+							do {
+								cadastrarCliente(MeusClientes,&tamanhos[0]); // Funcao cadastro cliente
+								printf("Deseja cadastrar outro cliente? 's' para sim, 'n' para não: ");
+								do {                // Enquanto a resposta nao for valida, continue lendo
+									fgets(in,50,stdin);
+								} while (in[0] != 'n' || in[0] != 's');
+								if (in[0] == 'n') break; // Se a resposta for Nao, pare de cadastrar, se nao, continue
+							} while(1);
 							break;
 						case 'p' : // Cadastro Pet
 	
@@ -824,13 +831,23 @@ int main() {
 							
 							break;
 						case '2' : // Buscar Animal pelo Nome
-	
+							do {
+								    printf("Informe o nome do pet: ");
+									fgets(in,50,stdin);
+									in[strcspn(in,"\n")] = '\0';
+									printf("%s\n",baseadoEmNomePet(in,MeusAnimais,tamanhos[1]));
+									{
+										printf("'c' para imprimir novamente, 'e' para sair.\nDigite aqui: ");
+										fgets(in,50,stdin);
+									} while (in[0] != 'e' || in[0] != 'c');
+								} while (in[0] == 'c');
 							break;
 						case '3' : // Listar Animais
-	
+							sortAnimais(MeusAnimais,tamanhos[1]); // Organizar os Animais Alfabeticamente
+							printf("%s",imprimirAnimais(MeusAnimais,&tamanhos[1])); // Imprimir a Tabela dos Animais
 							break;
 						case '4' : // Quantidade de Animais Agressivos
-	
+							printf("%s\n", qntdAnimaisAgressivos(MeusAnimais, tamanhos[1]));
 							break;
 						case '5' : // Listar Animais Separados Por Especie
 	
@@ -847,50 +864,14 @@ int main() {
 					}
 				}
 				break;
-			// Antigos menus
 			case 'h' : // Menu de comandos
 				printf(MENU_DE_COMANDOS);
-				break;
-			case 'a' : // Menu de cadastro de animal
-
-				break;
-			case 'c' : // Menu de cadastro de cliente
-				do {
-					cadastrarCliente(MeusClientes,&tamanhos[0]); // Funcao cadastro cliente
-					printf("Deseja cadastrar outro cliente? 's' para sim, 'n' para não: ");
-					do {                // Enquanto a resposta nao for valida, continue lendo
-						fgets(in,50,stdin);
-					} while (in[0] != 'n' || in[0] != 's');
-					if (in[0] == 'n') break; // Se a resposta for Nao, pare de cadastrar, se nao, continue
-				} while(1);
-				break;
-			case 'b' : // Buscar cliente pelo nome e demonstrar dados
-
-				break;
-			case 's' : // Buscar pet pelo nome e demostrar dados
-				do {
-				    printf("Informe o nome do pet: ");
-					fgets(in,50,stdin);
-					in[strcspn(in,"\n")] = '\0';
-					printf("%s\n",baseadoEmNomePet(in,MeusAnimais,tamanhos[1]));
-					{
-						printf("'c' para imprimir novamente, 'e' para sair.\nDigite aqui: ");
-						fgets(in,50,stdin);
-					} while (in[0] != 'e' || in[0] != 'c');
-				} while (in[0] == 'c');
-				break;
-			case 'p' : // Menu impressao de animais alfabeticamente
-				sortAnimais(MeusAnimais,tamanhos[1]); // Organizar os Animais Alfabeticamente
-				printf("%s",imprimirAnimais(MeusAnimais,&tamanhos[1])); // Imprimir a Tabela dos Animais
 				break;
 			case 'l' : // Commando limpar o console
 				system("clear");
 				break;
-			case 'q' : // Mostrar quantidade de Animais Agressivos
-				printf("%s\n", qntdAnimaisAgressivos(MeusAnimais, tamanhos[1]));
-				break;
-		}
-		printf(INICIO);
-  	}
+			printf(INICIO);
+  		}
+	}
   	return 0;
 }
