@@ -797,9 +797,6 @@ void registrarServico(Servico *novoServico, Animal *pet, int tipoServico) { // a
 }
 
 
-
-
-///////////////
 int main() {
 	char in[51]; // Variavel que guarda a entrada do Usuario no console | maior entrada valida e de 50, precisamos +1 pelo \n que fgets() pega
 	int tamanhos[] = {0,1}; // Quantidade de entradas por vetor ordem: MeusClientes, MeusAnimais
@@ -854,7 +851,7 @@ int main() {
 							break;
 						case 'o' : // Comprar Servico
 							do {
-								comprarServicos(MeuServicos, tamanhos[1], MeusAnimais);
+								comprarServicos(MeusAnimais, tamanhos[1], MeuServicos);
 								printf("Deseja comprar outro serviço? 's' para sim ou'n' para não: ");
 								do{
 									fgets(in,50,stdin);
@@ -871,7 +868,7 @@ int main() {
 					switch(in[0]) {
 						case '1' : // Buscar Cliente pelo Nome
 							do {
-								buscarClienteImprimir(MeusClientes, tamanhos[0]);
+								buscarClienteImprimir(MeusClientes, tamanhos[0], MeusAnimais, tamanhos[1]);
 								printf("Deseja buscar outro cliente? \n");
 								do {	
 									fgets(in,50,stdin);
