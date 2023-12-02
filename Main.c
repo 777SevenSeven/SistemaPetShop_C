@@ -18,11 +18,11 @@ Nomes:André Antônio da Silva Queiroz    | RA:a2575310
 
 #define MAX_SERVICO 3
 
-#define INICIO "\n🏠 'h' para comandos, 'e' para terminar;\n"
-#define MENU_DE_COMANDOS "\n🐾 'a' para cadastrar um novo animal;\n🦁 'q' para mostrar quantidade de animais agressivos\n📋 'p' para listar animais;\n🧹 'l' para limpar o console;\n👤 'c' para cadastrar um cliente;\n🚪 'e' para terminar;\n\ndigite aqui: "
-#define MENU_CADASTRO "Bem vindo ao Petshop 🐕 {AU AU!} Digite 'p' para cadastrar pets, e 'c' para cadastrar cliente, ou pressione 'e' para terminar!\n"
-#define MENU_SERVICOS "Digite 'o' para saber os serviços que oferecemos! ou a tecla 'p' caso você deseja pagar 🤑, pressione 'e' para terminar!\n"
-#define MENU_LISTAGEM "Digite '1' para buscar dados do cliente ^ w ^\nDigite '2' para buscar animal pelo nome dele '2'\nDigite '3' para ver os pets cadastrados!\nDigite '4' para saber quais os animais agressivos!\nDigite '5' para ver a lista de animais por espécie\nDigite '6' para ver os pets aniversariantes\nDigite '7' para ver os serviços não pagos (por animal)!\nDigite '8' para saber o serviço mais utilizado, pressione 'e' para terminar!\n"
+#define INICIO "\n\n🏠 'h' para comandos, 🚪 'e' para terminar;\nDigite aqui:  "
+#define MENU_DE_COMANDOS "\n🐾   '1' para realizar cadastros;\n🦁   '2' para conhecer ou pagar por nossos servicos\n📋   '3' para ver as listas;\n[]  'l' para limpar o console;\n🛑   'e' para terminar;\n"
+#define MENU_CADASTRO "\nBem vindo ao Petshop 🐕 {AU AU!}\nDigite 'p' para cadastrar pets\nDigite 'c' para cadastrar cliente\nDigite 'e' para terminar!\n"
+#define MENU_SERVICOS "\nDigite 'o' para saber os serviços que oferecemos!\nDigite 'p' caso você deseja pagar 🤑\nDigite 'e' para terminar!\n"
+#define MENU_LISTAGEM "\nDigite '1' para buscar dados do cliente!\nDigite '2' para buscar animal pelo nome dele\nDigite '3' para ver os pets cadastrados!\nDigite '4' para saber quais os animais agressivos!\nDigite '5' para ver a lista de animais por espécie\nDigite '6' para ver os pets aniversariantes\nDigite '7' para ver os serviços não pagos (por animal)!\nDigite '8' para saber o serviço mais utilizado ou pressione 'e' para terminar!\n"
 
 const char ESPECIES[][14] = {"Cachorro","Gato","Hamster","Pássaro", "Coelho"};
 
@@ -840,13 +840,25 @@ void registrarServico(Animal *pet, int tipoServico, Data data) { // armazenar to
 	registrarServico(meuAnimal, opcaoServico, data);
 }
 
+//------------------------------------------------------------------------------------------------------------------------------------------------------------------
 int main() {
 	char in[51]; // Variavel que guarda a entrada do Usuario no console | maior entrada valida e de 50, precisamos +1 pelo \n que fgets() pega
-	int tamanhos[] = {0,0,0}; // Quantidade de entradas por vetor ordem: MeusClientes, MeusAnimais
+	int tamanhos[] = {0,1}; // Quantidade de entradas por vetor ordem: MeusClientes, MeusAnimais
 	Cliente MeusClientes[100]; // Inicializacao dos vetores
 	Animal MeusAnimais[100];
 	Servico MeuServicos[100];
-	printf("Bem Vindo!%s",INICIO); // Mensagem de inicio
+	strcpy(MeusAnimais[0].nomeAnimal,"Amigo");
+	//strcpy(MeusAnimais[0].cliente->telefoneCliente, "012341235623");
+	MeusAnimais[0].agressivo = 'S';
+	printf("   _______   \n");
+        printf("  //     \\\\\n");
+        printf(" //       \\\\            SEJA BEM VINDO!\n");
+        printf("//_________\\\\              __________\n");      
+        printf("|    _    |  |            | PET SHOP |\n");
+        printf("|[] | | []|[]|    <-----  |   DO     |\n");
+        printf("|   | |   |  |            | MATHIAS  |\n");
+
+
 	while (strcmp(fgets(in,50,stdin), "e\n")!= 0) { // Enquanto o que se lee, nao for 'e', continuemos leendo os comandos..
 		switch(in[0]) { // Controle de menus
 			case '1' : // Menu de Cadastros
