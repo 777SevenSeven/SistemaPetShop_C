@@ -858,7 +858,7 @@ int main() {
         printf("|[] | | []|[]|    <-----  |   DO     |\n");
         printf("|   | |   |  |            | MATHIAS  |\n");
 
-
+	printf(INICIO);
 	while (strcmp(fgets(in,50,stdin), "e\n")!= 0) { // Enquanto o que se lee, nao for 'e', continuemos leendo os comandos..
 		switch(in[0]) { // Controle de menus
 			case '1' : // Menu de Cadastros
