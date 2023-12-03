@@ -28,7 +28,7 @@ const char ESPECIES[][14] = {"Cachorro","Gato","Hamster","Pássaro", "Coelho"};
 
 // Configuracao Tabela de Animais Por Especie
 char *tabelaAnimaisPorEspecie[14]             = {"Especie", "Nome", "Data de Nascimento", "Agressivo"};
-int confTabelaAnimaisPorEspecie[]             = {5, 14, 14, 10, 2}; // Primeiro Valor tamanho do Vetor
+int confTabelaAnimaisPorEspecie[]             = {5, 14, 14, 12, 2}; // Primeiro Valor tamanho do Vetor
 
 // Configuracao Tabela de Especies
 char *tabelaEspecies[14]                      = {"#","Especie"};
@@ -44,7 +44,7 @@ int confTabelaAnimaisAggressivos[]            = {2, 13}; // Representa Tamanho d
 
 // Configuracao Tabela Animais Completa
 char *tabelaAnimaisNomeColunas[40]            = {"Dono", "Telefone", "Nome", "Especie", "Agressivo", "DOB"};
-int confTabelaAnimais[]                       = {7, 14, 14, 14, 14, 11, 5}; 
+int confTabelaAnimais[]                       = {7, 14, 14, 14, 14, 11, 12}; 
 
 //Type def
 
@@ -78,7 +78,7 @@ typedef struct {
 //Funcs
 
 //funcao que cria uma string de tamnaho dinamico
-char *stringDinamica(int tamanho) {char *out = (char*) malloc(tamanho*sizeof(char)); return out;}
+char *stringDinamica(int tamanho) {return (char*) malloc(tamanho*sizeof(char));}
 
 //funcao que aumenta tamanho de string dinamico
 char *aumentarTamString(char *string, int tamanho) {return (char*) realloc(string,tamanho*sizeof(char));}
@@ -180,8 +180,8 @@ char *posIntToChar(int in) {
 //função que transforma uma data em string e retorna ela
 char *dataParaChar(Data data) {
 	int i = 0;
-	char *out = stringDinamica(12);
-	void anexarValor(char *valor, int letras) {myStrCpy(out,valor,&i,letras,0);}
+	char *out = (char*) malloc(12);
+	void anexarValor(char *valor, int letras) {myStrCpy(out,valor,&i,letras+1,0);}
 	void anexarBarra() {anexarValor("/",1);}
 	anexarValor(posIntToChar(data.dia),2);
 	anexarBarra();
@@ -348,7 +348,7 @@ char* imprimirTabelaAnimaisPorEspecie(Animal Animais[],int *tamanho) {
 	myStrCpy(impressao, fileira, &cursor, strlen(fileira),0);
     	for(int i = 0; i < (*tamanho); i++) {
 		Animal oA = Animais[i];// oA de O Animal
-		strcpy(fileira,  anexarFileira(criarColunaTabelaAnimaisPorEspecie(Animais[i]),confTabelaEspecies,2));
+		strcpy(fileira,  anexarFileira(criarColunaTabelaAnimaisPorEspecie(Animais[i]),confTabelaAnimaisPorEspecie,2));
      	impressao = aumentarTamString(impressao, (int) (strlen(fileira)+30+cursor));
 		myStrCpy(impressao, fileira, &cursor, strlen(fileira),0);
 	}
@@ -360,14 +360,14 @@ char *qntdAnimaisAgressivos(Animal *MeusAnimais, int quantidadeDeAnimais) {
 	int contagem = 0,
 	    cursor = 0;
 	char *impressao = stringDinamica(1),
-	     **colunaComQuantidadeDeAgressivos = vetorStringsDinamicos(1,4),
-	     *primeiraFileira, // nn sei se pode
+	     *fileiraComQuantidade = stringDinamica(100),
+	     **colunaComQuantidadeDeAgressivos = &fileiraComQuantidade,
   	     fileira[1000];
 	for (int i = 0; i < quantidadeDeAnimais; i++) {
   		if (MeusAnimais[i].agressivo  == 'S') contagem++;
   	}
-	strcpy(colunaComQuantidadeDeAgressivos[1],posIntToChar(contagem));
-    	strcpy(fileira, anexarFileira(tabelaAnimaisAggressivosNomeColunas,confTabelaAnimaisAggressivos,1));
+	strcpy(fileiraComQuantidade,posIntToChar(contagem));
+    strcpy(fileira, anexarFileira(tabelaAnimaisAggressivosNomeColunas,confTabelaAnimaisAggressivos,1));
      	impressao = aumentarTamString(impressao, (int) (strlen(fileira)+2));
 	myStrCpy(impressao, fileira, &cursor, strlen(fileira),0);
 	strcpy(fileira,  anexarFileira(colunaComQuantidadeDeAgressivos,confTabelaAnimaisAggressivos,0));
@@ -601,7 +601,7 @@ Cliente* buscarClienteImprimir(Cliente *Clientes, int tamanhoClientes, Animal *M
 // Função de cadastrar os pets
 Animal* cadastrarPet(Animal *MeusAnimais, int *tamanhoAnimais, Cliente *MeusClientes, int *tamanhoClientes) {
     char nomeAnimal[50], agressivo, escolhaClienteStr[50];
-    int especie, especiePet;
+    int especie, especiePet, bugDaData = 0;
     Cliente *ClienteEscolhido;
     Animal meuPet;
     Data dataNascimento;
@@ -658,7 +658,10 @@ Animal* cadastrarPet(Animal *MeusAnimais, int *tamanhoAnimais, Cliente *MeusClie
         char dataNascimentoStr[12];
         printf("Informe a data de nascimento do seu pet (DD MM AAAA): ");
         fgets(dataNascimentoStr, sizeof(dataNascimentoStr)/sizeof(char), stdin);
-        fgets(dataNascimentoStr, sizeof(dataNascimentoStr)/sizeof(char), stdin);
+        if (bugDaData == 0) {
+            bugDaData = 1;
+            fgets(dataNascimentoStr, sizeof(dataNascimentoStr)/sizeof(char), stdin);
+        }
         sscanf(dataNascimentoStr, "%2d %2d %d", &dataNascimento.dia, &dataNascimento.mes, &dataNascimento.ano);
 
         if (!validarData(dataNascimento.dia, dataNascimento.mes, dataNascimento.ano)) {
@@ -971,17 +974,17 @@ int main() {
 							break;
 						case '7' : // Listar Servicos nao pagos
 							listarContasNaoPagas(MeuServicos, tamanhos[2]);
-							printf("\n\nEnter para voltar", imprimirAnimaisAniversariantes(MeusAnimais,&tamanhos[1]));
+							printf("\n\nEnter para voltar");
 							fgets(in, 51, stdin);
 							break;
 						case '8' : // Listar Sevico mais Utilizado
 							servicosMaisUtilizados(MeuServicos, tamanhos[2]);
-							printf("\n\nEnter para voltar", imprimirAnimaisAniversariantes(MeusAnimais,&tamanhos[1]));
+							printf("\n\nEnter para voltar");
 							fgets(in, 51, stdin);
 							break;
 						case '9':
 						        printf("%c %d", MeuServicos[0].pago, tamanhos[2]);
-							printf("\n\nEnter para voltar", imprimirAnimaisAniversariantes(MeusAnimais,&tamanhos[1]));
+							printf("\n\nEnter para voltar");
 							fgets(in, 51, stdin);
 						        break;
 					}
