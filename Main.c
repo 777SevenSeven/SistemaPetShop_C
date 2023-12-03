@@ -970,13 +970,19 @@ int main() {
 							fgets(in, 51, stdin);
 							break;
 						case '7' : // Listar Servicos nao pagos
-								listarContasNaoPagas(MeuServicos, tamanhos[2]);
+							listarContasNaoPagas(MeuServicos, tamanhos[2]);
+							printf("\n\nEnter para voltar", imprimirAnimaisAniversariantes(MeusAnimais,&tamanhos[1]));
+							fgets(in, 51, stdin);
 							break;
 						case '8' : // Listar Sevico mais Utilizado
-								servicosMaisUtilizados(MeuServicos, tamanhos[2]);
+							servicosMaisUtilizados(MeuServicos, tamanhos[2]);
+							printf("\n\nEnter para voltar", imprimirAnimaisAniversariantes(MeusAnimais,&tamanhos[1]));
+							fgets(in, 51, stdin);
 							break;
 						case '9':
 						        printf("%c %d", MeuServicos[0].pago, tamanhos[2]);
+							printf("\n\nEnter para voltar", imprimirAnimaisAniversariantes(MeusAnimais,&tamanhos[1]));
+							fgets(in, 51, stdin);
 						        break;
 					}
 					printf(MENU_LISTAGEM);
