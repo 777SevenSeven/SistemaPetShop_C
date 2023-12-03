@@ -16,7 +16,7 @@ Nomes:André Antônio da Silva Queiroz    | RA:a2575310
 #define MES 12 
 #define ANO 2023
 
-#define MAX_SERVICO 3
+#define MAX_SERVICO 4
 
 #define INICIO "\n\n🏠 'h' para comandos, 🚪 'e' para terminar;\nDigite aqui:  "
 #define MENU_DE_COMANDOS "\n🐾   '1' para realizar cadastros;\n🦁   '2' para conhecer ou pagar por nossos servicos\n📋   '3' para ver as listas;\n[]  'l' para limpar o console;\n🛑   'e' para terminar;\n"
@@ -177,6 +177,7 @@ char *posIntToChar(int in) {
       		i--;
   	}
   	myChar[mx-2] = '\0'; // colocar o byte nulo no fim da string
+  	printf("%s", myChar);
   	return myChar;
 }
 
@@ -381,7 +382,7 @@ char *qntdAnimaisAgressivos(Animal *MeusAnimais, int quantidadeDeAnimais) {
 
 // funcao que retorna a configuracao de uma coluna de uma tabela de animais baseado em um animal especifico, essa conf e usada na funcao de impressao para criar uma fileira da tabela
 char **criarColunaAnimais(Animal oA) {
-    char **coluna = vetorStringsDinamicos(6,20);// vetorStringsDinamicos(6, 20);
+    char **coluna = vetorStringsDinamicos(6,52);// vetorStringsDinamicos(6, 20);
     char stringDeAgressivo[] = {oA.agressivo,'\0'};
 	strcpy(coluna[0], oA.cliente->nomeCliente);
 	strcpy(coluna[1], oA.cliente->telefoneCliente);
@@ -610,7 +611,7 @@ Animal* cadastrarPet(Animal *MeusAnimais, int *tamanhoAnimais, Cliente *MeusClie
     Data dataNascimento;
 
     while (1) {
-    printf("Já possui cadastro? S para sim, N para não ou E para desistir: ");
+    printf("Já possui cadastro de cliente? S para sim, N para não ou E para desistir: ");
     fgets(escolhaClienteStr, sizeof(escolhaClienteStr), stdin);
     escolhaClienteStr[strcspn(escolhaClienteStr, "\n")] = '\0';
 
@@ -650,8 +651,6 @@ Animal* cadastrarPet(Animal *MeusAnimais, int *tamanhoAnimais, Cliente *MeusClie
         fgets(opcao, sizeof(opcao) / sizeof(char), stdin);
         opcao[1] = '\0';
         especiePet = atoi(opcao);
-        printf("%d", especiePet);
-        printf("%s", opcao);
         if (especiePet < 0 || especiePet >= sizeof(ESPECIES) / sizeof(ESPECIES[0])) {
             printf("Escolha inválida. Digite um número válido.\n");
             continue;
@@ -661,16 +660,16 @@ Animal* cadastrarPet(Animal *MeusAnimais, int *tamanhoAnimais, Cliente *MeusClie
 
     do {
         char dataNascimentoStr[12];
-        printf("Digite a data de nascimento do seu Pet (DD MM AAAA): ");
-        fgets(dataNascimentoStr, sizeof(dataNascimentoStr) / sizeof(char), stdin);
-        sscanf(dataNascimentoStr, "%d %d %d", &dataNascimento.dia, &dataNascimento.mes, &dataNascimento.ano);
+        printf("Informe a data de nascimento do seu pet (DD MM AAAA): ");
+        fgets(dataNascimentoStr, sizeof(dataNascimentoStr)/sizeof(char), stdin);
+        fgets(dataNascimentoStr, sizeof(dataNascimentoStr)/sizeof(char), stdin);
+        sscanf(dataNascimentoStr, "%2d %2d %d", &dataNascimento.dia, &dataNascimento.mes, &dataNascimento.ano);
 
-        if (validarData(dataNascimento.dia, dataNascimento.mes, dataNascimento.ano) == 0) {
-            printf("Data de nascimento inválida. Digite novamente.\n");
-            continue;
+        if (!validarData(dataNascimento.dia, dataNascimento.mes, dataNascimento.ano)) {
+            printf("Data inválida. Por favor, informe uma data válida.\n");
         }
-        break;
-    } while (1);
+
+    } while (!validarData(dataNascimento.dia, dataNascimento.mes, dataNascimento.ano));
 
     do {
         printf("O seu Pet é agressivo? (S para sim, N para não): ");
@@ -697,19 +696,24 @@ Animal* cadastrarPet(Animal *MeusAnimais, int *tamanhoAnimais, Cliente *MeusClie
 
 // Função para mostrar o serviço mais utilizado
 void servicosMaisUtilizados(Servico servicos[], int numServicos) {
-	int tipoServicoContagem[MAX_SERVICO] = {0}; // Ele vai pegar todos elementes do array e inicializar em zero, isso vai servir p poder ver com qual recorrencia os serviços são usados
+	int tipoServicoContagem[MAX_SERVICO]; // Ele vai pegar todos elementes do array e inicializar em zero, isso vai servir p poder ver com qual recorrencia os serviços são usados
 	int maxQuantidade = 0;
     int tiposServicosMaisUtilizados[MAX_SERVICO];
     int contadorTiposServicos = 0;
-
-		for (int i = 0; i < numServicos; i++) {
+        for (int i = 1; i < MAX_SERVICO; i++) {
+        tipoServicoContagem[i] = 0;
+    }
+        for (int i = 1; i < MAX_SERVICO; i++) {
+        tiposServicosMaisUtilizados[i] = 0;
+    }
+		for (int i = 1; i < numServicos; i++) {
 			tipoServicoContagem[servicos[i].tipoServico]++; //vai pegar o tipo de serviço e acrescentar +1 sempre que o serviço for escolhido
     	}
 
-		for (int i = 0; i < MAX_SERVICO; i++) { //percorre todos os tipos de serviço possíveis começando do índice 0 até MAX_SERVICO
+		for (int i = 1; i < MAX_SERVICO; i++) { //percorre todos os tipos de serviço possíveis começando do índice 0 até MAX_SERVICO
 		    if (tipoServicoContagem[i] > maxQuantidade) { // verifica se a contagem de ocorrências do serviço[i] é maior que a contagem máxima, se for atualiza as variáveis 
 		        maxQuantidade = tipoServicoContagem[i];
-		        contadorTiposServicos = 1; //ele redefini p 1 pq um novo máximo foi encontrado
+		        contadorTiposServicos = i; //ele redefini p 1 pq um novo máximo foi encontrado
 		        tiposServicosMaisUtilizados[0] = i;
 		    } else if (tipoServicoContagem[i] == maxQuantidade) {
 		        tipoServicoContagem[contadorTiposServicos] = i; //aqui se dois serviços forem utilizados c a msm frequencia, vai exibir os dois, basicamente vai apontar o proximo na outra posição
@@ -717,11 +721,8 @@ void servicosMaisUtilizados(Servico servicos[], int numServicos) {
 		    }
 		}
 		
-		printf("Tipos de serviços mais utilizados (com %d ocorrências):\n", maxQuantidade);
-
-		for (int i = 0; i < contadorTiposServicos; i++) {
-        printf("Tipo de Serviço %d\n", tiposServicosMaisUtilizados[i]); //vai imprimir qual o serviço mais utilizado
-    }
+		printf("Tipos de serviços mais utilizados (com %d ocorrências):\n", tipoServicoContagem[contadorTiposServicos]);
+        printf("Tipo de Serviço %d\n", contadorTiposServicos); //vai imprimir qual o serviço mais utilizado
 }
 
 void listarContasNaoPagas(Servico servicos[], int numContas) {
@@ -816,6 +817,7 @@ Animal* buscarPet() {//aqui ele vai percorrer o loop de pets para ver se o pet e
         do {
         printf("Digite o nome do seu pet: ");
         fgets(entrada, sizeof(entrada)/sizeof(char), stdin);
+        entrada[strcspn(entrada, "\n")] = '\0';
         for (int i = 0; i < *tamanhoAnimais; i++) {
             if (strcmp(MeusAnimais[i].nomeAnimal, entrada) == 0) {
                 return &MeusAnimais[i];
@@ -832,22 +834,34 @@ void registrarServico(Animal *pet, int tipoServico, Data data) { // armazenar to
     	novoServico[*tamanhoServicos].tipoServico = tipoServico; //armazena o tipo de serviço escolhido
     	novoServico[*tamanhoServicos].pago = 'N'; //define pago como Não
     	novoServico[*tamanhoServicos].dataServico = data; //armazena a data ao serviço escolhido
+    	novoServico[*tamanhoServicos].identificador = *tamanhoServicos;
     	(*tamanhoServicos)++;
 	}
 	opcaoServico = obterOpcaoServico();
 	data = obterData();
 	meuAnimal = buscarPet();
 	registrarServico(meuAnimal, opcaoServico, data);
+	printf("Serviço registrado com sucesso, número da conta: %d\n", *tamanhoServicos - 1);
 }
 
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------
 int main() {
 	char in[51]; // Variavel que guarda a entrada do Usuario no console | maior entrada valida e de 50, precisamos +1 pelo \n que fgets() pega
-	int tamanhos[] = {0,1}; // Quantidade de entradas por vetor ordem: MeusClientes, MeusAnimais
+	int tamanhos[] = {1,1,0}; // Quantidade de entradas por vetor ordem: MeusClientes, MeusAnimais
 	Cliente MeusClientes[100]; // Inicializacao dos vetores
 	Animal MeusAnimais[100];
 	Servico MeuServicos[100];
+	Data data;
+	data.dia = 27;
+	data.mes = 11;
+	data.ano = 2023;
+	MeuServicos[0].pago = 'T';
 	strcpy(MeusAnimais[0].nomeAnimal,"Amigo");
+	MeusAnimais[0].dataNascimento = data;
+	MeusAnimais[0].especie = 1;
+	strcpy(MeusClientes[0].nomeCliente, "felipe");
+	strcpy(MeusClientes[0].telefoneCliente, "043984851658");
+	MeusAnimais[0].cliente = &MeusClientes[0];
 	//strcpy(MeusAnimais[0].cliente->telefoneCliente, "012341235623");
 	MeusAnimais[0].agressivo = 'S';
 	printf("   _______   \n");
@@ -894,7 +908,7 @@ int main() {
 					switch(in[0]) {
 						case 'p' : // Pagar Conta
 							do {
-								pagarConta(MeuServicos, tamanhos[3]);
+								pagarConta(MeuServicos, tamanhos[2]);
 								printf("Deseja realizar o pagamento de outra conta? 's' para sim ou'n' para não: ");	
 								do{
 									fgets(in,50,stdin);
@@ -939,28 +953,35 @@ int main() {
 									{
 										printf("'c' para imprimir novamente, 'e' para sair.\nDigite aqui: ");
 										fgets(in,50,stdin);
-									} while (in[0] != 'e' || in[0] != 'c');
+									} while (!(in[0] == 'e' || in[0] == 'c'));
 								} while (in[0] == 'c');
 							break;
 						case '3' : // Listar Animais
 							sortAnimais(MeusAnimais,tamanhos[1]); // Organizar os Animais Alfabeticamente
-							printf("%s", imprimirAnimais(MeusAnimais,&tamanhos[1])); // Imprimir a Tabela dos Animais
+							printf("%s\n\nEnter para voltar", imprimirAnimais(MeusAnimais,&tamanhos[1])); // Imprimir a Tabela dos Animais
+							fgets(in, 51, stdin);
 							break;
 						case '4' : // Quantidade de Animais Agressivos
-							printf("%s\n", qntdAnimaisAgressivos(MeusAnimais, tamanhos[1]));
+							printf("%s\n\nEnter para voltar", qntdAnimaisAgressivos(MeusAnimais, tamanhos[1]));
+							fgets(in, 51, stdin);
 							break;
 						case '5' : // Listar Animais Separados Por Especie
-							printf("%s\n", imprimirTabelaAnimaisPorEspecie(MeusAnimais,&tamanhos[1]));
+							printf("%s\n\nEnter para voltar", imprimirTabelaAnimaisPorEspecie(MeusAnimais,&tamanhos[1]));
+							fgets(in, 51, stdin);
 							break;
 						case '6' : // Listar Animais Aniversariantes
-							printf("%s\n", imprimirAnimaisAniversariantes(MeusAnimais,&tamanhos[1]));
+							printf("%s\n\nEnter para voltar", imprimirAnimaisAniversariantes(MeusAnimais,&tamanhos[1]));
+							fgets(in, 51, stdin);
 							break;
 						case '7' : // Listar Servicos nao pagos
-								listarContasNaoPagas(MeuServicos, tamanhos[3]);
+								listarContasNaoPagas(MeuServicos, tamanhos[2]);
 							break;
 						case '8' : // Listar Sevico mais Utilizado
-								servicosMaisUtilizados(MeuServicos, tamanhos[3]);
+								servicosMaisUtilizados(MeuServicos, tamanhos[2]);
 							break;
+						case '9':
+						        printf("%c %d", MeuServicos[0].pago, tamanhos[2]);
+						        break;
 					}
 					printf(MENU_LISTAGEM);
 				}
