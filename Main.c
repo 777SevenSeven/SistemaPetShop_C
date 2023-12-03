@@ -166,18 +166,14 @@ void myStrCpy (char *str1, char *str2, int *i, int lee, int writeColuna) {
 
 //função que transforma um numero inteiro positivo em um char
 char *posIntToChar(int in) {
-    int a = in;
-  	int i = ((in == 0) ? 1 : 1+(int) log10(in)); // Olha quantidade de numeros
-  	int mx = i; // Quantidade maxima de numeros
- 	char *myChar = stringDinamica(i+3); // Criar string com tamanho de Numeros+2
-	while(i >= 1) {
-      		int toInt = in/pow(10,i-1); // Dividir para ficar so um numero positivo com o resto em virgulas
-      		myChar[mx-i] = 48+toInt; // Colocar a letra do numero na string
-      		in -= toInt*pow(10,i-1); // Tirar o numero ja colocado do numero composto
-      		i--;
+  	int mx = ((in == 0) ? 1 : 1+(int) log10(in)); // Quantidade maxima de numeros
+ 	char *myChar = (char*) malloc(mx+1); // Criar string com tamanho de Numeros+2
+	for (int i = 0; i < mx; i++) {
+      		int toInt = in/pow(10,(mx-i)-1); // Dividir para ficar so um numero positivo com o resto em virgulas
+      		myChar[i] = 48+toInt; // Colocar a letra do numero na string
+      		in -= toInt*pow(10,mx-i-1); // Tirar o numero ja colocado do numero composto
   	}
-  	myChar[mx-2] = '\0'; // colocar o byte nulo no fim da string
-  	printf("%s", myChar);
+  	myChar[mx] = '\0'; // colocar o byte nulo no fim da string
   	return myChar;
 }
 
