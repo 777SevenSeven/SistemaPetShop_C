@@ -866,7 +866,7 @@ int main() {
 	MeusAnimais[0].cliente = &MeusClientes[0];
 	MeuServicos[1].pago = 'T';
 	strcpy(MeusAnimais[1].nomeAnimal,"Bobby");
-	MeusAnimais[1].dataNascimento = data;
+	MeusAnimais[1].dataNascimento = data2;
 	MeusAnimais[1].especie = 3;
 	strcpy(MeusClientes[1].nomeCliente, "Joao Maria");
 	strcpy(MeusClientes[1].telefoneCliente, "043977771658");
