@@ -725,25 +725,29 @@ void servicosMaisUtilizados(Servico servicos[], int numServicos) {
         printf("Tipo de Serviço %d\n", contadorTiposServicos); //vai imprimir qual o serviço mais utilizado
 }
 
-void listarContasNaoPagas(Servico servicos[], int numContas) {
+int *listarContasNaoPagas(Servico servicos[], int numContas) {
+    int *mapa = vetorIntDinamico(50);
+    int contador = 1;
     printf("Contas Pendentes:\n"); 
     for (int i = 0; i < numContas; i++) {
         // Vai percorrer todo o loop e exibirá uma lista de contas pendentes de pagamento
         if (servicos[i].pago == 'N') {
-            printf("%d. Conta %d - Não paga\n", i + 1, servicos[i].identificador);
+            mapa[contador] = i;
+            printf("%d. Conta %d - Não paga\n", contador, servicos[i].identificador);
+            contador++;
         }
 	}
+	mapa[0] = contador;
+	return mapa;
 }
 void pagarConta(Servico servicos[], int numContas) {
 char entrada[51];
-
     if (numContas == 0) {
         printf("Não há contas pendentes.\n");
         return;
     }
-	
-   listarContasNaoPagas(servicos, numContas);
-    printf("Escolha o número da conta que deseja verificar (1 a %d): ", numContas);
+    int *contasNaoPagas = listarContasNaoPagas(servicos, numContas); 
+    printf("Escolha o número da conta que deseja verificar (1 a %d): ", contasNaoPagas[0]-1);
     int escolha;
     fgets(entrada, sizeof(entrada)/sizeof(char), stdin);
     sscanf(entrada, "%d", &escolha);
@@ -757,7 +761,7 @@ char entrada[51];
 
         if (resposta == 'S' || resposta == 's') {
             printf("Você pagou a Conta %d.\n", servicos[escolha - 1].identificador);
-            servicos[escolha - 1].pago = 'S';
+            servicos[contasNaoPagas[escolha]].pago = 'S';
         } else {
             printf("A Conta %d não foi paga.\n", servicos[escolha - 1].identificador);
         }
