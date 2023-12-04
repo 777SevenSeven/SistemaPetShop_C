@@ -851,12 +851,12 @@ int main() {
 	Animal MeusAnimais[100];
 	Servico MeuServicos[100];
 	Data data1, data2;
-	data.dia = 27;
-	data.mes = 11;
-	data.ano = 2023;
-	data.dia = 12;
-	data.mes = 3;
-	data.ano = 2017;
+	data1.dia = 27;
+	data1.mes = 11;
+	data1.ano = 2023;
+	data2.dia = 12;
+	data2.mes = 3;
+	data2.ano = 2017;
 	MeuServicos[0].pago = 'T';
 	strcpy(MeusAnimais[0].nomeAnimal,"Amigo");
 	MeusAnimais[0].dataNascimento = data1;
@@ -871,8 +871,8 @@ int main() {
 	strcpy(MeusClientes[1].nomeCliente, "Joao Maria");
 	strcpy(MeusClientes[1].telefoneCliente, "043977771658");
 	MeusAnimais[1].cliente = &MeusClientes[0];
-	//strcpy(MeusAnimais[0].cliente->telefoneCliente, "012341235623");
 	MeusAnimais[0].agressivo = 'S';
+	MeusAnimais[1].agressivo = 'N';
 	printf("   _______   \n");
         printf("  //     \\\\\n");
         printf(" //       \\\\            SEJA BEM VINDO!\n");
