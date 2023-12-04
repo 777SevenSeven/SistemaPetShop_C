@@ -698,30 +698,22 @@ Animal* cadastrarPet(Animal *MeusAnimais, int *tamanhoAnimais, Cliente *MeusClie
 void servicosMaisUtilizados(Servico servicos[], int numServicos) {
 	int tipoServicoContagem[MAX_SERVICO]; // Ele vai pegar todos elementes do array e inicializar em zero, isso vai servir p poder ver com qual recorrencia os serviços são usados
 	int maxQuantidade = 0;
-    int tiposServicosMaisUtilizados[MAX_SERVICO];
     int contadorTiposServicos = 0;
+    
         for (int i = 1; i < MAX_SERVICO; i++) {
         tipoServicoContagem[i] = 0;
     }
+        for (int i = 0; i < numServicos; i++) {
+            tipoServicoContagem[servicos[i].tipoServico]++;
+        }
         for (int i = 1; i < MAX_SERVICO; i++) {
-        tiposServicosMaisUtilizados[i] = 0;
+            if(tipoServicoContagem[i] > maxQuantidade) {
+                contadorTiposServicos = i;
+                maxQuantidade = tipoServicoContagem[i];
+        }
     }
-		for (int i = 1; i < numServicos; i++) {
-			tipoServicoContagem[servicos[i].tipoServico]++; //vai pegar o tipo de serviço e acrescentar +1 sempre que o serviço for escolhido
-    	}
-
-		for (int i = 1; i < MAX_SERVICO; i++) { //percorre todos os tipos de serviço possíveis começando do índice 0 até MAX_SERVICO
-		    if (tipoServicoContagem[i] > maxQuantidade) { // verifica se a contagem de ocorrências do serviço[i] é maior que a contagem máxima, se for atualiza as variáveis 
-		        maxQuantidade = tipoServicoContagem[i];
-		        contadorTiposServicos = i; //ele redefini p 1 pq um novo máximo foi encontrado
-		        tiposServicosMaisUtilizados[0] = i;
-		    } else if (tipoServicoContagem[i] == maxQuantidade) {
-		        tipoServicoContagem[contadorTiposServicos] = i; //aqui se dois serviços forem utilizados c a msm frequencia, vai exibir os dois, basicamente vai apontar o proximo na outra posição
-		        contadorTiposServicos++;
-		    }
-		}
-		
-		printf("Tipos de serviços mais utilizados (com %d ocorrências):\n", tipoServicoContagem[contadorTiposServicos]);
+        
+	printf("Tipos de serviços mais utilizados (com %d ocorrências):\n", maxQuantidade);
         printf("Tipo de Serviço %d\n", contadorTiposServicos); //vai imprimir qual o serviço mais utilizado
 }
 
