@@ -18,16 +18,17 @@ Nomes:André Antônio da Silva Queiroz    | RA:a2575310
 
 #define MAX_SERVICO 4
 
+#define BEM_VINDO "   _______   \n  //     \\\\\n //       \\\\            SEJA BEM VINDO!\n//_________\\\\              __________\n|    _    |  |            | PET SHOP |\n|[] | | []|[]|    <-----  |    DO    |\n|   | |   |  |            |   POVO   |\n"
 #define INICIO "\n\n🏠 'h' para comandos, 🚪 'e' para terminar;\nDigite aqui:  "
 #define MENU_DE_COMANDOS "\n🐾   '1' para realizar cadastros;\n🦁   '2' para conhecer ou pagar por nossos servicos\n📋   '3' para ver as listas;\n[]  'l' para limpar o console;\n🛑   'e' para terminar;\n"
 #define MENU_CADASTRO "\nBem vindo ao Petshop 🐕 {AU AU!}\nDigite 'p' para cadastrar pets\nDigite 'c' para cadastrar cliente\nDigite 'e' para terminar!\n"
 #define MENU_SERVICOS "\nDigite 'o' para saber os serviços que oferecemos!\nDigite 'p' caso você deseja pagar 🤑\nDigite 'e' para terminar!\n"
 #define MENU_LISTAGEM "\nDigite '1' para buscar dados do cliente!\nDigite '2' para buscar animal pelo nome dele\nDigite '3' para ver os pets cadastrados!\nDigite '4' para saber quais os animais agressivos!\nDigite '5' para ver a lista de animais por espécie\nDigite '6' para ver os pets aniversariantes\nDigite '7' para ver os serviços não pagos (por animal)!\nDigite '8' para saber o serviço mais utilizado ou pressione 'e' para terminar!\n"
 
-const char ESPECIES[][14] = {"Cachorro","Gato","Hamster","Pássaro", "Coelho"};
+const char ESPECIES[][14] = {"Cachorro","Gato","Hamster","Passaro", "Coelho"};
 
 // Configuracao Tabela de Animais Por Especie
-char *tabelaAnimaisPorEspecie[14]             = {"Especie", "Nome", "Data de Nascimento", "Agressivo"};
+char *tabelaAnimaisPorEspecie[14]             = {"Especie", "Nome", "DoB", "Agressivo"};
 int confTabelaAnimaisPorEspecie[]             = {5, 14, 14, 12, 2}; // Primeiro Valor tamanho do Vetor
 
 // Configuracao Tabela de Especies
@@ -846,7 +847,7 @@ void registrarServico(Animal *pet, int tipoServico, Data data) { // armazenar to
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------
 int main() {
 	char in[51]; // Variavel que guarda a entrada do Usuario no console | maior entrada valida e de 50, precisamos +1 pelo \n que fgets() pega
-	int tamanhos[] = {1,1,0}; // Quantidade de entradas por vetor ordem: MeusClientes, MeusAnimais
+	int tamanhos[] = {2,2,0}; // Quantidade de entradas por vetor ordem: MeusClientes, MeusAnimais
 	Cliente MeusClientes[100]; // Inicializacao dos vetores
 	Animal MeusAnimais[100];
 	Servico MeuServicos[100];
@@ -854,33 +855,26 @@ int main() {
 	data1.dia = 27;
 	data1.mes = 11;
 	data1.ano = 2023;
-	data2.dia = 12;
-	data2.mes = 3;
-	data2.ano = 2017;
-	MeuServicos[0].pago = 'T';
 	strcpy(MeusAnimais[0].nomeAnimal,"Amigo");
 	MeusAnimais[0].dataNascimento = data1;
 	MeusAnimais[0].especie = 1;
 	strcpy(MeusClientes[0].nomeCliente, "felipe");
 	strcpy(MeusClientes[0].telefoneCliente, "043984851658");
 	MeusAnimais[0].cliente = &MeusClientes[0];
-	MeuServicos[1].pago = 'T';
+	data2.dia = 12;
+	data2.mes = 3;
+	data2.ano = 2017;
 	strcpy(MeusAnimais[1].nomeAnimal,"Bobby");
 	MeusAnimais[1].dataNascimento = data2;
 	MeusAnimais[1].especie = 3;
 	strcpy(MeusClientes[1].nomeCliente, "Joao Maria");
 	strcpy(MeusClientes[1].telefoneCliente, "043977771658");
-	MeusAnimais[1].cliente = &MeusClientes[0];
+	MeusAnimais[1].cliente = &MeusClientes[1];
+	////////////////////////////////////////
 	MeusAnimais[0].agressivo = 'S';
 	MeusAnimais[1].agressivo = 'N';
-	printf("   _______   \n");
-        printf("  //     \\\\\n");
-        printf(" //       \\\\            SEJA BEM VINDO!\n");
-        printf("//_________\\\\              __________\n");      
-        printf("|    _    |  |            | PET SHOP |\n");
-        printf("|[] | | []|[]|    <-----  |   DO     |\n");
-        printf("|   | |   |  |            | MATHIAS  |\n");
-
+	////////////////////////////////////////
+	printf(BEM_VINDO);
 	printf(INICIO);
 	while (strcmp(fgets(in,50,stdin), "e\n")!= 0) { // Enquanto o que se lee, nao for 'e', continuemos leendo os comandos..
 		switch(in[0]) { // Controle de menus
