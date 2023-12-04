@@ -869,7 +869,7 @@ int main() {
         printf("//_________\\\\              __________\n");      
         printf("|    _    |  |            | PET SHOP |\n");
         printf("|[] | | []|[]|    <-----  |   DO     |\n");
-        printf("|   | |   |  |            | GABARITO |\n");
+        printf("|   | |   |  |            | MATHIAS  |\n");
 
 	printf(INICIO);
 	while (strcmp(fgets(in,50,stdin), "e\n")!= 0) { // Enquanto o que se lee, nao for 'e', continuemos leendo os comandos..
