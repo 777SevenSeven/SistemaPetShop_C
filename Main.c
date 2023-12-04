@@ -255,22 +255,26 @@ int find(char from[], char to[]) {
 int animalAniversariante(int diaInscricao, int mesInscricao) {
     int tamanhoMes[] = {0, 31, ((ANO % 4 == 0) ? 29 : 28), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 
-    // Se o mês de aniversário é igual ao mês de inscrição, verifica se o dia de aniversário é posterior ao de inscrição
-    if (MES == mesInscricao && DIA > diaInscricao) {
-        return DIA - diaInscricao <= 7;
+    // Se o mês de inscricao tiver uma diferença maior que 1 com o ANO atual:
+    if ((MES - mesInscricao) <= 1) { 
+    
+        // Se o mês de aniversário é igual ao mês de inscrição, verifica se o dia de aniversário é posterior ao de inscrição
+        if (MES == mesInscricao && DIA > diaInscricao) {
+            return DIA - diaInscricao <= 7;
+        }
+    
+        
+        // Se o mês de aniversário é posterior ao mês de inscrição
+        if (MES > mesInscricao) {
+            // Calcula os dias restantes no mês de inscrição
+            int diasRestantes = tamanhoMes[mesInscricao] - diaInscricao;
+    
+            // Calcula os dias desde o dia seguinte ao da inscrição até o dia do aniversário no mês seguinte
+            int diasParaAniversario = diasRestantes + DIA;
+    
+            return diasParaAniversario <= 7;
+        }
     }
-
-    // Se o mês de aniversário é posterior ao mês de inscrição
-    if (MES > mesInscricao) {
-        // Calcula os dias restantes no mês de inscrição
-        int diasRestantes = tamanhoMes[mesInscricao] - diaInscricao;
-
-        // Calcula os dias desde o dia seguinte ao da inscrição até o dia do aniversário no mês seguinte
-        int diasParaAniversario = diasRestantes + DIA;
-
-        return diasParaAniversario <= 7;
-    }
-
     return 0; // Caso contrário, não está aniversariando nos próximos 7 dias
 }
 
