@@ -12,7 +12,7 @@ Nomes:André Antônio da Silva Queiroz    | RA:a2575310
 #include <stdlib.h>
 
 //Definimos as informações da data aqui em cima, para facilitar o encontro para a manuntenção dessas informações, entre os membros.
-#define DIA 1
+#define DIA 5
 #define MES 12 
 #define ANO 2023
 
@@ -25,7 +25,7 @@ Nomes:André Antônio da Silva Queiroz    | RA:a2575310
 #define MENU_SERVICOS "\nDigite 'o' para saber os serviços que oferecemos!\nDigite 'p' caso você deseja pagar 🤑\nDigite 'e' para terminar!\n"
 #define MENU_LISTAGEM "\nDigite '1' para buscar dados do cliente!\nDigite '2' para buscar animal pelo nome dele\nDigite '3' para ver os pets cadastrados!\nDigite '4' para saber quais os animais agressivos!\nDigite '5' para ver a lista de animais por espécie\nDigite '6' para ver os pets aniversariantes\nDigite '7' para ver os serviços não pagos (por animal)!\nDigite '8' para saber o serviço mais utilizado ou pressione 'e' para terminar!\n"
 
-const char ESPECIES[][14] = {"Cachorro","Gato","Hamster","Passaro", "Coelho"};
+const char ESPECIES[][14] = {"Cachorro","Gato","Hamster","Passaro", "Coelho", "Dinossauro"};
 
 // Configuracao Tabela de Animais Por Especie
 char *tabelaAnimaisPorEspecie[14]             = {"Especie", "Nome", "DoB", "Agressivo"};
@@ -44,7 +44,7 @@ char *tabelaAnimaisAggressivosNomeColunas[14] = {"Quantidade"}; // O nome das co
 int confTabelaAnimaisAggressivos[]            = {2, 13}; // Representa Tamanho de cada coluna em ordem, o primeiro valor e o tamanho do Vetor
 
 // Configuracao Tabela Animais Completa
-char *tabelaAnimaisNomeColunas[40]            = {"Dono", "Telefone", "Nome", "Especie", "Agressivo", "DOB"};
+char *tabelaAnimaisNomeColunas[40]            = {"Dono", "Telefone", "Nome", "Especie", "Agressivo", "DoB"};
 int confTabelaAnimais[]                       = {7, 14, 14, 14, 14, 11, 12}; 
 
 //Type def
@@ -847,11 +847,11 @@ void registrarServico(Animal *pet, int tipoServico, Data data) { // armazenar to
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------
 int main() {
 	char in[51]; // Variavel que guarda a entrada do Usuario no console | maior entrada valida e de 50, precisamos +1 pelo \n que fgets() pega
-	int tamanhos[] = {2,2,0}; // Quantidade de entradas por vetor ordem: MeusClientes, MeusAnimais
+	int tamanhos[] = {5,5,0}; // Quantidade de entradas por vetor ordem: MeusClientes, MeusAnimais
 	Cliente MeusClientes[100]; // Inicializacao dos vetores
 	Animal MeusAnimais[100];
 	Servico MeuServicos[100];
-	Data data1, data2;
+	Data data1, data2,data3, data4, data5;
 	data1.dia = 27;
 	data1.mes = 11;
 	data1.ano = 2023;
@@ -864,15 +864,45 @@ int main() {
 	data2.dia = 12;
 	data2.mes = 3;
 	data2.ano = 2017;
-	strcpy(MeusAnimais[1].nomeAnimal,"Bobby");
-	MeusAnimais[1].dataNascimento = data2;
+	strcpy(MeusAnimais[3].nomeAnimal,"Bobby");
+	MeusAnimais[3].dataNascimento = data2;
+	MeusAnimais[3].especie = 3;
+	strcpy(MeusClientes[3].nomeCliente, "Joao Maria");
+	strcpy(MeusClientes[3].telefoneCliente, "043977771658");
+	MeusAnimais[3].cliente = &MeusClientes[3];
+	data3.dia = 6;
+	data3.mes = 7;
+	data3.ano = 2018;
+	strcpy(MeusAnimais[1].nomeAnimal,"Mia");
+	MeusAnimais[1].dataNascimento = data3;
 	MeusAnimais[1].especie = 3;
-	strcpy(MeusClientes[1].nomeCliente, "Joao Maria");
-	strcpy(MeusClientes[1].telefoneCliente, "043977771658");
+	strcpy(MeusClientes[1].nomeCliente, "Mario Soares");
+	strcpy(MeusClientes[1].telefoneCliente, "024977778289");
 	MeusAnimais[1].cliente = &MeusClientes[1];
+	data4.dia = 29;
+	data4.mes = 4;
+	data4.ano = 2023;
+	strcpy(MeusAnimais[2].nomeAnimal,"Pekora");
+	MeusAnimais[2].dataNascimento = data4;
+	MeusAnimais[2].especie = 4;
+	strcpy(MeusClientes[2].nomeCliente, "Usagi");
+	strcpy(MeusClientes[2].telefoneCliente, "099987732157");
+	MeusAnimais[2].cliente = &MeusClientes[2];
+	data5.dia = 3;
+	data5.mes = 8;
+	data5.ano = 2022;
+	strcpy(MeusAnimais[4].nomeAnimal,"Cairo");
+	MeusAnimais[4].dataNascimento = data5;
+	MeusAnimais[4].especie = 5;
+	strcpy(MeusClientes[4].nomeCliente, "Egito");
+	strcpy(MeusClientes[4].telefoneCliente, "020983278512");
+	MeusAnimais[4].cliente = &MeusClientes[4];
 	////////////////////////////////////////
 	MeusAnimais[0].agressivo = 'S';
 	MeusAnimais[1].agressivo = 'N';
+	MeusAnimais[2].agressivo = 'S';
+	MeusAnimais[3].agressivo = 'N';
+	MeusAnimais[4].agressivo = 'S';
 	////////////////////////////////////////
 	printf(BEM_VINDO);
 	printf(INICIO);
