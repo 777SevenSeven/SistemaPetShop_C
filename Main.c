@@ -749,17 +749,17 @@ char entrada[51];
     sscanf(entrada, "%d", &escolha);
 
     if (escolha >= 1 && escolha <= numContas) {
-        printf("A Conta %d não foi paga. Deseja pagar agora? (S/N): ", servicos[escolha - 1].identificador);
+        printf("A Conta %d não foi paga. Deseja pagar agora? (S/N): ", servicos[contasNaoPagas[escolha]].identificador);
     
         char resposta;
         fgets(entrada, sizeof(entrada)/sizeof(char), stdin);
         sscanf(entrada, "%c", &resposta);
 
         if (resposta == 'S' || resposta == 's') {
-            printf("Você pagou a Conta %d.\n", servicos[escolha - 1].identificador);
+            printf("Você pagou a Conta %d.\n", servicos[contasNaoPagas[escolha]].identificador);
             servicos[contasNaoPagas[escolha]].pago = 'S';
         } else {
-            printf("A Conta %d não foi paga.\n", servicos[escolha - 1].identificador);
+            printf("A Conta %d não foi paga.\n", servicos[escolha].identificador);
         }
     } else {
         printf("Escolha inválida.\n");
@@ -847,7 +847,7 @@ void registrarServico(Animal *pet, int tipoServico, Data data) { // armazenar to
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------
 int main() {
 	char in[51]; // Variavel que guarda a entrada do Usuario no console | maior entrada valida e de 50, precisamos +1 pelo \n que fgets() pega
-	int tamanhos[] = {5,5,0}; // Quantidade de entradas por vetor ordem: MeusClientes, MeusAnimais
+	int tamanhos[] = {5,5,3}; // Quantidade de entradas por vetor ordem: MeusClientes, MeusAnimais
 	Cliente MeusClientes[100]; // Inicializacao dos vetores
 	Animal MeusAnimais[100];
 	Servico MeuServicos[100];
@@ -904,6 +904,37 @@ int main() {
 	MeusAnimais[3].agressivo = 'N';
 	MeusAnimais[4].agressivo = 'S';
 	////////////////////////////////////////
+	Data dataS1, dataS2, dataS3;
+	dataS1.dia = 2;
+	dataS1.mes = 3;
+	dataS1.ano = 2023;
+	
+	dataS2.dia = 5;
+	dataS2.mes = 5;
+	dataS2.ano = 2023;
+	
+	dataS3.dia = 2;
+	dataS3.mes = 6;
+	dataS3.ano = 2023;
+	
+	MeuServicos[0].pet = &MeusAnimais[1];
+	MeuServicos[0].tipoServico = 2;
+	MeuServicos[0].dataServico = dataS1;
+	MeuServicos[0].identificador = 0;
+	MeuServicos[0].pago = 'N';
+	
+	MeuServicos[1].pet = &MeusAnimais[3];
+	MeuServicos[1].tipoServico = 2;
+	MeuServicos[1].dataServico = dataS2;
+	MeuServicos[1].identificador = 1;
+	MeuServicos[1].pago = 'N';
+	
+	MeuServicos[2].pet = &MeusAnimais[2];
+	MeuServicos[2].tipoServico = 2;
+	MeuServicos[2].dataServico = dataS3;
+	MeuServicos[2].identificador = 2;
+	MeuServicos[2].pago = 'N';
+	///////////////////////////////////////
 	printf(BEM_VINDO);
 	printf(INICIO);
 	while (strcmp(fgets(in,50,stdin), "e\n")!= 0) { // Enquanto o que se lee, nao for 'e', continuemos leendo os comandos..
