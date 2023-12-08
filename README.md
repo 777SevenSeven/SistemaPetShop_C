@@ -1,38 +1,38 @@
-# Gerenciador de PetShop - Trabalho Final de Algoritmos 01
+# PetShop Manager - Algorithms Final Work 01
 
-Este projeto é o resultado do trabalho final da disciplina de Algoritmos 01, do curso de Engenharia de Computação, da turma EC41A.2023_01.C11. O trabalho foi desenvolvido em colaboração pelos seguintes membros da equipe:
+This project is the result of the final work of the Algorithms 01 discipline, of the Computer Engineering course, of the EC41A.2023_01.C11 class at UTFPR at the Cornélio Procópio-PR Campus. The work was developed in collaboration by the following team members:
 
 - André Antônio da Silva Queiroz (RA: a2575310)
 - Mathias Vinicius Carcano Ferretti (RA: a2575396)
 - Gabriel Henrique Prado Affonso (RA: a2618044)
 
-## Descrição
+##Description
 
-O Gerenciador de PetShop é um sistema desenvolvido em linguagem C para auxiliar na gestão de informações relacionadas a clientes, animais de estimação e serviços em um contexto de PetShop ou consultório veterinário.
+The PetShop Manager is a system developed in C language to assist in the management of information related to customers, pets and services in a PetShop or veterinary office context.
 
-## Funcionalidades
+## Functionalities
 
-O sistema oferece as seguintes funcionalidades principais:
+The system offers the following main functionalities:
 
-- Cadastro de clientes e animais de estimação.
-- Registro de serviços prestados.
-- Pagamento de contas.
-- Listagem e busca de informações sobre clientes e animais.
+- Registration of clients and pets.
+- Record of services provided.
+- Bill payment.
+- Listing and searching for information about clients and animals.
 
-## Instruções de Uso
+## Instructions for use
 
-Para utilizar o programa, basta compilar e executar o código em um ambiente que suporte a linguagem C. O programa é interativo e guiará o usuário por meio de um menu.
+To use the program, simply compile and run the code in an environment that supports the C language. The program is interactive and will guide the user through a menu.
 
-## Colaboração
+## Collaboration
 
-Se desejar contribuir ou realizar melhorias no código, sinta-se à vontade para criar pull requests. Agradecemos qualquer contribuição que possa aprimorar este projeto.
+If you want to contribute or make improvements to the code, feel free to create pull requests. We appreciate any contribution that can improve this project.
 
-## Data de Entrega
+## Delivery details
 
-O trabalho foi entregue em 18/04/2023, como parte das atividades da disciplina de Algoritmos 01.
+The work was delivered on 04/18/2023, as part of the activities of the Algorithms 01 discipline.
 
-## Bibliotecas Utilizadas
+## Libraries Used
 
-O projeto utiliza as bibliotecas mínimas recomendadas pelo professor, conforme as diretrizes da disciplina.
+The project uses the minimum libraries recommended by the teacher, in accordance with the discipline guidelines.
 
-Para mais informações, consulte o código fonte e a documentação do projeto.
+For more information, see the project source code and documentation.
